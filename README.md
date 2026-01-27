@@ -100,12 +100,9 @@ erDiagram
 
 ---
 
-## 👥 Équipe de Développement (IDAI)
+## � Auteur (IDAI)
 
-- **Dany Homam** — *Lead Developer & System Architect*
-- **EL Hajioui Houssam** — *DevOps & Security Engineer*
-- **El Bourmaki Salim** — *DBA & Core Backend*
-- **Farssi Fatima Zahra** — *UI Specialist & QA*
+- **Dany Homam** — *Fullstack Developer & System Architect*
 
 ---
 

@@ -1,0 +1,115 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Log;
+use App\Models\User;
+use App\Models\Resource;
+use App\Models\Reservation;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+
+class AdminController extends Controller
+{
+    /**
+     * Dashboard Global avec Statistiques (Point 4.3 de l'énoncé)
+     */
+    public function dashboard()
+    {
+        $totalResources = Resource::count();
+        // On considère une ressource occupée si elle a une réservation "Approuvée" ou "Active"
+        $occupiedResources = Reservation::whereIn('status', ['Approuvée', 'Active'])
+            ->distinct('resource_id')
+            ->count('resource_id');
+
+        $stats = [
+            'total_users' => User::count(),
+            'total_resources' => $totalResources,
+            'active_reservations' => $occupiedResources,
+            'pending_accounts' => User::where('role', 'guest')->where('is_active', false)->count(),
+            'total_logs' => Log::count(),
+        ];
+
+        // Calcul du taux d'occupation global (Point 4.3)
+        $stats['occupancy_rate'] = $totalResources > 0
+            ? round(($occupiedResources / $totalResources) * 100)
+            : 0;
+
+        $resourcesByType = Resource::select('type', DB::raw('count(*) as total'))->groupBy('type')->get();
+        $maintenanceCount = Resource::where('status', 'maintenance')->count();
+        $recentLogs = Log::with('user')->latest()->take(10)->get();
+
+        return view('admin.dashboard', compact('stats', 'resourcesByType', 'maintenanceCount', 'recentLogs'));
+    }
+
+    /**
+     * Gestion des Utilisateurs (Point 4.1 et 4.5)
+     */
+    public function users()
+    {
+        $users = User::orderBy('created_at', 'desc')->get();
+        return view('admin.users', compact('users'));
+    }
+
+    /**
+     * Consultation des Logs globaux (Traçabilité demandée)
+     */
+    public function logs(Request $request)
+    {
+        $query = Log::with('user');
+
+        if ($request->has('action') && $request->action != '') {
+            $query->where('action', $request->action);
+        }
+
+        $logs = $query->latest()->paginate(25)->withQueryString();
+        return view('admin.logs', compact('logs'));
+    }
+
+    /**
+     * Activation/Désactivation et Rôles (Point 4.5)
+     */
+    public function updateUser(Request $request, User $user)
+    {
+        $request->validate([
+            'role' => 'nullable|in:guest,user,responsable,admin',
+            'is_active' => 'nullable|boolean',
+        ]);
+
+        $oldStatus = $user->is_active;
+
+        if ($request->has('role'))
+            $user->role = $request->role;
+        if ($request->has('is_active'))
+            $user->is_active = $request->is_active;
+        if ($request->has('rejection_reason'))
+            $user->rejection_reason = $request->rejection_reason;
+
+        $user->save();
+
+        // Log de l'action admin
+        $actionDescription = "Profil mis à jour pour {$user->email} (Rôle: {$user->role}, Actif: {$user->is_active})";
+        if ($request->has('rejection_reason') && $request->rejection_reason) {
+            $actionDescription .= " - Refusé pour : " . $request->rejection_reason;
+        }
+
+        Log::create([
+            'user_id' => auth()->id(),
+            'action' => 'Gestion Admin',
+            'description' => $actionDescription
+        ]);
+
+        // Envoi d'email en cas d'activation
+        if (!$oldStatus && $user->is_active) {
+            try {
+                $user->notify(new \App\Notifications\AccountActivatedNotification($user));
+            } catch (\Exception $e) {
+                \Illuminate\Support\Facades\Log::error("SMTP Notification Error: " . $e->getMessage());
+            }
+        }
+
+
+        return redirect()->back()->with('success', 'Modifications système enregistrées.');
+    }
+}

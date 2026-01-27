@@ -1,0 +1,226 @@
+/* --- GRID LAYOUT --- */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+    margin-bottom: 60px;
+}
+
+/* --- CARDS & BADGES --- */
+.card {
+    background: var(--bg-card);
+    border-radius: 16px;
+    box-shadow: var(--shadow-sm);
+    padding: 30px;
+    height: 100%;
+}
+
+.rule-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.rule-badge {
+    margin-right: 15px;
+    padding: 8px 16px;
+    font-size: 0.95rem;
+    background: rgba(124, 58, 237, 0.1);
+    color: var(--primary);
+    border: 1px solid rgba(124, 58, 237, 0.2);
+    border-radius: 50px;
+    /* Pill shape */
+    font-weight: 700;
+    min-width: 45px;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rule-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--text-primary);
+}
+
+.rule-text {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* Access Cards - Rainbow Accents */
+.card-accent-success {
+    border-top: 4px solid #10b981;
+}
+
+.card-accent-info {
+    border-top: 4px solid #3b82f6;
+}
+
+.card-accent-warning {
+    border-top: 4px solid #f59e0b;
+}
+
+/* Badge Accents */
+.rule-badge.success-accent {
+    background: #ecfdf5;
+    color: #059669;
+    border-color: rgba(16, 185, 129, 0.3);
+}
+
+.rule-badge.info-accent {
+    background: #eff6ff;
+    color: #3b82f6;
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+.rule-badge.warning-accent {
+    background: #fffbeb;
+    color: #d97706;
+    border-color: rgba(245, 158, 11, 0.3);
+}
+
+/* --- TEAM SECTION --- */
+.section-header {
+    margin-bottom: 2rem;
+    text-align: center;
+    display: block;
+}
+
+.about-subtitle {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 800px;
+}
+
+.about-separator {
+    border: 0;
+    border-top: 1px solid var(--border-color);
+    margin: 60px auto;
+    width: 60%;
+}
+
+.team-section-title {
+    color: var(--text-secondary);
+    margin-bottom: 40px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 3px;
+    text-align: center;
+}
+
+.admin-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 60px;
+}
+
+.team-marquee-wrapper {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+}
+
+.team-grid-container {
+    display: flex;
+    gap: 30px;
+    width: fit-content;
+    animation: scroll-left 20s linear infinite;
+}
+
+.team-grid-container:hover {
+    animation-play-state: paused;
+}
+
+@keyframes scroll-left {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.team-member-card {
+    flex: 0 0 320px;
+    max-width: 320px;
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: var(--bg-card);
+}
+
+.team-member-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.team-image-wrapper {
+    width: 100%;
+    height: 320px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    margin-bottom: 20px;
+    background: #f1f5f9;
+}
+
+.team-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.team-member-card:hover .team-image-wrapper img {
+    transform: scale(1.1);
+}
+
+.member-info {
+    text-align: center;
+}
+
+.member-name {
+    color: var(--text-primary);
+    margin: 10px 0 5px;
+}
+
+.member-role {
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.member-role.admin-role {
+    color: var(--primary);
+}
+
+.btn-contact {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.btn-outline {
+    background: white;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 10px 15px;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.btn-outline:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: #eff6ff;
+}

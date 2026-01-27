@@ -1,0 +1,1 @@
+window.filterLogs=function(){const n=document.getElementById("logSearch");if(!n)return;const l=n.value.toUpperCase(),t=document.getElementById("logTable").getElementsByTagName("tr");for(let e=1;e<t.length;e++)(t[e].textContent||t[e].innerText).toUpperCase().indexOf(l)>-1?t[e].style.display="":t[e].style.display="none"};

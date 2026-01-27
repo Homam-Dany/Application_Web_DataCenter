@@ -1,0 +1,236 @@
+/* resources/css/reservations/index.css */
+
+.res-index-header {
+    margin-bottom: 1rem;
+}
+
+.res-index-subtitle {
+    margin-bottom: 1rem;
+}
+
+.btn-new-res {
+    padding: 10px 20px;
+}
+
+/* Filter Card */
+.filter-card {
+    margin-bottom: 30px;
+}
+
+.filter-form {
+    display: flex;
+    gap: 20px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    flex: 1;
+    min-width: 150px;
+}
+
+.filter-group-wide {
+    flex: 1;
+    min-width: 200px;
+}
+
+.filter-label {
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.filter-label i {
+    color: var(--primary);
+}
+
+.filter-input,
+.filter-select {
+    width: 100%;
+    background: var(--bg-main);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 10px;
+    border-radius: var(--radius-sm);
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.filter-input:focus,
+.filter-select:focus {
+    border-color: var(--primary);
+}
+
+.filter-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-reset-filter {
+    background: var(--bg-hover);
+    color: var(--text-secondary);
+    padding: 10px 15px;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    font-size: 0.9rem;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-reset-filter:hover {
+    background: var(--border-color);
+}
+
+/* Reservations Grid */
+.res-grid {
+    display: grid;
+    gap: 20px;
+}
+
+.res-card-item {
+    border-left: 4px solid var(--primary);
+}
+
+.res-card-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.res-card-title-text {
+    color: var(--text-primary);
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.res-card-period {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+/* Info segments */
+.res-info-segment {
+    margin-top: 15px;
+    background: var(--bg-hover);
+    padding: 15px;
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--primary);
+}
+
+.res-info-label {
+    color: var(--primary);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+.res-info-text {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-top: 6px;
+    font-style: italic;
+    line-height: 1.5;
+}
+
+/* Rejection segment */
+.res-rejection-segment {
+    margin-top: 15px;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    padding: 15px;
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--danger);
+}
+
+.res-rejection-label {
+    color: var(--danger);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+.res-rejection-text {
+    color: var(--danger);
+    font-size: 0.9rem;
+    margin-top: 6px;
+    font-style: italic;
+}
+
+/* Card Actions */
+.res-card-actions {
+    margin-top: 15px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    align-items: stretch;
+}
+
+.btn-report-problem {
+    background: rgba(249, 115, 22, 0.1);
+    color: #f97316;
+    border: 1px solid rgba(249, 115, 22, 0.3);
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.btn-report-problem:hover {
+    background: rgba(249, 115, 22, 0.2);
+    border-color: #f97316;
+}
+
+.btn-cancel-reservation {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: var(--danger);
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+    height: 100%;
+}
+
+.btn-cancel-reservation:hover {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: var(--danger);
+}
+
+/* Empty State */
+.res-empty-state {
+    text-align: center;
+    padding: 60px;
+    color: var(--text-secondary);
+}
+
+.res-empty-icon {
+    font-size: 2rem;
+    color: var(--border-color);
+    margin-bottom: 15px;
+}
+
+.res-empty-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+.res-clear-filters {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+}

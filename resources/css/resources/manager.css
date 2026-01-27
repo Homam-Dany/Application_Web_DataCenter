@@ -1,0 +1,125 @@
+/* resources/css/resources/manager.css */
+
+.manager-header {
+    margin-bottom: 1rem;
+}
+
+.manager-subtitle {
+    margin-bottom: 1rem;
+}
+
+.resource-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.resource-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.resource-title {
+    margin-bottom: 5px;
+}
+
+.resource-meta {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.resource-meta i {
+    color: var(--primary);
+    margin-right: 5px;
+}
+
+.resource-specs {
+    display: flex;
+    gap: 20px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.spec-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.spec-item i {
+    color: var(--text-muted);
+}
+
+.spec-value {
+    font-weight: 600;
+}
+
+.spec-label {
+    color: var(--text-secondary);
+}
+
+.resource-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.resource-actions form {
+    flex: 1;
+}
+
+.btn-maintenance-toggle {
+    width: 100%;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0 15px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-edit-resource {
+    flex: 0 0 auto;
+    min-width: 120px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-card);
+    color: var(--primary);
+    border: 1px solid var(--primary);
+    border-radius: 8px;
+    padding: 0 15px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.btn-edit-resource:hover {
+    background: var(--bg-hover);
+}
+
+.icon-margin {
+    margin-right: 6px;
+}
+
+/* Theme specific overrides */
+.manager-view .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+}
+
+.manager-view .card-title {
+    color: var(--text-primary);
+}

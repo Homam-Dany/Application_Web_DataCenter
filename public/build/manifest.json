@@ -1,0 +1,136 @@
+{
+  "resources/css/about.css": {
+    "file": "assets/about-BIwzuFSO.css",
+    "src": "resources/css/about.css",
+    "isEntry": true
+  },
+  "resources/css/admin/logs.css": {
+    "file": "assets/logs-C9zcBqZJ.css",
+    "src": "resources/css/admin/logs.css",
+    "isEntry": true
+  },
+  "resources/css/auth/forgot-password.css": {
+    "file": "assets/forgot-password-DXmJRUxY.css",
+    "src": "resources/css/auth/forgot-password.css",
+    "isEntry": true
+  },
+  "resources/css/auth/login.css": {
+    "file": "assets/login-BUjL250-.css",
+    "src": "resources/css/auth/login.css",
+    "isEntry": true
+  },
+  "resources/css/auth/reset-password.css": {
+    "file": "assets/reset-password-Bo8FHBFw.css",
+    "src": "resources/css/auth/reset-password.css",
+    "isEntry": true
+  },
+  "resources/css/dashboard.css": {
+    "file": "assets/dashboard-Y7SyzyJv.css",
+    "src": "resources/css/dashboard.css",
+    "isEntry": true
+  },
+  "resources/css/layouts/app.css": {
+    "file": "assets/app-CqmwU5WL.css",
+    "src": "resources/css/layouts/app.css",
+    "isEntry": true
+  },
+  "resources/css/reservations/create.css": {
+    "file": "assets/create-CEQ3Dz2N.css",
+    "src": "resources/css/reservations/create.css",
+    "isEntry": true
+  },
+  "resources/css/reservations/index.css": {
+    "file": "assets/index-B8JoKxrs.css",
+    "src": "resources/css/reservations/index.css",
+    "isEntry": true
+  },
+  "resources/css/reservations/manager.css": {
+    "file": "assets/manager-OK10jRLB.css",
+    "src": "resources/css/reservations/manager.css",
+    "isEntry": true
+  },
+  "resources/css/resources/create.css": {
+    "file": "assets/create-N8V73x48.css",
+    "src": "resources/css/resources/create.css",
+    "isEntry": true
+  },
+  "resources/css/resources/edit.css": {
+    "file": "assets/edit-DDOYnhP9.css",
+    "src": "resources/css/resources/edit.css",
+    "isEntry": true
+  },
+  "resources/css/resources/index.css": {
+    "file": "assets/index-DFcnZhoY.css",
+    "src": "resources/css/resources/index.css",
+    "isEntry": true
+  },
+  "resources/css/resources/manager.css": {
+    "file": "assets/manager-eoxtHEr8.css",
+    "src": "resources/css/resources/manager.css",
+    "isEntry": true
+  },
+  "resources/images/bgdc.png": {
+    "file": "assets/bgdc-B881QeZg.png",
+    "src": "resources/images/bgdc.png"
+  },
+  "resources/js/about.js": {
+    "file": "assets/about-DRYTAMNj.js",
+    "name": "about",
+    "src": "resources/js/about.js",
+    "isEntry": true
+  },
+  "resources/js/admin/dashboard.js": {
+    "file": "assets/dashboard-CODPzW4B.js",
+    "name": "dashboard",
+    "src": "resources/js/admin/dashboard.js",
+    "isEntry": true
+  },
+  "resources/js/admin/logs.js": {
+    "file": "assets/logs-CP1qUa6Q.js",
+    "name": "logs",
+    "src": "resources/js/admin/logs.js",
+    "isEntry": true
+  },
+  "resources/js/admin/users.js": {
+    "file": "assets/users-BGbJP8Sp.js",
+    "name": "users",
+    "src": "resources/js/admin/users.js",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-B_9xOxt_.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  },
+  "resources/js/auth/login.js": {
+    "file": "assets/login-C_IUb3Ud.js",
+    "name": "login",
+    "src": "resources/js/auth/login.js",
+    "isEntry": true
+  },
+  "resources/js/layouts/app.js": {
+    "file": "assets/app-Wv-APzEX.js",
+    "name": "app",
+    "src": "resources/js/layouts/app.js",
+    "isEntry": true
+  },
+  "resources/js/notifications/index.js": {
+    "file": "assets/index-BUJeNurW.js",
+    "name": "index",
+    "src": "resources/js/notifications/index.js",
+    "isEntry": true
+  },
+  "resources/js/reservations/create.js": {
+    "file": "assets/create-BvahX-1h.js",
+    "name": "create",
+    "src": "resources/js/reservations/create.js",
+    "isEntry": true
+  },
+  "resources/js/theme-init.js": {
+    "file": "assets/theme-init-DKy7nPnK.js",
+    "name": "theme-init",
+    "src": "resources/js/theme-init.js",
+    "isEntry": true
+  }
+}

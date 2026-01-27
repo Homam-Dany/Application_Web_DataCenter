@@ -1,0 +1,155 @@
+/* resources/css/reservations/manager.css */
+
+.res-manager-container {
+    margin-top: 30px;
+    padding: 20px;
+}
+
+.res-manager-title {
+    margin-bottom: 25px;
+    color: var(--text-primary);
+}
+
+.res-manager-title span {
+    color: var(--primary);
+}
+
+/* Success Alert / Notification */
+.res-manager-alert {
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid var(--success);
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.res-manager-list {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.res-manager-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    padding: 25px;
+    border-radius: 12px;
+}
+
+.res-card-header {
+    margin-bottom: 20px;
+}
+
+.res-card-title {
+    color: var(--primary);
+    margin: 0;
+}
+
+.res-card-subtitle {
+    margin-top: 5px;
+    color: var(--text-secondary);
+}
+
+/* Justification box */
+.res-justification-box {
+    margin-top: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    border-left: 4px solid var(--primary);
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.res-justification-label {
+    color: var(--primary);
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+}
+
+.res-justification-text {
+    font-style: italic;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Actions Section */
+.res-actions-section {
+    border-top: 1px solid var(--border-color);
+    padding-top: 20px;
+}
+
+.accept-form {
+    margin-bottom: 15px;
+}
+
+.btn-accept-res {
+    background: var(--success);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 800;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.2s;
+}
+
+.btn-accept-res:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+}
+
+.refuse-form-label {
+    display: block;
+    color: var(--danger);
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.refuse-textarea {
+    width: 100%;
+    background: var(--bg-main);
+    border: 1px solid var(--danger);
+    color: var(--text-primary);
+    padding: 12px;
+    border-radius: 8px;
+    min-height: 80px;
+    margin-bottom: 5px;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.refuse-textarea:focus {
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.refuse-error {
+    color: var(--danger);
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+}
+
+.btn-refuse-res {
+    background: var(--danger);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 800;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.2s;
+}
+
+.btn-refuse-res:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+}
+
+.empty-res-notice {
+    text-align: center;
+    color: var(--text-muted);
+}

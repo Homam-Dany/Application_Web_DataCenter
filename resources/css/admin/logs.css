@@ -1,0 +1,72 @@
+/* resources/css/admin/logs.css */
+
+/* Optimisation de la pagination pour le thème Light */
+.custom-pagination nav svg {
+    height: 20px;
+}
+
+.custom-pagination nav div:first-child {
+    display: none;
+}
+
+.custom-pagination nav span,
+.custom-pagination nav a {
+    border-radius: 8px !important;
+    margin: 0 2px;
+    border: 1px solid #e2e8f0 !important;
+}
+
+/* Page Layout */
+.logs-container {
+    padding: 20px;
+}
+
+/* Filter Bar */
+.filter-card {
+    margin-bottom: 30px;
+    padding: 25px;
+}
+
+.filter-form {
+    display: flex;
+    gap: 24px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.filter-group-action {
+    flex: 1;
+    min-width: 220px;
+}
+
+.filter-group-search {
+    flex: 2;
+    min-width: 300px;
+}
+
+.search-input-wrapper {
+    position: relative;
+}
+
+.search-icon-inside {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 1rem;
+    pointer-events: none;
+}
+
+.search-input-field {
+    padding-left: 48px !important;
+}
+
+.btn-reset-filters {
+    background: var(--bg-hover);
+    color: var(--text-secondary);
+    font-weight: 700;
+    height: 48px;
+    padding: 0 24px;
+    border-radius: 12px;
+}

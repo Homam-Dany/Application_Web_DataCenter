@@ -1,0 +1,291 @@
+/* ==========================================================================
+    DATA CENTER MANAGER - PROFESSIONAL CORPORATE THEME
+    Palette : Cobalt, Slate & Emerald
+   ========================================================================== */
+
+:root {
+    /* Fond plus profond et moins saturé */
+    --bg-dark: #020617; 
+    --card-bg: rgba(15, 23, 42, 0.6); 
+    
+    /* Couleur Primaire : Bleu Cobalt Professionnel (Remplace le Cyan) */
+    --accent-cyan: #6366f1; 
+    
+    /* Couleurs d'état plus douces et moins "flashy" */
+    --accent-green: #10b981;
+    --accent-orange: #f59e0b;
+    --accent-red: #e11d48;
+    
+    /* Typographie */
+    --text-main: #f1f5f9;
+    --text-muted: #64748b;
+    
+    /* Bordures et effets */
+    --glass-border: rgba(255, 255, 255, 0.05);
+    --neon-glow: rgba(99, 102, 241, 0.2);
+}
+
+/* --- BASES & TYPOGRAPHIE --- */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    -webkit-font-smoothing: antialiased; 
+}
+
+body {
+    /* Gradient plus doux et professionnel */
+    background: radial-gradient(circle at 0% 0%, #0f172a 0%, #020617 100%);
+    color: var(--text-main);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    line-height: 1.5;
+    overflow-x: hidden;
+}
+
+/* --- NAVIGATION HAUTE PRÉCISION --- */
+.navbar-custom {
+    background: rgba(2, 6, 23, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 0.75rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-links { list-style: none; display: flex; gap: 32px; align-items: center; }
+.nav-links a { 
+    color: var(--text-muted); 
+    text-decoration: none; 
+    font-weight: 500; 
+    font-size: 0.95rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+}
+.nav-links a.active { 
+    color: var(--text-main); 
+    font-weight: 700;
+    text-shadow: 0 0 15px var(--neon-glow);
+}
+
+.nav-links a.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--accent-cyan);
+    box-shadow: 0 0 10px var(--accent-cyan);
+    border-radius: 2px;
+}
+.nav-links a:hover { 
+    color: var(--accent-cyan); 
+    filter: drop-shadow(0 0 5px var(--neon-glow));
+}
+
+/* --- CONTENEUR PRINCIPAL --- */
+.main-content { 
+    max-width: 1200px; 
+    margin: 4rem auto; 
+    padding: 0 24px; 
+}
+
+/* --- CARTES GLASSMORPHISM ÉVOLUÉES --- */
+.card, .resource-card, .auth-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card:hover, .auth-card:hover { 
+    transform: translateY(-8px); 
+    border-color: rgba(99, 102, 241, 0.3);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 0 20px rgba(99, 102, 241, 0.1);
+}
+
+/* --- FORMULAIRES & INPUTS --- */
+.form-group { margin-bottom: 24px; text-align: left; }
+.form-group label, label {
+    display: block;
+    color: var(--accent-cyan);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+}
+
+.form-control, 
+input[type="email"], 
+input[type="password"], 
+input[type="text"], 
+input[type="date"], 
+input[type="datetime-local"], 
+select, 
+textarea {
+    width: 100%;
+    padding: 14px 18px;
+    background: rgba(2, 6, 23, 0.4) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 12px;
+    color: white !important;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    color-scheme: dark; 
+}
+
+.form-control:focus, input:focus, select:focus {
+    background: rgba(15, 23, 42, 0.8) !important;
+    border-color: var(--accent-cyan) !important;
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1) !important;
+}
+
+/* Customisation calendrier */
+::-webkit-calendar-picker-indicator {
+    filter: invert(0.8); /* Moins coloré pour plus de sobriété */
+    cursor: pointer;
+}
+
+/* --- BOUTONS UNIFIÉS --- */
+.btn {
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+}
+
+.btn-primary { 
+    background: var(--accent-cyan); 
+    color: white; /* Blanc pour le texte sur bleu foncé */
+    box-shadow: 0 8px 20px -6px rgba(99, 102, 241, 0.5); 
+}
+
+.btn-primary:hover { 
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px -5px rgba(99, 102, 241, 0.6); 
+}
+
+.btn-warning { 
+    background: rgba(245, 158, 11, 0.1); 
+    border: 1px solid var(--accent-orange); 
+    color: var(--accent-orange); 
+}
+
+.btn-warning:hover { 
+    background: var(--accent-orange); 
+    color: var(--bg-dark); 
+}
+
+/* Style spécifique Déconnexion Navbar */
+.navbar-custom form button,
+.navbar-custom button[type="submit"] {
+    background: var(--accent-red) !important;
+    color: white !important;
+    padding: 10px 20px !important;
+    border-radius: 10px !important;
+    font-size: 0.8rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    border: none !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(225, 29, 72, 0.3) !important;
+    margin-left: 15px;
+}
+
+.navbar-custom form button:hover {
+    background: #9f1239 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(225, 29, 72, 0.5) !important;
+}
+
+/* --- AUTHENTIFICATION --- */
+.auth-page { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    min-height: 100vh; 
+}
+
+.auth-card { 
+    max-width: 440px; 
+    width: 100%; 
+    text-align: center;
+}
+
+.auth-logo { margin-bottom: 2rem; }
+.logo-text { font-size: 1.8rem; font-weight: 800; color: #fff; text-decoration: none; }
+.logo-text span { color: var(--accent-cyan); }
+
+/* Bouton spécifique Login */
+.auth-card button, 
+.auth-content button,
+.auth-page button[type="submit"]:not(.navbar-custom button) {
+    width: 100%;
+    margin-top: 25px;
+    padding: 14px 28px;
+    background: var(--accent-cyan);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 8px 20px -6px rgba(99, 102, 241, 0.5);
+}
+
+.auth-footer { margin-top: 1.5rem; }
+.auth-footer a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; transition: 0.2s; }
+.auth-footer a:hover { color: var(--accent-cyan); }
+
+/* --- STATS & BADGES --- */
+.stats-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+    gap: 2rem; 
+}
+
+.stat-item { 
+    text-align: center; 
+    padding: 2.5rem; 
+    border-radius: 24px; 
+    background: linear-gradient(145deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0) 100%);
+    border: 1px solid var(--glass-border); 
+}
+
+.stat-value { 
+    font-size: 3.5rem; 
+    font-weight: 900; 
+    color: var(--accent-cyan); 
+    background: linear-gradient(180deg, #fff 40%, var(--accent-cyan) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.badge { padding: 6px 14px; border-radius: 99px; font-size: 0.7rem; font-weight: 700; }
+.disponible { background: rgba(16, 185, 129, 0.1); color: var(--accent-green); border: 1px solid rgba(16, 185, 129, 0.2); }
+.maintenance { background: rgba(245, 158, 11, 0.1); color: var(--accent-orange); border: 1px solid rgba(245, 158, 11, 0.2); }

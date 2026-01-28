@@ -123,21 +123,20 @@
                 <div class="navbar-user">
                     @auth
                         <div class="user-info">
-                            <div class="user-name">{{ Auth::user()->name }}</div>
-                            <div class="user-role">
-                                @php
-                                    $roles = [
-                                        'admin' => 'Administrateur',
-                                        'responsable' => 'Responsable Tech',
-                                        'user' => 'Ingénieur Réseau',
-                                        'guest' => 'Invité'
-                                    ];
-                                @endphp
-                                {{ $roles[Auth::user()->role] ?? Auth::user()->role }}
-                            </div>
-                            <a href="{{ route('profile.edit') }}" class="btn-logout" title="Mon Profil"
-                                style="margin-right: 5px;">
-                                <i class="fas fa-user-circle"></i>
+                            <a href="{{ route('profile.edit') }}" title="Mon Profil"
+                                style="text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: flex-end;">
+                                <div class="user-name">{{ Auth::user()->name }}</div>
+                                <div class="user-role">
+                                    @php
+                                        $roles = [
+                                            'admin' => 'Administrateur',
+                                            'responsable' => 'Responsable Tech',
+                                            'user' => 'Ingénieur Réseau',
+                                            'guest' => 'Invité'
+                                        ];
+                                    @endphp
+                                    {{ $roles[Auth::user()->role] ?? Auth::user()->role }}
+                                </div>
                             </a>
                         </div>
                         <form action="{{ route('logout') }}" method="POST" style="margin: 0;">

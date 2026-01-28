@@ -2,85 +2,82 @@
 
 <div align="center">
 
-[![Laravel v10](https://img.shields.io/badge/Laravel-v10.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com)
-[![PHP v8.2](https://img.shields.io/badge/PHP-v8.2-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://php.net)
-[![MySQL](https://img.shields.io/badge/MySQL-Database-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://mysql.com)
-[![Vanilla JS](https://img.shields.io/badge/Vanilla_JS-ES6+-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
+![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 
-**Une solution Enterprise-Grade pour la gestion, la réservation et le monitoring asynchrone des ressources de Data Center.**
+**La solution de référence pour la gestion, la réservation et le monitoring des ressources de Data Center.**
+*Développée avec rigueur, sans frameworks CSS/JS, pour une performance pure.*
 
-[Concept](#-vision--concept) • [Spécifications](#-spécifications-techniques) • [Déploiement](#-guide-de-déploiement) • [Rapport PDF/MD](./RAPPORT_TECHNIQUE.md)
+[Concept](#-vision--concept) • [Spécifications](#-spécifications-techniques) • [Installation](#-guide-dinstallation) • [Équipe](#-équipe)
 
 ---
-
 </div>
 
 ## 🎯 Vision & Concept
 
-**DC-Manager** répond au défi critique de l'allocation des ressources informatiques (Serveurs Physiques, VMs, Baies de Stockage) dans un environnement multi-utilisateurs. 
+**DC-Manager** répond au défi critique de l'allocation des ressources IT (Serveurs, Baies, VMs) en environnement partagé. 
+Notre approche "Zero-Dependency" sur le frontend garantit une maîtrise totale du code, une légèreté inégalée et une interface sur-mesure (Dark Mode natif) pensée pour les ingénieurs.
 
-Contrairement aux solutions génériques, ce projet repose sur un **moteur UI custom (Zero-Framework)**, offrant une expérience utilisateur fluide, un mode sombre immersif et une réactivité instantanée, tout en conservant la puissance du back-end Laravel.
-
----
-
-## 🚀 Fonctionnalités Avancées
+## 🚀 Fonctionnalités Clés
 
 ### 💎 Expérience Utilisateur (UI/UX)
-- **Total Dark Mode** : Interface optimisée pour les administrateurs système (Indigo & Midnight Black).
-- **Responsive Engine** : Adaptation parfaite sur mobile, tablette et desktop sans Bootstrap.
-- **Real-time Feedback** : Notifications UI et badges de statut dynamiques.
+- **Interface Premium** : Design moderne, "Card-based", avec un mode sombre profond (Midnight Blue).
+- **Responsive** : Adaptation fluide sur tous les écrans grâce à CSS Grid & Flexbox.
+- **Tableaux de Bord Personnalisés** : Vues adaptées par rôle (Utilisateur, Responsable, Admin).
 
-### 🛡️ Core Logic & Sécurité
-- **Algorithme d'Anti-Collision** : Vérification mathématique des chevauchements de dates de réservation.
-- **ACL (Access Control List)** : 4 niveaux de privilèges (Invité, Ingénieur, Master Tech, Super Admin).
-- **Audit Trail** : Journalisation exhaustive de chaque interaction système pour une traçabilité totale.
-- **Incident Lifecycle** : Système de tickets intégré avec changement d'état automatique des ressources.
-
----
+### 🛡️ Cœur Fonctionnel
+- **Système de Réservation Intelligent** :
+    - Algorithme anti-collision (interdiction des chevauchements).
+    - Vérification de disponibilité en temps réel.
+- **Gestion d'Incidents** : Workflow de signalement et de résolution intégré.
+- **Mon Profil** : Espace personnel complet (Sécurité, RGPD, Historique).
+- **Administration** : Audit logs, graphiques statistiques (Chart.js), gestion des utilisateurs.
 
 ## 🛠 Spécifications Techniques
 
-### Backend Architecture
-- **Framework** : Laravel 10 (MVC Pattern)
-- **ORM** : Eloquent avec relations polymorphiques et scopes de filtrage.
-- **Validation** : Service de validation centralisé pour garantir l'intégrité métier.
+Cette application respecte des contraintes strictes pour démontrer une expertise technique :
 
-### Frontend Architecture
-- **Design System** : CSS Variables & Flexbox/Grid (Sans Tailwind/Bootstrap).
-- **Asset Pipeline** : Vite.js avec Hot Module Replacement (HMR).
-- **Icons** : FontAwesome 6 Pro integration.
+- **Backend** : Laravel 9/10 (Architecture MVC, Eloquent ORM, Policies, Middlewares).
+- **Frontend** :
+    - **CSS** : 100% Custom (Pas de Bootstrap ni Tailwind). Architecture modulaire.
+    - **JS** : Vanilla ES6+ (Pas de jQuery). Modules séparés par fonctionnalité.
+    - **Build** : Vite.js pour la compilation des assets.
+- **Base de Données** : MySQL relationnelle.
 
----
-
-## 📦 Guide de Déploiement
+## 📦 Guide d'Installation
 
 ### Prérequis
-- **PHP** : 8.1 minimum
-- **Composer** : 2.x
-- **Node.js** : 18.x + NPM
-- **Serveur SQL** : MySQL 8.0+
+- PHP 8.1+
+- Composer
+- Node.js & NPM
+- Serveur MySQL
 
-### Installation Rapide
+### Démarrage Rapide
 
-1. **Environnement PHP & JS**
+1. **Cloner et Installer les dépendances**
    ```bash
+   git clone https://github.com/Homam-Dany/Application_Web_DataCenter.git
+   cd Application_Web_DataCenter
    composer install
    npm install
    ```
 
-2. **Configuration Système**
+2. **Configuration**
    ```bash
    cp .env.example .env
    php artisan key:generate
+   # Configurez votre base de données dans le fichier .env
    ```
-   *Note : Configurez vos identifiants `DB_DATABASE`, `DB_USERNAME` et `DB_PASSWORD` dans le `.env`.*
 
 3. **Base de Données**
    ```bash
    php artisan migrate --seed
    ```
 
-4. **Runtime**
+4. **Lancement**
    ```bash
    npm run build
    php artisan serve
@@ -88,21 +85,12 @@ Contrairement aux solutions génériques, ce projet repose sur un **moteur UI cu
 
 ---
 
-## 📊 Visualisation du Schéma (ERD)
+## 👥 Équipe
 
-```mermaid
-erDiagram
-    RESOURCE ||--o{ RESERVATION : has
-    USER ||--o{ RESERVATION : manages
-    RESOURCE ||--o{ INCIDENT : undergoes
-    USER ||--o{ LOG : performs
-```
+Ce projet est le fruit d'une collaboration rigoureuse :
 
----
-
-## � Auteur (IDAI)
-
-- **Dany Homam** — *Fullstack Developer & System Architect*
+- **Dany Homam** — *Lead Developer & Architecte*
+- **Houssam** — *Fullstack Developer (Feature Profil & Sécurité)*
 
 ---
 

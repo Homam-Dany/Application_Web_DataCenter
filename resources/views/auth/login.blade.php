@@ -9,7 +9,8 @@
     @vite(['resources/css/auth/login.css'])
 </head>
 
-<body>
+<body
+    style="background: url('{{ url('images/bgdc.png') }}?v={{ time() }}') no-repeat center center fixed !important; background-size: cover !important; background-color: #1a1a1a;">
     <div class="container {{ (isset($panel) && $panel === 'register') || request('panel') === 'register' || session('panel') === 'register' ? 'active' : '' }}"
         id="container">
         <div class="form-container sign-up">

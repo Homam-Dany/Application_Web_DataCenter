@@ -1,0 +1,41 @@
+.history-subtitle {
+    color: var(--text-muted);
+}
+
+.history-card {
+    margin-top: 2rem;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: var(--text-main);
+}
+
+.history-table th {
+    border-bottom: 1px solid var(--glass-border);
+    text-align: left;
+    padding: 1rem;
+}
+
+.history-table tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.history-table td {
+    padding: 1rem;
+}
+
+.badge-approved {
+    background: #10b981;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.badge-rejected {
+    background: #ef4444;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+}

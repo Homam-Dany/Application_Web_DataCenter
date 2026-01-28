@@ -17,6 +17,7 @@ export default defineConfig({
                 'resources/css/resources/edit.css',
                 'resources/css/reservations/index.css',
                 'resources/css/reservations/manager.css',
+                'resources/css/reservations/history.css',
                 'resources/css/reservations/create.css',
                 'resources/css/admin/logs.css',
                 'resources/css/admin/users.css',

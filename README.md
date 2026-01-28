@@ -87,13 +87,21 @@ Cette application respecte des contraintes strictes pour démontrer une expertis
 
 ## 👥 Équipe
 
-- **Dany Homam** — *Lead Fullstack Developer & Architecte*
+- **Homam Dany**
+- **Houssam ElHAJIOUI**
+- **Fatima Zahra Farssi**
+- **Salim El Bourmaki**
 
 ---
 
 <div align="center">
 
 **Projet Académique d'Excellence — Université Abdelmalek Essaâdi**  
-*Département Ingénierie De Développement D'Applications Informatiques*
+*Département d'Informatique*
+
+---
+**Filiere : Ingenieurie de Developpement d'Applications Informatiques (IDAI)**
+
+---
 
 </div>

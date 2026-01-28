@@ -82,7 +82,18 @@ class ReservationController extends Controller
         $request->validate([
             'resource_id' => 'required|exists:resources,id',
             'start_date' => 'required|date|after_or_equal:today',
-            'end_date' => 'required|date|after:start_date',
+            'end_date' => [
+                'required',
+                'date',
+                'after:start_date',
+                function ($attribute, $value, $fail) use ($request) {
+                    $start = \Carbon\Carbon::parse($request->start_date);
+                    $end = \Carbon\Carbon::parse($value);
+                    if ($start->diffInDays($end) > 15) {
+                        $fail('La réservation est limitée à 15 jours maximum pour garantir un partage équitable.');
+                    }
+                },
+            ],
             'justification' => 'required|string|min:10|max:1000',
         ]);
 

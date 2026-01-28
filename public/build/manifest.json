@@ -34,6 +34,11 @@
     "src": "resources/css/dashboard.css",
     "isEntry": true
   },
+  "resources/css/incidents/manager.css": {
+    "file": "assets/manager-LoqXuIsc.css",
+    "src": "resources/css/incidents/manager.css",
+    "isEntry": true
+  },
   "resources/css/layouts/app.css": {
     "file": "assets/app-DSBOey8T.css",
     "src": "resources/css/layouts/app.css",
@@ -125,7 +130,7 @@
     "isEntry": true
   },
   "resources/js/incidents/manager.js": {
-    "file": "assets/manager-Cw-NU3bq.js",
+    "file": "assets/manager-CZXWoynl.js",
     "name": "manager",
     "src": "resources/js/incidents/manager.js",
     "isEntry": true

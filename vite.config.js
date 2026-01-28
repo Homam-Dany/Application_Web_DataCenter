@@ -20,6 +20,8 @@ export default defineConfig({
                 'resources/css/reservations/history.css',
                 'resources/css/profile.css',
                 'resources/js/profile.js',
+                'resources/css/incidents/manager.css',
+                'resources/js/incidents/manager.js',
                 'resources/css/reservations/create.css',
                 'resources/css/admin/logs.css',
                 'resources/css/admin/users.css',

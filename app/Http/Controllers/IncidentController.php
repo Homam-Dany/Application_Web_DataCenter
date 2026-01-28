@@ -61,8 +61,13 @@ class IncidentController extends Controller
         }
         // Si c'est un admin, il voit tout par défaut
 
+        // Séparer les incidents ouverts et résolus pour l'affichage (Historique)
         $incidents = $query->latest()->get();
-        return view('incidents.manager', compact('incidents'));
+
+        $openIncidents = $incidents->where('status', 'ouvert');
+        $resolvedIncidents = $incidents->where('status', '!=', 'ouvert');
+
+        return view('incidents.manager', compact('openIncidents', 'resolvedIncidents'));
     }
 
     public function resolve(Incident $incident)

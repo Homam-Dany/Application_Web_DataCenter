@@ -1,0 +1,155 @@
+/* resources/css/incidents/manager.css */
+
+.page-header {
+    margin-bottom: 1rem;
+}
+
+.page-subtitle {
+    margin-bottom: 1rem;
+}
+
+.card-incidents {
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+.incidents-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.incidents-table thead {
+    background-color: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.incidents-table th {
+    padding: 16px 24px;
+    font-weight: 600;
+    color: #374151;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.incidents-table tbody {
+    background-color: white;
+}
+
+.incident-row {
+    border-bottom: 1px solid #f3f4f6;
+    transition: background-color 0.2s;
+}
+
+.incident-row td {
+    padding: 20px 24px;
+}
+
+.resource-name {
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    font-weight: 600;
+    color: #111827;
+}
+
+.user-email {
+    color: #6b7280;
+}
+
+.incident-subject {
+    color: #1f2937;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.incident-description {
+    color: #4b5563;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.action-cell {
+    text-align: center;
+}
+
+.btn-resolve {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    border-radius: 6px;
+    font-family: inherit;
+    font-weight: 600;
+}
+
+.status-resolved {
+    color: #10b981;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.empty-state {
+    padding: 60px;
+    text-align: center;
+    color: #6b7280;
+}
+
+.empty-icon {
+    font-size: 3rem;
+    margin-bottom: 16px;
+    color: #9CA3AF;
+}
+
+.empty-text {
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+/* History Section */
+.history-controls {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-toggle-history {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    padding: 8px 16px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--text-secondary);
+    transition: all 0.2s;
+}
+
+.btn-toggle-history:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.history-section {
+    display: none;
+    margin-top: 2rem;
+    border-top: 1px solid var(--border-color);
+    padding-top: 2rem;
+}
+
+.history-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--text-muted);
+}

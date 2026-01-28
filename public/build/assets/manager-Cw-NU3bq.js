@@ -1,1 +1,0 @@
-document.addEventListener("DOMContentLoaded",()=>{document.querySelectorAll(".incident-row").forEach(e=>{e.addEventListener("mouseover",()=>{e.style.backgroundColor="#f9fafb"}),e.addEventListener("mouseout",()=>{e.style.backgroundColor="white"})})});

@@ -1,13 +1,20 @@
-// resources/js/incidents/manager.js
+/* resources/js/incidents/manager.js */
 
 document.addEventListener('DOMContentLoaded', () => {
-    const rows = document.querySelectorAll('.incident-row');
-    rows.forEach(row => {
-        row.addEventListener('mouseover', () => {
-            row.style.backgroundColor = '#f9fafb';
+    const toggleBtn = document.getElementById('toggle-history-btn');
+    const historySection = document.getElementById('history-section');
+
+    if (toggleBtn && historySection) {
+        toggleBtn.addEventListener('click', () => {
+            const isHidden = historySection.style.display === 'none' || historySection.style.display === '';
+
+            if (isHidden) {
+                historySection.style.display = 'block';
+                toggleBtn.innerHTML = '<i class="fas fa-eye-slash"></i> Masquer l\'historique';
+            } else {
+                historySection.style.display = 'none';
+                toggleBtn.innerHTML = '<i class="fas fa-history"></i> Voir l\'historique';
+            }
         });
-        row.addEventListener('mouseout', () => {
-            row.style.backgroundColor = 'white';
-        });
-    });
+    }
 });

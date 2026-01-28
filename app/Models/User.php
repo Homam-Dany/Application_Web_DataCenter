@@ -53,4 +53,12 @@ class User extends Authenticatable
     {
         return $this->role === self::ROLE_GUEST;
     }
+
+    /**
+     * Une utilisateur peut avoir plusieurs réservations.
+     */
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
 }

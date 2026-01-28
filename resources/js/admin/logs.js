@@ -1,5 +1,14 @@
 // resources/js/admin/logs.js
 
+document.addEventListener('DOMContentLoaded', () => {
+    const actionSelect = document.getElementById('logActionSelect');
+    if (actionSelect) {
+        actionSelect.addEventListener('change', () => {
+            actionSelect.closest('form').submit();
+        });
+    }
+});
+
 window.filterLogs = function () {
     const input = document.getElementById('logSearch');
     if (!input) return;

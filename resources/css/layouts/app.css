@@ -791,3 +791,54 @@ select.form-control {
     border-color: var(--primary) !important;
     color: white !important;
 }
+
+/* --- EXPIRY BANNER --- */
+.expiry-banner {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
+    padding: 12px 20px;
+    border-radius: var(--radius-md);
+    margin-bottom: 25px;
+    box-shadow: 0 10px 15px -3px rgba(245, 158, 11, 0.2);
+    animation: slideIn 0.5s ease-out;
+}
+
+.expiry-banner-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.expiry-banner-content i {
+    font-size: 1.2rem;
+}
+
+.expiry-banner-link {
+    color: white;
+    text-decoration: underline;
+    font-weight: 700;
+    padding: 4px 12px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-sm);
+    transition: all 0.2s;
+}
+
+.expiry-banner-link:hover {
+    background: rgba(255, 255, 255, 0.3);
+    text-decoration: none;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

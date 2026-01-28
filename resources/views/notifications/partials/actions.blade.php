@@ -22,12 +22,12 @@
                 </div>
 
                 <div style="display: flex; gap: 15px;">
-                    <button type="button" class="btn btn-success" onclick="submitDecision({{ $reservation->id }}, 'accepter')">
+                    <button type="button" class="btn btn-success btn-decision-accept" data-id="{{ $reservation->id }}">
                         <i class="fas fa-check"></i> ACCEPTER
                     </button>
 
-                    <button type="button" id="refuse-btn-{{ $reservation->id }}" class="btn btn-danger"
-                        onclick="handleRefusal({{ $reservation->id }})">
+                    <button type="button" id="refuse-btn-{{ $reservation->id }}" class="btn btn-danger btn-decision-refuse"
+                        data-id="{{ $reservation->id }}">
                         <i class="fas fa-times"></i> REFUSER
                     </button>
                 </div>

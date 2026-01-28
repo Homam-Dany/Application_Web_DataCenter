@@ -1,6 +1,20 @@
 // resources/js/notifications/index.js
 
 document.addEventListener('DOMContentLoaded', function () {
+    // Attach listeners to buttons with specific classes
+    document.querySelectorAll('.btn-decision-accept').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const id = btn.dataset.id;
+            window.submitDecision(id, 'accepter');
+        });
+    });
+
+    document.querySelectorAll('.btn-decision-refuse').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const id = btn.dataset.id;
+            window.handleRefusal(id);
+        });
+    });
     const toggleBtn = document.getElementById('toggle-history-btn');
     const historySection = document.getElementById('history-section');
     const toggleText = document.getElementById('toggle-text');

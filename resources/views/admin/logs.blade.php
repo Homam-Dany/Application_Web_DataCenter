@@ -27,7 +27,7 @@
                         <i class="fas fa-filter" style="color: var(--primary); font-size: 0.9rem;"></i> Filtrer par action
                     </label>
                     <div style="position: relative;">
-                        <select name="action" onchange="this.form.submit()" class="form-control">
+                        <select name="action" id="logActionSelect" class="form-control">
                             <option value="">Toutes les actions</option>
                             <option value="Signalement" {{ request('action') == 'Signalement' ? 'selected' : '' }}>Signalement
                             </option>

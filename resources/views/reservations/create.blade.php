@@ -34,8 +34,7 @@
                     <label class="res-form-label">
                         <i class="fas fa-server"></i> Choisir l'équipement
                     </label>
-                    <select name="resource_id" id="resource_id" required class="res-form-select"
-                        onchange="updateDetails(this)">
+                    <select name="resource_id" id="resource_id" required class="res-form-select">
                         <option value="">-- Liste des ressources disponibles --</option>
                         @foreach($resources as $resource)
                             <option value="{{ $resource->id }}" data-cpu="{{ $resource->cpu }}" data-ram="{{ $resource->ram }}"

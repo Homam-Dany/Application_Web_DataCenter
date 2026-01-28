@@ -1,6 +1,6 @@
 {
   "resources/css/about.css": {
-    "file": "assets/about-BIwzuFSO.css",
+    "file": "assets/about-DyeNBr5j.css",
     "src": "resources/css/about.css",
     "isEntry": true
   },
@@ -9,13 +9,18 @@
     "src": "resources/css/admin/logs.css",
     "isEntry": true
   },
+  "resources/css/admin/users.css": {
+    "file": "assets/users-D8bkFTsk.css",
+    "src": "resources/css/admin/users.css",
+    "isEntry": true
+  },
   "resources/css/auth/forgot-password.css": {
     "file": "assets/forgot-password-DXmJRUxY.css",
     "src": "resources/css/auth/forgot-password.css",
     "isEntry": true
   },
   "resources/css/auth/login.css": {
-    "file": "assets/login-BUjL250-.css",
+    "file": "assets/login-If9RQtCc.css",
     "src": "resources/css/auth/login.css",
     "isEntry": true
   },
@@ -25,12 +30,12 @@
     "isEntry": true
   },
   "resources/css/dashboard.css": {
-    "file": "assets/dashboard-Y7SyzyJv.css",
+    "file": "assets/dashboard-m1sQ6PMn.css",
     "src": "resources/css/dashboard.css",
     "isEntry": true
   },
   "resources/css/layouts/app.css": {
-    "file": "assets/app-CqmwU5WL.css",
+    "file": "assets/app-DSBOey8T.css",
     "src": "resources/css/layouts/app.css",
     "isEntry": true
   },
@@ -40,7 +45,7 @@
     "isEntry": true
   },
   "resources/css/reservations/index.css": {
-    "file": "assets/index-B8JoKxrs.css",
+    "file": "assets/index-CJcDNPbq.css",
     "src": "resources/css/reservations/index.css",
     "isEntry": true
   },
@@ -86,7 +91,7 @@
     "isEntry": true
   },
   "resources/js/admin/logs.js": {
-    "file": "assets/logs-CP1qUa6Q.js",
+    "file": "assets/logs-GdSazuhT.js",
     "name": "logs",
     "src": "resources/js/admin/logs.js",
     "isEntry": true
@@ -109,6 +114,12 @@
     "src": "resources/js/auth/login.js",
     "isEntry": true
   },
+  "resources/js/incidents/manager.js": {
+    "file": "assets/manager-Cw-NU3bq.js",
+    "name": "manager",
+    "src": "resources/js/incidents/manager.js",
+    "isEntry": true
+  },
   "resources/js/layouts/app.js": {
     "file": "assets/app-Wv-APzEX.js",
     "name": "app",
@@ -116,15 +127,21 @@
     "isEntry": true
   },
   "resources/js/notifications/index.js": {
-    "file": "assets/index-BUJeNurW.js",
+    "file": "assets/index-C1pgJxZd.js",
     "name": "index",
     "src": "resources/js/notifications/index.js",
     "isEntry": true
   },
   "resources/js/reservations/create.js": {
-    "file": "assets/create-BvahX-1h.js",
+    "file": "assets/create-qVSeJjlk.js",
     "name": "create",
     "src": "resources/js/reservations/create.js",
+    "isEntry": true
+  },
+  "resources/js/reservations/index.js": {
+    "file": "assets/index-Bsi7xLO0.js",
+    "name": "index",
+    "src": "resources/js/reservations/index.js",
     "isEntry": true
   },
   "resources/js/theme-init.js": {

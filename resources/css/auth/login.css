@@ -9,7 +9,8 @@
 }
 
 body {
-    /* Background set in Blade for better path resolution in XAMPP */
+    background: url('/images/bgdc.png') no-repeat center center fixed !important;
+    background-size: cover !important;
     display: flex;
     align-items: center;
     justify-content: center;

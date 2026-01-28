@@ -33,7 +33,7 @@
                 $borderColor = match (true) {
                     ($status === 'Refusée') => '#ef4444',
                     ($status === 'Approuvée' || $status === 'resolu') => '#10b981',
-                    (isset($notification->data['incident_id']) || $status === 'ouvert') => '#f59e0b',
+                    (isset($notification->data['incident_id']) || $status === 'ouvert' || $status === 'expire_soon') => '#f59e0b',
                     default => '#3b82f6'
                 };
             @endphp

@@ -155,6 +155,28 @@
 
     <!-- CONTENU PRINCIPAL -->
     <main class="main-content">
+        @auth
+            @php
+                $tomorrow = \Carbon\Carbon::tomorrow()->toDateString();
+                $expiringTomorrow = auth()->user()->reservations()
+                    ->whereIn('status', ['Approuvée', 'Active'])
+                    ->whereDate('end_date', $tomorrow)
+                    ->count();
+            @endphp
+
+            @if($expiringTomorrow > 0)
+                <div class="expiry-banner">
+                    <div class="expiry-banner-content">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>Attention : Vous avez <strong>{{ $expiringTomorrow }}</strong>
+                            réservation{{ $expiringTomorrow > 1 ? 's' : '' }} qui se
+                            termine{{ $expiringTomorrow > 1 ? 'nt' : '' }} demain.</span>
+                        <a href="{{ route('reservations.index') }}" class="expiry-banner-link">Gérer mes réservations</a>
+                    </div>
+                </div>
+            @endif
+        @endauth
+
         @if(session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}

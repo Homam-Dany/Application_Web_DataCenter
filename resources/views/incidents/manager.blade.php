@@ -4,6 +4,10 @@
     @vite(['resources/css/dashboard.css'])
 @endpush
 
+@push('scripts')
+    @vite(['resources/js/incidents/manager.js'])
+@endpush
+
 @section('content')
     <div class="page-header" style="margin-bottom: 1rem;">
         <div>
@@ -37,8 +41,7 @@
             </thead>
             <tbody style="background-color: white;">
                 @forelse($incidents as $incident)
-                    <tr style="border-bottom: 1px solid #f3f4f6; transition: background-color 0.2s;"
-                        onmouseover="this.style.backgroundColor='#f9fafb'" onmouseout="this.style.backgroundColor='white'">
+                    <tr class="incident-row" style="border-bottom: 1px solid #f3f4f6; transition: background-color 0.2s;">
                         <td style="padding: 20px 24px;">
                             <span
                                 style="color: var(--primary); font-weight: 700; font-size: 0.9rem;">{{ $incident->resource->name }}</span>

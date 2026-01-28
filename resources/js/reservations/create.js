@@ -1,5 +1,14 @@
 // resources/js/reservations/create.js
 
+document.addEventListener('DOMContentLoaded', () => {
+    const resourceSelect = document.getElementById('resource_id');
+    if (resourceSelect) {
+        resourceSelect.addEventListener('change', function () {
+            window.updateDetails(this);
+        });
+    }
+});
+
 window.updateDetails = function (select) {
     const preview = document.getElementById('preview-card');
     if (!preview) return;

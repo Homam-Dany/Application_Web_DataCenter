@@ -24,7 +24,7 @@
         <form method="POST" action="{{ route('password.email') }}">
             @csrf
 
-            <div style="text-align: left;">
+            <div class="input-group">
                 <input type="email" name="email" placeholder="Entrez votre email" value="{{ old('email') }}" required
                     autofocus>
                 @error('email') <span class="error-msg">{{ $message }}</span> @enderror

@@ -111,7 +111,8 @@
                     @endif
 
                     <div class="res-card-actions">
-                        <a href="#" title="Signaler un incident" class="btn-report-problem">
+                        <a href="#" title="Signaler un incident" class="btn-report-problem"
+                            data-resource-id="{{ $res->resource->id }}">
                             <i class="fas fa-exclamation-triangle"></i> Signaler un problème
                         </a>
 
@@ -135,4 +136,44 @@
             </div>
         @endforelse
     </div>
+
+    {{-- Modal de Signalement d'Incident --}}
+    <div id="incidentModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-exclamation-triangle" style="color: #f97316;"></i> Signaler un problème
+                </h3>
+                <button type="button" class="close-modal" id="closeIncidentModal">&times;</button>
+            </div>
+            <form action="{{ route('incidents.store') }}" method="POST">
+                @csrf
+                <input type="hidden" name="resource_id" id="modal_resource_id">
+
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label class="filter-label">Sujet de l'incident</label>
+                    <input type="text" name="subject" placeholder="Ex: Panne réseau, Surchauffe..." required
+                        class="form-control">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 25px;">
+                    <label class="filter-label">Description détaillée</label>
+                    <textarea name="description" placeholder="Décrivez le problème rencontré sur cette ressource..."
+                        required class="form-control" style="min-height: 120px; resize: vertical;"></textarea>
+                </div>
+
+                <div style="display: flex; gap: 15px; justify-content: flex-end;">
+                    <button type="button" class="btn btn-secondary" id="cancelIncidentBtn"
+                        style="background: #e2e8f0; color: #475569;">Annuler</button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> Envoyer le signalement
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 @endsection
+
+@push('scripts')
+    @vite(['resources/js/reservations/index.js'])
+@endpush

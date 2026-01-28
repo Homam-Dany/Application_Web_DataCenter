@@ -19,13 +19,13 @@
 
             <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
-            <div style="text-align: left;">
+            <div class="input-group">
                 <input type="email" name="email" placeholder="Email" value="{{ old('email', $request->email) }}"
                     required autofocus>
                 @error('email') <span class="error-msg">{{ $message }}</span> @enderror
             </div>
 
-            <div style="text-align: left;">
+            <div class="input-group">
                 <input type="password" name="password" placeholder="Nouveau mot de passe" required
                     autocomplete="new-password">
                 @error('password') <span class="error-msg">{{ $message }}</span> @enderror

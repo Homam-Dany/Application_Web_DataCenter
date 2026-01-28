@@ -26,11 +26,6 @@ class ResourceController extends Controller
         return view('resources.index', compact('resources'));
     }
 
-    public function rules()
-    {
-        return view('resources.rules');
-    }
-
     public function managerIndex()
     {
         if (Auth::user()->role === 'admin') {

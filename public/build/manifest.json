@@ -20,7 +20,7 @@
     "isEntry": true
   },
   "resources/css/auth/login.css": {
-    "file": "assets/login-If9RQtCc.css",
+    "file": "assets/login-BUjL250-.css",
     "src": "resources/css/auth/login.css",
     "isEntry": true
   },
@@ -39,9 +39,19 @@
     "src": "resources/css/layouts/app.css",
     "isEntry": true
   },
+  "resources/css/profile.css": {
+    "file": "assets/profile-Dx0MsPJc.css",
+    "src": "resources/css/profile.css",
+    "isEntry": true
+  },
   "resources/css/reservations/create.css": {
     "file": "assets/create-CEQ3Dz2N.css",
     "src": "resources/css/reservations/create.css",
+    "isEntry": true
+  },
+  "resources/css/reservations/history.css": {
+    "file": "assets/history-DyzzeDPj.css",
+    "src": "resources/css/reservations/history.css",
     "isEntry": true
   },
   "resources/css/reservations/index.css": {
@@ -130,6 +140,12 @@
     "file": "assets/index-C1pgJxZd.js",
     "name": "index",
     "src": "resources/js/notifications/index.js",
+    "isEntry": true
+  },
+  "resources/js/profile.js": {
+    "file": "assets/profile-BeKY9exv.js",
+    "name": "profile",
+    "src": "resources/js/profile.js",
     "isEntry": true
   },
   "resources/js/reservations/create.js": {

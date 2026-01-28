@@ -135,6 +135,10 @@
                                 @endphp
                                 {{ $roles[Auth::user()->role] ?? Auth::user()->role }}
                             </div>
+                            <a href="{{ route('profile.edit') }}" class="btn-logout" title="Mon Profil"
+                                style="margin-right: 5px;">
+                                <i class="fas fa-user-circle"></i>
+                            </a>
                         </div>
                         <form action="{{ route('logout') }}" method="POST" style="margin: 0;">
                             @csrf

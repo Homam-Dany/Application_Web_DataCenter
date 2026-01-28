@@ -1,0 +1,211 @@
+/* resources/css/profile.css */
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding-bottom: 3rem;
+}
+
+.profile-header {
+    margin-bottom: 2rem;
+}
+
+.page-subtitle {
+    margin-bottom: 1rem;
+}
+
+.status-alert {
+    margin-bottom: 2rem;
+    padding: 1rem 1.5rem;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid var(--success);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--success);
+    font-weight: 600;
+    box-shadow: var(--shadow-sm);
+    width: 100%;
+}
+
+.status-alert i {
+    font-size: 1.25rem;
+}
+
+.profile-card-header {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+}
+
+.profile-card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-card-title i {
+    color: var(--primary);
+}
+
+.profile-card-subtitle {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+.profile-form-wrapper {
+    max-width: 40rem;
+}
+
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group-profile {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-label-profile {
+    display: block;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.form-input-profile {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    background: var(--bg-input);
+    color: var(--text-primary);
+    outline: none;
+    transition: all 0.2s;
+}
+
+.form-input-profile:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-error-profile {
+    color: var(--danger);
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+}
+
+.profile-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+/* Danger Zone */
+.card-danger {
+    border-top: 4px solid var(--danger);
+}
+
+.card-danger .profile-card-title i {
+    color: var(--danger);
+}
+
+.btn-delete-reveal {
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-weight: 700;
+}
+
+.delete-confirmation-section {
+    margin-top: 0.5rem;
+}
+
+.delete-confirm-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--danger);
+    margin-bottom: 1rem;
+    font-family: 'Lexend', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.delete-confirm-text {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-family: 'Lexend', sans-serif;
+}
+
+.delete-pwd-label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.form-input-delete {
+    width: 100%;
+    padding: 0.85rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    background: var(--bg-input);
+    color: var(--text-primary);
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.form-input-delete:focus {
+    border-color: var(--danger);
+}
+
+.delete-actions {
+    display: flex;
+    justify-content: flex-start;
+    gap: 1rem;
+    align-items: center;
+}
+
+.btn-cancel-delete {
+    padding: 10px 20px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    background: transparent;
+    color: var(--text-primary);
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.btn-cancel-delete:hover {
+    background: var(--bg-hover);
+}
+
+.btn-confirm-delete {
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+}
+
+@media (max-width: 640px) {
+
+    .profile-actions,
+    .delete-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}

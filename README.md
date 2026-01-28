@@ -87,10 +87,7 @@ Cette application respecte des contraintes strictes pour démontrer une expertis
 
 ## 👥 Équipe
 
-Ce projet est le fruit d'une collaboration rigoureuse :
-
-- **Dany Homam** — *Lead Developer & Architecte*
-- **Houssam** — *Fullstack Developer (Feature Profil & Sécurité)*
+- **Dany Homam** — *Lead Fullstack Developer & Architecte*
 
 ---
 

@@ -95,12 +95,11 @@ Cette application respecte des standards de qualité industrielle :
 
 ## 👥 Équipe de Développement
 
-**Projet Académique d'Excellence — Université Abdelmalek Essaâdi (IDAI)**
+**Projet Académique — Université Abdelmalek Essaâdi**
+**Filière :** Licence en Ingénierie de Développement d'Applications Informatiques (IDAI)
+**Établissement :** FST Tanger
 
-- **Homam Dany** : Lead Developer & Architecte
-- **Houssam ElHAJIOUI** : Frontend Specialist
-- **Fatima Zahra Farssi** : UI/UX Designer
-- **Salim El Bourmaki** : Backend Engineer
+- **Homam Dany**
 
 ---
 <div align="center">

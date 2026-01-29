@@ -1,6 +1,9 @@
 # 📋 Rapport d'Audit & Conformité Technique V2.0
 
 **Projet** : DC-Manager (Système de Gestion de Data Center + IA)
+**Équipe** : Homam Dany
+**Filière** : Licence en Ingénierie de Développement d'Applications Informatiques (IDAI)
+**Établissement** : FST Tanger, Université Abdelmalek Essaâdi
 **Date** : Janvier 2026
 
 ---

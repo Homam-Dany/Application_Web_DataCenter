@@ -16,6 +16,7 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 Route::get('/catalogue', [ResourceController::class, 'index'])->name('resources.index');
+Route::post('/chatbot/ask', [App\Http\Controllers\ChatbotController::class, 'ask'])->name('chatbot.ask');
 
 // La page À Propos centralise désormais tout (Règles + Équipe)
 Route::get('/a-propos', function () {

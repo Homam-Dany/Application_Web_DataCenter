@@ -199,6 +199,9 @@
     @vite(['resources/js/app.js', 'resources/js/layouts/app.js'])
 
     @stack('scripts')
+
+    <!-- AI Chatbot Widget -->
+    @include('partials.chatbot')
 </body>
 
 </html>

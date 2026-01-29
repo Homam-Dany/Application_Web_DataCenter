@@ -6,46 +6,54 @@
 ![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=for-the-badge&logo=openai&logoColor=white)
 
-**La solution de référence pour la gestion, la réservation et le monitoring des ressources de Data Center.**
-*Développée avec rigueur, sans frameworks CSS/JS, pour une performance pure.*
+**La solution ultime de gestion de Data Center, enrichie par l'Intelligence Artificielle.**
+*Performance native, Pas de jQuery, Pas de Bootstrap. Juste du code propre.*
 
-[Concept](#-vision--concept) • [Spécifications](#-spécifications-techniques) • [Installation](#-guide-dinstallation) • [Équipe](#-équipe)
+[Fonctionnalités](#-fonctionnalités-clés) • [IA & Chatbot](#-assistant-ia-intelligent) • [Installation](#-guide-dinstallation) • [Équipe](#-équipe)
 
 ---
 </div>
 
-## 🎯 Vision & Concept
+## 🎯 Vision & Innovation
 
-**DC-Manager** répond au défi critique de l'allocation des ressources IT (Serveurs, Baies, VMs) en environnement partagé. 
-Notre approche "Zero-Dependency" sur le frontend garantit une maîtrise totale du code, une légèreté inégalée et une interface sur-mesure (Dark Mode natif) pensée pour les ingénieurs.
+**DC-Manager** redéfinit la gestion d'infrastructure IT en combinant une interface utilisateur ultra-moderne ("Glassmorphism", Dark Mode natif) avec des fonctionnalités avancées d'automatisation. Contrairement aux solutions classiques, nous avons banni les dépendances lourdes pour offrir une expérience **ultra-rapide** et **sécurisée**.
 
 ## 🚀 Fonctionnalités Clés
 
-### 💎 Expérience Utilisateur (UI/UX)
-- **Interface Premium** : Design moderne, "Card-based", avec un mode sombre profond (Midnight Blue).
-- **Responsive** : Adaptation fluide sur tous les écrans grâce à CSS Grid & Flexbox.
-- **Tableaux de Bord Personnalisés** : Vues adaptées par rôle (Utilisateur, Responsable, Admin).
+### 🧠 Assistant IA Intelligent (Nouveau)
+- **Chatbot Autonome** : Intégré nativement dans l'interface, il répond 24/7 aux questions des utilisateurs.
+- **Support Hybride** :
+    - **Mode Autonome** : Répond aux questions fréquentes (réservations, pannes, règles) sans coût API.
+    - **Mode GPT** : Connectable à OpenAI pour une intelligence illimitée.
+- **Suggestions Rapides** : Interface conversationnelle moderne avec puces de suggestions contextuelles.
 
-### 🛡️ Cœur Fonctionnel
-- **Système de Réservation Intelligent** :
-    - Algorithme anti-collision (interdiction des chevauchements).
-    - Vérification de disponibilité en temps réel.
-- **Gestion d'Incidents** : Workflow de signalement et de résolution intégré.
-- **Mon Profil** : Espace personnel complet (Sécurité, RGPD, Historique).
-- **Administration** : Audit logs, graphiques statistiques (Chart.js), gestion des utilisateurs.
+### � Système de Notifications Avancé
+- **Emails Transactionnels** : Notifications SMTP temps réel pour l'activation de compte et les refus.
+- **Magic Links** : Connexion sécurisée sans mot de passe via lien unique temporaire.
+- **Alertes de Refus** : Envoi de justifications détaillées en cas de rejet d'une demande d'accès.
+
+### 🛡️ Administration & Sécurité
+- **Gestion des Utilisateurs 2.0** :
+    - Workflow de validation des comptes (Approuver / Refuser avec motif).
+    - Separation claire des comptes Actifs, En Attente et Refusés.
+    - Suppression définitive sécurisée (Hard Delete).
+- **Audit Logs** : Traçabilité immuable de toutes les actions critiques.
+
+### 💎 Expérience Utilisateur (UI/UX)
+- **Design Système Propriétaire** : Architecture CSS modulaire unique (Variables CSS, Grid Layout).
+- **Tableaux de Bord Dynamiques** : Vues adaptées par rôle (Invité, Ingénieur, Responsable, Admin).
 
 ## 🛠 Spécifications Techniques
 
-Cette application respecte des contraintes strictes pour démontrer une expertise technique :
+Cette application respecte des standards de qualité industrielle :
 
-- **Backend** : Laravel 9/10 (Architecture MVC, Eloquent ORM, Policies, Middlewares).
+- **Backend** : Laravel 10 (MVC, Eloquent, Queues, Mailables).
 - **Frontend** :
-    - **CSS** : 100% Custom (Pas de Bootstrap ni Tailwind). Architecture modulaire.
-    - **JS** : Vanilla ES6+ (Pas de jQuery). Modules séparés par fonctionnalité.
-    - **Build** : Vite.js pour la compilation des assets.
-- **Base de Données** : MySQL relationnelle.
+    - **JS** : Vanilla ES6+ Modulaire (Architecture basée sur les composants).
+    - **CSS** : Design System Custom ("Aurora Design").
+- **IA** : Controller dédié avec logique de matching NLP (Natural Language Processing) locale.
 
 ## 📦 Guide d'Installation
 
@@ -57,51 +65,44 @@ Cette application respecte des contraintes strictes pour démontrer une expertis
 
 ### Démarrage Rapide
 
-1. **Cloner et Installer les dépendances**
+1. **Cloner le projet**
    ```bash
    git clone https://github.com/Homam-Dany/Application_Web_DataCenter.git
    cd Application_Web_DataCenter
+   ```
+
+2. **Installation**
+   ```bash
    composer install
    npm install
    ```
 
-2. **Configuration**
+3. **Configuration**
    ```bash
    cp .env.example .env
    php artisan key:generate
-   # Configurez votre base de données dans le fichier .env
    ```
-
-3. **Base de Données**
-   ```bash
-   php artisan migrate --seed
-   ```
+   *Configurez votre base de données et paramètres SMTP (Gmail/Outlook) dans le fichier .env*
 
 4. **Lancement**
    ```bash
+   php artisan migrate --seed
    npm run build
    php artisan serve
    ```
 
 ---
 
-## 👥 Équipe
+## 👥 Équipe de Développement
 
-- **Homam Dany**
-- **Houssam ElHAJIOUI**
-- **Fatima Zahra Farssi**
-- **Salim El Bourmaki**
+**Projet Académique d'Excellence — Université Abdelmalek Essaâdi (IDAI)**
+
+- **Homam Dany** : Lead Developer & Architecte
+- **Houssam ElHAJIOUI** : Frontend Specialist
+- **Fatima Zahra Farssi** : UI/UX Designer
+- **Salim El Bourmaki** : Backend Engineer
 
 ---
-
 <div align="center">
-
-**Projet Académique d'Excellence — Université Abdelmalek Essaâdi**  
-*Département d'Informatique*
-
----
-**Filiere : Ingenieurie de Developpement d'Applications Informatiques (IDAI)**
-
----
-
+    <i>Un projet conçu avec passion pour l'excellence technique.</i>
 </div>

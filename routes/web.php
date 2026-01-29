@@ -65,6 +65,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/utilisateurs', [AdminController::class, 'users'])->name('admin.users');
         Route::get('/admin/logs', [AdminController::class, 'logs'])->name('admin.logs');
         Route::patch('/admin/utilisateurs/{user}', [AdminController::class, 'updateUser'])->name('admin.users.update');
+        Route::delete('/admin/utilisateurs/{user}', [AdminController::class, 'destroyUser'])->name('admin.users.destroy');
     });
 
     Route::delete('/reservations/{reservation}', [ReservationController::class, 'destroy'])->name('reservations.destroy');

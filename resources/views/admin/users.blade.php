@@ -105,9 +105,14 @@
                 </thead>
                 <tbody>
                     @php
-                        // On prend tous les users qui ne sont pas "en attente" (donc actif, ou rejeté, ou role défini)
-                        $managedUsers = $users->reject(function ($user) {
-                            return $user->role === 'guest' && !$user->is_active && $user->rejection_reason === null;
+                        // SECTION 2: Utilisateurs Actifs / Inactifs (mais PAS refusés, PAS en attente)
+                        $managedUsers = $users->filter(function ($user) {
+                            // Exclure ceux qui sont "En attente" (Guest + Inactif + Pas de refus)
+                            $isPending = $user->role === 'guest' && !$user->is_active && $user->rejection_reason === null;
+                            // Exclure ceux qui sont "Refusés" (Motif present)
+                            $isRefused = $user->rejection_reason !== null; // Correction: le refus prime
+                            
+                            return !$isPending && !$isRefused;
                         });
                     @endphp
                     @foreach($managedUsers as $user)
@@ -137,11 +142,7 @@
                                 </form>
                             </td>
                             <td style="padding: 15px 20px; text-align: center;">
-                                @if($user->rejection_reason)
-                                    <span class="status-badge status-refused" title="{{ $user->rejection_reason }}">
-                                        REFUSÉ
-                                    </span>
-                                @elseif($user->is_active)
+                                @if($user->is_active)
                                     <span class="status-badge status-active">
                                         ACTIF
                                     </span>
@@ -165,6 +166,75 @@
                 </tbody>
             </table>
         </div>
+
+        {{-- SECTION 3 : COMPTES REFUSÉS --}}
+        @php
+            $refusedUsers = $users->whereNotNull('rejection_reason');
+        @endphp
+
+        @if(count($refusedUsers) > 0)
+            <div style="margin-top: 40px;">
+                <h2 style="color: #64748b; font-size: 1.1rem; font-weight: 700; margin-bottom: 20px;">
+                    <i class="fas fa-ban" style="color: #ef4444; margin-right: 8px;"></i> Demandes Refusées
+                </h2>
+                <div class="card" style="background: #fff5f5; padding: 0; border-radius: 16px; overflow: hidden; border: 1px solid #fecaca;">
+                    <table class="active-users-table">
+                        <thead>
+                            <tr>
+                                <th>Utilisateur</th>
+                                <th>Raison du Refus</th>
+                                <th style="text-align: center;">Statut</th>
+                                <th style="text-align: center;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($refusedUsers as $user)
+                                <tr class="user-row-active" style="background-color: #fffaf0;">
+                                    <td style="padding: 15px 20px;">
+                                        <div style="display: flex; align-items: center; gap: 12px;">
+                                            <div class="user-avatar-active" style="background-color: #ef4444; color: white;">
+                                                {{ strtoupper(substr($user->name, 0, 1)) }}
+                                            </div>
+                                            <div>
+                                                <strong class="user-name-text" style="color: #7f1d1d;">{{ $user->name }}</strong><br>
+                                                <small class="user-email-text">{{ $user->email }}</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="padding: 15px 20px; color: #b91c1c; font-style: italic;">
+                                        "{{ $user->rejection_reason }}"
+                                    </td>
+                                    <td style="padding: 15px 20px; text-align: center;">
+                                        <span class="status-badge status-refused">
+                                            REFUSÉ
+                                        </span>
+                                    </td>
+                                    <td style="padding: 15px 20px; text-align: center;">
+                                        <div style="display: flex; gap: 10px; justify-content: center;">
+                                            {{-- Optionnel: Possibilité de rétablir (reset refus) --}}
+                                            <!--
+                                            <form action="{{ route('admin.users.update', $user) }}" method="POST">
+                                                @csrf @method('PATCH')
+                                                <input type="hidden" name="rejection_reason" value="">
+                                                <button class="btn btn-save-role">Rétablir</button>
+                                            </form>
+                                            -->
+                                            <form action="{{ route('admin.users.destroy', $user) }}" method="POST" onsubmit="return confirm('Supprimer définitivement ce compte ?');">
+                                                @csrf @method('DELETE')
+                                                <button type="submit" class="btn btn-refuse" style="padding: 8px 12px;">
+                                                    <i class="fas fa-trash"></i> Supprimer
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        @endif
+
     </div>
 
     {{-- Modal de Refus --}}

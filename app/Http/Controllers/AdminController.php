@@ -109,7 +109,35 @@ class AdminController extends Controller
             }
         }
 
+        // Envoi d'email en cas de refus
+        if ($request->has('rejection_reason') && $request->rejection_reason) {
+            try {
+                $user->notify(new \App\Notifications\AccountRefusedNotification($user, $request->rejection_reason));
+            } catch (\Exception $e) {
+                \Illuminate\Support\Facades\Log::error("SMTP Notification Error (Refusal): " . $e->getMessage());
+            }
+        }
+
 
         return redirect()->back()->with('success', 'Modifications système enregistrées.');
+    }
+
+    public function destroyUser(User $user)
+    {
+        // On ne supprime pas son propre compte
+        if (auth()->id() === $user->id) {
+            return redirect()->back()->with('error', 'Impossible de supprimer votre propre compte.');
+        }
+
+        $email = $user->email;
+        $user->delete();
+
+        Log::create([
+            'user_id' => auth()->id(),
+            'action' => 'Suppression Compte',
+            'description' => "Compte supprimé : $email"
+        ]);
+
+        return redirect()->back()->with('success', 'Compte utilisateur supprimé définitivement.');
     }
 }

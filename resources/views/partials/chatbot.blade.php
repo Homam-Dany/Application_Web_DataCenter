@@ -1,4 +1,6 @@
-<div id="ai-chatbot-widget" class="chatbot-closed">
+<div id="ai-chatbot-widget" class="chatbot-closed" data-menu-url="{{ route('chatbot.menu') }}"
+    data-ask-url="{{ route('chatbot.ask') }}">
+
     <!-- Bubble Button -->
     <div id="chatbot-trigger" class="chatbot-trigger">
         <i class="fas fa-robot"></i>
@@ -11,7 +13,7 @@
         <div class="chatbot-header">
             <div class="chatbot-title">
                 <i class="fas fa-brain"></i>
-                <span>Assistant IDAI</span>
+                <span>Assistant DataCenter</span>
             </div>
             <button id="chatbot-close" class="chatbot-close-btn"><i class="fas fa-times"></i></button>
         </div>
@@ -38,7 +40,6 @@
 </div>
 
 <style>
-    /* ... existing styles ... */
     /* Widget Container */
     #ai-chatbot-widget {
         position: fixed;
@@ -75,9 +76,10 @@
         position: absolute;
         bottom: 80px;
         right: 0;
-        width: 350px;
-        height: 500px;
-        /* Taller for menu */
+        width: 320px;
+        /* Taille réduite demandée */
+        height: 420px;
+        /* Taille réduite demandée */
         background: white;
         border-radius: 20px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -110,7 +112,7 @@
     /* Header */
     .chatbot-header {
         background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-        padding: 15px 20px;
+        padding: 12px 15px;
         color: white;
         display: flex;
         justify-content: space-between;
@@ -142,12 +144,12 @@
     /* Messages */
     .chatbot-messages {
         flex: 1;
-        padding: 20px;
+        padding: 15px;
         overflow-y: auto;
         background-color: #f8fafc;
         display: flex;
         flex-direction: column;
-        gap: 12px;
+        gap: 10px;
     }
 
     .message {
@@ -300,33 +302,48 @@
             }
         }
 
-        trigger.addEventListener('click', toggleChat);
-        closeBtn.addEventListener('click', toggleChat);
+        // Event Listeners direct
+        if (trigger) {
+            trigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleChat();
+            });
+        }
+
+        if (closeBtn) {
+            closeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleChat();
+            });
+        }
 
         // Load Menu from Backend
         async function loadMenu() {
             try {
-                const response = await fetch("{{ route('chatbot.menu') }}");
+                // Utiliser l'URL du data-attribute
+                const menuUrl = widget.getAttribute('data-menu-url');
+                const response = await fetch(menuUrl);
                 const menuItems = await response.json();
 
-                suggestionsContainer.innerHTML = ''; // Clear loading
+                if (suggestionsContainer) {
+                    suggestionsContainer.innerHTML = ''; // Clear loading
 
-                menuItems.forEach(item => {
-                    const btn = document.createElement('button');
-                    btn.classList.add('suggestion-chip');
-                    btn.textContent = item.text;
-                    btn.addEventListener('click', () => {
-                        // User clicks a menu option
-                        input.value = item.text;
-                        sendMessage();
+                    menuItems.forEach(item => {
+                        const btn = document.createElement('button');
+                        btn.classList.add('suggestion-chip');
+                        btn.textContent = item.text;
+                        btn.addEventListener('click', () => {
+                            if (input) input.value = item.text;
+                            sendMessage();
+                        });
+                        suggestionsContainer.appendChild(btn);
                     });
-                    suggestionsContainer.appendChild(btn);
-                });
+                }
 
                 menuLoaded = true;
             } catch (error) {
                 console.error("Erreur chargement menu", error);
-                suggestionsContainer.innerHTML = '<div class="loading-suggestions">Erreur de chargement du menu.</div>';
+                if (suggestionsContainer) suggestionsContainer.innerHTML = '<div class="loading-suggestions">Erreur de chargement du menu.</div>';
             }
         }
 
@@ -345,12 +362,15 @@
             const loadingId = addLoading();
 
             try {
+                const askUrl = widget.getAttribute('data-ask-url');
+                const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
                 // 3. Call API
-                const response = await fetch("{{ route('chatbot.ask') }}", {
+                const response = await fetch(askUrl, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        'X-CSRF-TOKEN': csrfToken
                     },
                     body: JSON.stringify({ message: text })
                 });
@@ -377,8 +397,8 @@
             }
         }
 
-        sendBtn.addEventListener('click', sendMessage);
-        input.addEventListener('keypress', (e) => {
+        if (sendBtn) sendBtn.addEventListener('click', sendMessage);
+        if (input) input.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') sendMessage();
         });
 

@@ -5,66 +5,100 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion | DC-Manager</title>
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Material Icons (Used by UniTime design) -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     @vite(['resources/css/auth/login.css'])
 </head>
 
-<body
-    style="background: url('{{ url('images/bgdc.png') }}?v={{ time() }}') no-repeat center center fixed !important; background-size: cover !important; background-color: #1a1a1a;">
-    <div class="container {{ (isset($panel) && $panel === 'register') || request('panel') === 'register' || session('panel') === 'register' ? 'active' : '' }}"
-        id="container">
-        <div class="form-container sign-up">
-            <form method="POST" action="{{ route('register') }}">
-                @csrf
-                <h1>Créer un compte</h1>
-                <span>Utilisez votre email pour vous inscrire</span>
-                <input type="text" name="name" placeholder="Nom" required value="{{ old('name') }}">
-                @error('name') <span class="error-msg">{{ $message }}</span> @enderror
+<body>
+    <div
+        class="login-content {{ (isset($panel) && $panel === 'register') || request('panel') === 'register' || session('panel') === 'register' ? 'sign-up-mode' : '' }}">
+        <div class="forms-container">
+            <div class="signin-signup">
+                <!-- FORMULAIRE DE CONNEXION -->
+                <form method="POST" action="{{ route('login') }}" class="sign-in-form">
+                    @csrf
+                    <h2 class="title" style="color:#5c6bc0">Se Connecter</h2>
 
-                <input type="email" name="email" placeholder="Email" required value="{{ old('email') }}">
-                @error('email') <span class="error-msg">{{ $message }}</span> @enderror
+                    <div class="input-field">
+                        <i class="material-icons">email</i>
+                        <input type="email" name="email" placeholder="Email" required value="{{ old('email') }}">
+                    </div>
+                    @error('email') <span class="error-msg">{{ $message }}</span> @enderror
 
-                <input type="password" name="password" placeholder="Mot de passe" required>
-                @error('password') <span class="error-msg">{{ $message }}</span> @enderror
+                    <div class="input-field">
+                        <i class="material-icons">lock</i>
+                        <input type="password" name="password" placeholder="Mot de passe" required>
+                    </div>
+                    @error('password') <span class="error-msg">{{ $message }}</span> @enderror
 
-                <input type="password" name="password_confirmation" placeholder="Confirmer le mot de passe" required>
-                <button type="submit">S'INSCRIRE</button>
-                <a href="{{ route('resources.index') }}" class="guest-link-auth">Continuer comme invité</a>
-            </form>
+                    <div class="form-options">
+                        <a href="{{ route('password.request') }}" class="forgot-pass">Mot de passe oublié ?</a>
+                    </div>
+
+                    <input type="submit" value="SA CONNECTER" class="btn solid" />
+
+                    <a href="{{ route('resources.index') }}" class="guest-link-auth">Continuer comme invité</a>
+                </form>
+
+                <!-- FORMULAIRE D'INSCRIPTION -->
+                <form method="POST" action="{{ route('register') }}" class="sign-up-form">
+                    @csrf
+                    <h2 class="title" style="color:#5c6bc0">Inscription</h2>
+
+                    <div class="input-field">
+                        <i class="material-icons">person</i>
+                        <input type="text" name="name" placeholder="Nom" required value="{{ old('name') }}">
+                    </div>
+                    @error('name') <span class="error-msg">{{ $message }}</span> @enderror
+
+                    <div class="input-field">
+                        <i class="material-icons">email</i>
+                        <input type="email" name="email" placeholder="Email" required value="{{ old('email') }}">
+                    </div>
+                    @error('email') <span class="error-msg">{{ $message }}</span> @enderror
+
+                    <div class="input-field">
+                        <i class="material-icons">lock</i>
+                        <input type="password" name="password" placeholder="Mot de passe" required>
+                    </div>
+                    @error('password') <span class="error-msg">{{ $message }}</span> @enderror
+
+                    <div class="input-field">
+                        <i class="material-icons">lock_outline</i>
+                        <input type="password" name="password_confirmation" placeholder="Confirmer le mot de passe"
+                            required>
+                    </div>
+
+                    <input type="submit" value="S'INSCRIRE" class="btn solid" />
+                    <a href="{{ route('resources.index') }}" class="guest-link-auth">Continuer comme invité</a>
+                </form>
+            </div>
         </div>
 
-        <div class="form-container sign-in">
-            <form method="POST" action="{{ route('login') }}">
-                @csrf
-                <h1>Se Connecter</h1>
-                <div class="social-icons">
-
+        <div class="panels-container">
+            <div class="panel left-panel">
+                <div class="content">
+                    <h3>Nouveau ici ?</h3>
+                    <p>Rejoignez-nous et commencez à gérer vos ressources dès maintenant !</p>
+                    <button class="btn transparent" id="sign-up-btn">S'INSCRIRE</button>
                 </div>
-                <span>Utilisez votre email et mot de passe</span>
-                <input type="email" name="email" placeholder="Email" required value="{{ old('email') }}">
-                @error('email') <span class="error-msg">{{ $message }}</span> @enderror
+                <!-- Image UniTime adaptée (Log.png for "New Here?" usually sits on the left panel to invite sign up) -->
+                <!-- In sliding form: Left Panel visible when in Sign In Mode (to invite usage of Sign Up) -->
+                <!-- UniTime uses log.png in Left Panel -->
+                <img src="{{ asset('images/log.png') }}" class="image" alt="Login Illustration" />
+            </div>
 
-                <input type="password" name="password" placeholder="Mot de passe" required>
-                @error('password') <span class="error-msg">{{ $message }}</span> @enderror
-
-                <a href="{{ route('password.request') }}">Mot de passe oublié ?</a>
-                <button type="submit">SE CONNECTER</button>
-                <a href="{{ route('resources.index') }}" class="guest-link-auth">Continuer comme invité</a>
-            </form>
-        </div>
-
-        <div class="toggle-container">
-            <div class="toggle">
-                <div class="toggle-panel toggle-left">
-                    <h1>De retour ?</h1>
-                    <p>Connectez-vous avec vos informations personnelles pour accéder au parc informatique.</p>
-                    <button class="hidden" id="login">SE CONNECTER</button>
+            <div class="panel right-panel">
+                <div class="content">
+                    <h3>Déjà membre ?</h3>
+                    <p>Connectez-vous pour accéder à votre espace personnel.</p>
+                    <button class="btn transparent" id="sign-in-btn">SE CONNECTER</button>
                 </div>
-                <div class="toggle-panel toggle-right">
-                    <h1>Bonjour !</h1>
-                    <p>Inscrivez-vous pour commencer à gérer vos ressources dès maintenant.</p>
-                    <button class="hidden" id="register">S'INSCRIRE</button>
-                </div>
+                <!-- Image UniTime adaptée -->
+                <img src="{{ asset('images/register.png') }}" class="image" alt="Register Illustration" />
             </div>
         </div>
     </div>

@@ -57,17 +57,17 @@ Le système repose sur une architecture **MVC (Modèle-Vue-Contrôleur)** strict
 
 ```mermaid
 graph TD
-    Client[Client Nav.] <-->|HTTPS/TLS 1.3| LoadBalancer[Serveur Web Apache]
-    LoadBalancer <-->|PHP-FPM| Laravel[Laravel Framework Core]
+    Client["Client Nav."] <-->|"HTTPS/TLS 1.3"| LoadBalancer["Serveur Web Apache"]
+    LoadBalancer <-->|"PHP-FPM"| Laravel["Laravel Framework Core"]
     
     subgraph "Application Layer"
-        Laravel -->|Auth| Guard[Auth Guard (Session)]
-        Laravel -->|Logic| Controllers[Contrôleurs Métiers]
-        Controllers -->|Data| Eloquent[ORM Eloquent]
+        Laravel -->|"Auth"| Guard["Auth Guard (Session)"]
+        Laravel -->|"Logic"| Controllers["Contrôleurs Métiers"]
+        Controllers -->|"Data"| Eloquent["ORM Eloquent"]
     end
     
     subgraph "Persistence Layer"
-        Eloquent <-->|SQL| MySQL[(MySQL 8.0 InnoDB)]
+        Eloquent <-->|"SQL"| MySQL[("MySQL 8.0 InnoDB")]
     end
 ```
 
@@ -93,6 +93,27 @@ graph TD
 *   **Typage Fort :** Utilisation des types PHP 8.1+ dans les signatures de méthodes.
 *   **Standard PSR-12 :** Respect strict des normes de codage PHP.
 *   **DRY (Don't Repeat Yourself) :** Utilisation de `Components` Blade pour les éléments réutilisables (Boutons, Cartes, Modales).
+
+### 4.3 Diagramme de Flux de Données
+
+```mermaid
+graph TD
+    User(("Utilisateur")) -->|"HTTPS Request"| Routeur["Laravel Router"]
+    Routeur -->|"Middleware"| Controlleur["Controllers"]
+    
+    subgraph "Core Logic"
+        Controlleur -->|"Validate"| Request["Form Request"]
+        Controlleur -->|"Process"| Service["Service Layer"]
+        Service -->|"Query"| Eloquent["Eloquent ORM"]
+    end
+    
+    subgraph "Database"
+        Eloquent <-->|"SQL Interactions"| MySQL[("MySQL")]
+    end
+
+    Controlleur -->|"View Data"| Blade["Blade Engine"]
+    Blade -->|"HTML Response"| User
+```
 
 ---
 

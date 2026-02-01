@@ -38,7 +38,7 @@
                         <a href="{{ route('password.request') }}" class="forgot-pass">Mot de passe oublié ?</a>
                     </div>
 
-                    <input type="submit" value="SA CONNECTER" class="btn solid" />
+                    <input type="submit" value="SE CONNECTER" class="btn solid" />
 
                     <a href="{{ route('resources.index') }}" class="guest-link-auth">Continuer comme invité</a>
                 </form>

@@ -23,13 +23,9 @@
             </div>
 
             <!-- Suggestions Chips -->
-            <div class="chatbot-suggestions">
-                <button class="suggestion-chip" data-question="Comment créer un compte ?">📝 Créer un compte</button>
-                <button class="suggestion-chip" data-question="Comment réserver ?">📅 Réserver</button>
-                <button class="suggestion-chip" data-question="C'est quoi un Responsable ?">👑 Rôle Responsable</button>
-                <button class="suggestion-chip" data-question="Signaler une panne">⚠️ Signaler Panne</button>
-                <button class="suggestion-chip" data-question="Quelles sont les règles ?">📜 Règles</button>
-                <button class="suggestion-chip" data-question="Contact Support">📞 Contact</button>
+            <div class="chatbot-suggestions" id="chatbot-suggestions-container">
+                <!-- Loaded dynamically -->
+                <div class="loading-suggestions"><i class="fas fa-circle-notch fa-spin"></i> Chargement du menu...</div>
             </div>
         </div>
 
@@ -42,6 +38,7 @@
 </div>
 
 <style>
+    /* ... existing styles ... */
     /* Widget Container */
     #ai-chatbot-widget {
         position: fixed;
@@ -79,7 +76,8 @@
         bottom: 80px;
         right: 0;
         width: 350px;
-        height: 450px;
+        height: 500px;
+        /* Taller for menu */
         background: white;
         border-radius: 20px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -98,13 +96,15 @@
         transform: scale(1);
         pointer-events: all;
     }
-    
+
     .chatbot-open .chatbot-trigger {
         transform: rotate(90deg) scale(0.8);
         background: #ef4444;
     }
+
     .chatbot-open .chatbot-trigger i::before {
-        content: "\f00d"; /* Change icon to X */
+        content: "\f00d";
+        /* Change icon to X */
     }
 
     /* Header */
@@ -134,7 +134,10 @@
         opacity: 0.8;
         transition: opacity 0.2s;
     }
-    .chatbot-close-btn:hover { opacity: 1; }
+
+    .chatbot-close-btn:hover {
+        opacity: 1;
+    }
 
     /* Messages */
     .chatbot-messages {
@@ -148,13 +151,15 @@
     }
 
     .message {
-        max-width: 80%;
-        padding: 10px 15px;
+        max-width: 85%;
+        padding: 12px 16px;
         border-radius: 12px;
         font-size: 14px;
         line-height: 1.5;
         position: relative;
         word-wrap: break-word;
+        white-space: pre-line;
+        /* Handle newlines in answers */
     }
 
     .bot-message {
@@ -162,7 +167,7 @@
         color: #1e293b;
         align-self: flex-start;
         border-bottom-left-radius: 4px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         border: 1px solid #e2e8f0;
     }
 
@@ -182,30 +187,45 @@
         margin-top: 10px;
     }
 
-    /* Suggestions */
+    /* Suggestions Menu Style */
     .chatbot-suggestions {
         display: flex;
-        flex-wrap: wrap;
+        flex-direction: column;
+        /* Vertical stack like Telegram menu */
         gap: 8px;
-        margin-bottom: 10px;
+        margin-top: 10px;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 10px;
     }
 
     .suggestion-chip {
-        background: #e0e7ff;
+        background: white;
         color: #4338ca;
-        border: 1px solid #c7d2fe;
-        border-radius: 16px;
-        padding: 6px 12px;
-        font-size: 12px;
+        border: 1px solid #e0e7ff;
+        border-radius: 8px;
+        padding: 10px 15px;
+        font-size: 13px;
+        font-weight: 500;
         cursor: pointer;
         transition: all 0.2s;
-        white-space: nowrap;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
     }
 
     .suggestion-chip:hover {
-        background: #4f46e5;
-        color: white;
-        border-color: #4f46e5;
+        background: #e0e7ff;
+        border-color: #c7d2fe;
+        transform: translateX(2px);
+    }
+
+    .loading-suggestions {
+        text-align: center;
+        color: #94a3b8;
+        font-size: 12px;
+        padding: 10px;
     }
 
     /* Input */
@@ -226,7 +246,7 @@
         transition: border-color 0.2s;
         font-size: 14px;
     }
-    
+
     #chatbot-input:focus {
         border-color: #6366f1;
     }
@@ -248,7 +268,7 @@
     #chatbot-send:hover {
         background: #4338ca;
     }
-    
+
     #chatbot-send:disabled {
         background: #94a3b8;
         cursor: not-allowed;
@@ -263,18 +283,18 @@
         const messagesContainer = document.getElementById('chatbot-messages');
         const input = document.getElementById('chatbot-input');
         const sendBtn = document.getElementById('chatbot-send');
-        
-        // Suggestion Chips
-        const suggestions = document.querySelectorAll('.suggestion-chip');
-        
+        const suggestionsContainer = document.getElementById('chatbot-suggestions-container');
+
         let isOpen = false;
+        let menuLoaded = false;
 
         // Toggle Chat
         function toggleChat() {
             isOpen = !isOpen;
-            if(isOpen) {
+            if (isOpen) {
                 widget.classList.add('chatbot-open');
                 setTimeout(() => input.focus(), 300);
+                if (!menuLoaded) loadMenu();
             } else {
                 widget.classList.remove('chatbot-open');
             }
@@ -283,14 +303,32 @@
         trigger.addEventListener('click', toggleChat);
         closeBtn.addEventListener('click', toggleChat);
 
-        // Handle Suggestion Click
-        suggestions.forEach(chip => {
-            chip.addEventListener('click', () => {
-                const question = chip.getAttribute('data-question');
-                input.value = question;
-                sendMessage();
-            });
-        });
+        // Load Menu from Backend
+        async function loadMenu() {
+            try {
+                const response = await fetch("{{ route('chatbot.menu') }}");
+                const menuItems = await response.json();
+
+                suggestionsContainer.innerHTML = ''; // Clear loading
+
+                menuItems.forEach(item => {
+                    const btn = document.createElement('button');
+                    btn.classList.add('suggestion-chip');
+                    btn.textContent = item.text;
+                    btn.addEventListener('click', () => {
+                        // User clicks a menu option
+                        input.value = item.text;
+                        sendMessage();
+                    });
+                    suggestionsContainer.appendChild(btn);
+                });
+
+                menuLoaded = true;
+            } catch (error) {
+                console.error("Erreur chargement menu", error);
+                suggestionsContainer.innerHTML = '<div class="loading-suggestions">Erreur de chargement du menu.</div>';
+            }
+        }
 
         // Send Message
         async function sendMessage() {
@@ -318,10 +356,10 @@
                 });
 
                 const data = await response.json();
-                
+
                 // 4. Remove Loading & Add Bot Response
                 removeMessage(loadingId);
-                
+
                 if (data.success) {
                     addMessage(data.message, 'bot');
                 } else {

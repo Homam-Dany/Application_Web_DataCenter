@@ -55,8 +55,8 @@ class ReservationController extends Controller
         $resources = Resource::where('manager_id', Auth::id())->get();
 
         $pendingReservations = Reservation::whereHas('resource', function ($query) {
-            // Un admin voit tout, un responsable voit ses ressources
-            if (!auth()->user()->isAdmin()) {
+            // Un admin ou un responsable voit tout
+            if (!auth()->user()->isAdmin() && !auth()->user()->isResponsable()) {
                 $query->where('manager_id', Auth::id());
             }
         })
@@ -147,8 +147,8 @@ class ReservationController extends Controller
     {
         $reservation = Reservation::findOrFail($id);
 
-        // Autorisation : Manager de la ressource OU Admin
-        if (auth()->id() !== $reservation->resource->manager_id && !auth()->user()->isAdmin()) {
+        // Autorisation : Manager de la ressource OU Admin OU Responsable
+        if (auth()->id() !== $reservation->resource->manager_id && !auth()->user()->isAdmin() && !auth()->user()->isResponsable()) {
             abort(403, "Vous n'êtes pas autorisé à prendre cette décision.");
         }
 
@@ -197,7 +197,7 @@ class ReservationController extends Controller
     public function history()
     {
         $reservations = Reservation::whereHas('resource', function ($query) {
-            if (!auth()->user()->isAdmin()) {
+            if (!auth()->user()->isAdmin() && !auth()->user()->isResponsable()) {
                 $query->where('manager_id', Auth::id());
             }
         })

@@ -11,7 +11,7 @@ class Resource extends Model
 
     protected $fillable = [
         'name',
-        'type', 
+        'type',
         'category',
         'cpu',
         'ram',
@@ -23,7 +23,8 @@ class Resource extends Model
         'status', // disponible, maintenance, désactivée
         'manager_id',
         'maintenance_start', // NOUVEAU : Pour point 4.4
-        'maintenance_end'    // NOUVEAU : Pour point 4.4
+        'maintenance_end',   // NOUVEAU : Pour point 4.4
+        'rack_position'      // NOUVEAU : Pour point 4.5 (Rack Map)
     ];
 
     protected $casts = [

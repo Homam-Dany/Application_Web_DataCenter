@@ -66,6 +66,14 @@
                             </label>
                             <input type="number" name="ram" value="{{ $resource->ram }}" class="edit-form-input">
                         </div>
+
+                        <!-- Rack Position -->
+                        <div>
+                            <label class="edit-form-label">
+                                <i class="fas fa-server"></i> Position Rack
+                            </label>
+                            <input type="text" name="rack_position" value="{{ $resource->rack_position }}" class="edit-form-input" placeholder="ex: U12">
+                        </div>
                     </div>
 
                     <div class="edit-resource-footer">

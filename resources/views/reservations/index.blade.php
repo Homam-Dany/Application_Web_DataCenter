@@ -10,9 +10,14 @@
             <h1 class="page-title">Mon Historique <span>Data Center</span></h1>
             <p class="page-subtitle res-index-subtitle">Consultez et filtrez vos réservations passées et en cours.</p>
         </div>
-        <a href="{{ route('reservations.create') }}" class="btn btn-primary btn-new-res">
-            <i class="fas fa-plus-circle"></i> Nouvelle Réservation
-        </a>
+        <div style="display:flex; gap:10px;">
+            <a href="{{ route('reservations.calendar') }}" class="btn btn-secondary">
+                <i class="fas fa-calendar-alt"></i> Vue Calendrier
+            </a>
+            <a href="{{ route('reservations.create') }}" class="btn btn-primary btn-new-res">
+                <i class="fas fa-plus-circle"></i> Nouvelle Réservation
+            </a>
+        </div>
     </div>
 
     <div class="card filter-card">

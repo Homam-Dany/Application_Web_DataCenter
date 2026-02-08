@@ -15,6 +15,9 @@
                 <p class="dashboard-subtitle">Validez les nouveaux comptes et gérez les accès au Data Center.</p>
             </div>
             <div class="header-summary">
+                <a href="{{ route('admin.export.users') }}" class="btn" style="background: #10b981; color: white; margin-right: 15px; border: none;">
+                    <i class="fas fa-file-csv"></i> Exporter CSV
+                </a>
                 <span class="header-summary-text">
                     <i class="fas fa-users" style="margin-right: 8px; color: var(--primary);"></i> {{ count($users) }} membres au total
                 </span>

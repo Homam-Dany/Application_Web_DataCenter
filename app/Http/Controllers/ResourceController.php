@@ -26,6 +26,35 @@ class ResourceController extends Controller
         return view('resources.index', compact('resources'));
     }
 
+    public function show(Resource $resource)
+    {
+        return view('resources.show', compact('resource'));
+    }
+
+    public function exportResources()
+    {
+        $fileName = 'resources_' . date('Y-m-d_H-i') . '.csv';
+
+        return response()->streamDownload(function () {
+            $handle = fopen('php://output', 'w');
+            fputcsv($handle, ['ID', 'Nom', 'Type', 'Catégorie', 'CPU', 'RAM', 'Statut', 'Manager']);
+
+            foreach (Resource::with('manager')->cursor() as $resource) {
+                fputcsv($handle, [
+                    $resource->id,
+                    $resource->name,
+                    $resource->type,
+                    $resource->category,
+                    $resource->cpu,
+                    $resource->ram,
+                    $resource->status,
+                    $resource->manager ? $resource->manager->name : 'N/A'
+                ]);
+            }
+            fclose($handle);
+        }, $fileName);
+    }
+
     public function managerIndex()
     {
         if (Auth::user()->role === 'admin') {
@@ -53,6 +82,7 @@ class ResourceController extends Controller
             'cpu' => 'required|integer',
             'ram' => 'required|integer',
             'category' => 'required|string',
+            'rack_position' => 'nullable|string|max:10', // Ex: U10
         ]);
 
         Resource::create([
@@ -61,6 +91,7 @@ class ResourceController extends Controller
             'cpu' => $request->cpu,
             'ram' => $request->ram,
             'category' => $request->category,
+            'rack_position' => $request->rack_position,
             'status' => 'disponible',
             'manager_id' => auth()->id(), // Le créateur devient le manager
         ]);
@@ -88,6 +119,7 @@ class ResourceController extends Controller
             'name' => 'required|string',
             'maintenance_start' => 'nullable|date',
             'maintenance_end' => 'nullable|date|after:maintenance_start',
+            'rack_position' => 'nullable|string|max:10', // Ex: U10
         ]);
 
         $resource->update($request->all());
@@ -115,5 +147,13 @@ class ResourceController extends Controller
         $resource->update(['status' => $newStatus]);
 
         return redirect()->back()->with('success', "État de la ressource changé en {$newStatus}.");
+    }
+
+    public function printQr(Resource $resource)
+    {
+        if ($resource->manager_id !== Auth::id() && Auth::user()->role !== 'admin') {
+            abort(403);
+        }
+        return view('resources.print_qr', compact('resource'));
     }
 }

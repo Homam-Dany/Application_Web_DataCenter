@@ -85,4 +85,65 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // [NEW] Incidents Chart
+    const incidentsCanvas = document.getElementById('incidentsChart');
+    if (incidentsCanvas) {
+        const labels = JSON.parse(incidentsCanvas.dataset.labels);
+        const data = JSON.parse(incidentsCanvas.dataset.values);
+
+        new Chart(incidentsCanvas, {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: data,
+                    backgroundColor: ['#ef4444', '#f59e0b', '#10b981', '#6366f1'],
+                    borderWidth: 0,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right', // Légende à droite pour changer un peu
+                        labels: {
+                            color: '#64748b',
+                            usePointStyle: true,
+                            padding: 15,
+                            font: { size: 11 }
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: '#1e293b'
+                    }
+                }
+            }
+        });
+    }
+
+    // [NEW] Live Dashboard Polling (Every 30s)
+    setInterval(() => {
+        fetch('/admin/api/stats')
+            .then(response => response.json())
+            .then(data => {
+                // Update Text Stats
+                if (data.stats) {
+                    const occupancyEl = document.getElementById('stat-occupancy');
+                    const totalEl = document.getElementById('stat-total');
+                    const maintenanceEl = document.getElementById('stat-maintenance');
+                    const pendingEl = document.getElementById('stat-pending');
+                    const progressBar = document.querySelector('.stat-progress-fill');
+
+                    if (occupancyEl) occupancyEl.innerText = data.stats.occupancy_rate + '%';
+                    if (progressBar) progressBar.style.width = data.stats.occupancy_rate + '%';
+                    if (totalEl) totalEl.innerText = data.stats.total_resources;
+                    if (maintenanceEl) maintenanceEl.innerText = data.stats.maintenance_count;
+                    if (pendingEl) pendingEl.innerText = data.stats.pending_accounts;
+                }
+            })
+            .catch(error => console.error('LiveStats Error:', error));
+    }, 30000); // 30 seconds
 });

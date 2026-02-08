@@ -47,6 +47,38 @@ class ReservationController extends Controller
         return view('reservations.index', compact('allReservations'));
     }
 
+    public function calendar()
+    {
+        $reservations = Reservation::where('user_id', Auth::id())
+            ->whereIn('status', ['Approuvée', 'Active', 'en_attente'])
+            ->with('resource')
+            ->get();
+
+        $events = [];
+
+        foreach ($reservations as $res) {
+            $color = match ($res->status) {
+                'Approuvée' => '#10b981', // Success
+                'Active' => '#10b981',
+                'en_attente' => '#f59e0b', // Warning
+                default => '#6b7280',
+            };
+
+            $events[] = [
+                'title' => $res->resource->name,
+                'start' => $res->start_date->format('Y-m-d'),
+                'end' => $res->end_date->addDay()->format('Y-m-d'), // +1 day for FullCalendar exclusivity
+                'backgroundColor' => $color,
+                'borderColor' => $color,
+                'extendedProps' => [
+                    'status' => $res->status
+                ]
+            ];
+        }
+
+        return view('reservations.calendar', compact('events'));
+    }
+
     /**
      * Vue Responsable/Admin : Consulter les demandes à gérer (Point 3.2)
      */

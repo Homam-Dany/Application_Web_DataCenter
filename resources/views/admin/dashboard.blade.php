@@ -12,8 +12,18 @@
                 <h1 class="page-title">Dashboard</h1>
                 <p class="page-subtitle">Aperçu en temps réel de l'état du Data Center et des activités système.</p>
             </div>
-            <div class="admin-badge">
-                <i class="fas fa-shield-alt"></i> Mode Administrateur
+            <div style="display: flex; gap: 15px; align-items: center;">
+                <a href="{{ route('reports.monthly') }}" class="btn"
+                    style="background: white; color: var(--primary); border: 1px solid var(--primary); font-weight: 600;">
+                    <i class="fas fa-file-pdf"></i> Rapport Mensuel
+                </a>
+                <a href="{{ route('admin.rack_map') }}" class="btn"
+                    style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: white; font-weight: 600; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);">
+                    <i class="fas fa-th"></i> Visual Rack Map
+                </a>
+                <div class="admin-badge">
+                    <i class="fas fa-shield-alt"></i> Mode Administrateur
+                </div>
             </div>
         </div>
 
@@ -23,7 +33,7 @@
             <div class="stat-card primary">
                 <p class="stat-label">Taux d'Occupation</p>
                 <div class="stat-card-header">
-                    <h2 class="stat-value">{{ $stats['occupancy_rate'] }}%</h2>
+                    <h2 class="stat-value" id="stat-occupancy">{{ $stats['occupancy_rate'] }}%</h2>
                     <div class="stat-icon-wrapper stat-icon-primary">
                         <i class="fas fa-chart-pie"></i>
                     </div>
@@ -37,7 +47,7 @@
             <div class="stat-card success">
                 <p class="stat-label">Total des Unités</p>
                 <div class="stat-card-header">
-                    <h2 class="stat-value">{{ $stats['total_resources'] }}</h2>
+                    <h2 class="stat-value" id="stat-total">{{ $stats['total_resources'] }}</h2>
                     <div class="stat-icon-wrapper stat-icon-success">
                         <i class="fas fa-server"></i>
                     </div>
@@ -48,7 +58,7 @@
             <div class="stat-card warning">
                 <p class="stat-label">En Maintenance</p>
                 <div class="stat-card-header">
-                    <h2 class="stat-value">{{ $maintenanceCount }}</h2>
+                    <h2 class="stat-value" id="stat-maintenance">{{ $maintenanceCount }}</h2>
                     <div class="stat-icon-wrapper stat-icon-warning">
                         <i class="fas fa-tools"></i>
                     </div>
@@ -59,7 +69,7 @@
             <div class="stat-card danger">
                 <p class="stat-label">Comptes en Attente</p>
                 <div class="stat-card-header">
-                    <h2 class="stat-value">{{ $stats['pending_accounts'] }}</h2>
+                    <h2 class="stat-value" id="stat-pending">{{ $stats['pending_accounts'] }}</h2>
                     <div class="stat-icon-wrapper stat-icon-danger">
                         <i class="fas fa-user-clock"></i>
                     </div>
@@ -79,7 +89,18 @@
                     </canvas>
                 </div>
             </div>
-            </canvas>
+
+            {{-- [NEW] Incidents Chart --}}
+            <div class="card">
+                <h3 class="card-title card-title-with-icon">
+                    <i class="fas fa-exclamation-circle" style="color: var(--danger);"></i> Incidents par Statut
+                </h3>
+                <div class="chart-canvas-container">
+                    <canvas id="incidentsChart" data-labels="{{ json_encode($incidentsByStatus->pluck('status')) }}"
+                        data-values="{{ json_encode($incidentsByStatus->pluck('total')) }}">
+                    </canvas>
+                </div>
+            </div>
         </div>
     </div>
     <div class="card">

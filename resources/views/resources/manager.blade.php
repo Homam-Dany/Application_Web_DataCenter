@@ -10,10 +10,15 @@
             <h1 class="page-title">Mon Parc <span>Informatique</span></h1>
             <p class="page-subtitle manager-subtitle">Gérez la disponibilité technique de vos ressources en temps réel.</p>
         </div>
-        {{-- Bouton d'ajout stylisé --}}
-        <a href="{{ route('resources.create') }}" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Ajouter une ressource
-        </a>
+        {{-- Boutons d'action --}}
+        <div style="display: flex; gap: 10px;">
+            <a href="{{ route('resources.export') }}" class="btn" style="background: #10b981; color: white; border: none;">
+                <i class="fas fa-file-csv"></i> Export CSV
+            </a>
+            <a href="{{ route('resources.create') }}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Ajouter une ressource
+            </a>
+        </div>
     </div>
 
     <div class="resource-list manager-view">
@@ -60,6 +65,11 @@
                                 {{ $resource->status === 'maintenance' ? 'Remettre en service' : 'Mettre en maintenance' }}
                             </button>
                         </form>
+
+                        <a href="{{ route('resources.print_qr', $resource->id) }}" target="_blank" class="btn btn-secondary"
+                            title="Imprimer QR Code" style="margin-right: 8px;">
+                            <i class="fas fa-qrcode"></i>
+                        </a>
 
                         <a href="{{ route('resources.edit', $resource->id) }}" class="btn btn-primary btn-edit-resource">
                             <i class="fas fa-cog icon-margin"></i> Modifier

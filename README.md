@@ -6,12 +6,13 @@
 ![PHP](https://img.shields.io/badge/PHP-8.1%2B-777BB4?style=for-the-badge&logo=php&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-Bundler-646CFF?style=for-the-badge&logo=vite&logoColor=white)
-![AI Ready](https://img.shields.io/badge/AI-Ready-10A37F?style=for-the-badge&logo=openai&logoColor=white)
+![SweetAlert2](https://img.shields.io/badge/SweetAlert2-EF2D5E?style=for-the-badge&logo=sweetalert2&logoColor=white)
+![Chart.js](https://img.shields.io/badge/Chart.js-F5788D?style=for-the-badge&logo=chart.js&logoColor=white)
 
 **La solution de gestion de Data Center ultime, propulsée par l'Intelligence Artificielle.**
 *Performance native. Architecture Événementielle. Sécurité de niveau entreprise.*
 
-[🚀 Démo](#) • [📚 Documentation](#) • [🐛 Signaler un bug](https://github.com/Homam-Dany/Application_Web_DataCenter/issues)
+[🚀 Démo](#) • [📚 Documentation Technique](RAPPORT_TECHNIQUE.md) • [🐛 Signaler un bug](https://github.com/Homam-Dany/Application_Web_DataCenter/issues)
 
 ---
 </div>
@@ -22,15 +23,17 @@
 
 > **Notre philosophie :** "La complexité du backend doit être invisible derrière une élégance frontend absolue."
 
-## 🔥 Fonctionnalités "Flagship"
+## 🔥 Fonctionnalités "Flagship" (v2.0)
 
 | Module | Description | Innovation |
 | :--- | :--- | :--- |
-| **🤖 Assistant DataCenter** | Chatbot IA intégré nativement (sans iFrame) pour le support 24/7. | Détection de contexte, suggestions dynamiques, architecture *Event-Delegated*. |
-| **⚡ Performance UI** | Interface **Glassmorphism** sans frameworks lourds (No Bootstrap/jQuery). | Score Lighthouse > 95. Chargement instantané via Vite.js. |
-| **🛡️ Sécurité IAM** | Gestion des identités et des accès (RBAC) granulaire. | Workflow d'approbation stricte, Logs d'audit immuables, Hard Delete RGPD. |
-| **📅 Smart Booking** | Moteur de réservation de ressources avec détection de conflits. | Algorithme de vérification temporelle en temps réel. |
-| **🔔 Live Notifications** | Système proactif d'alertes (Email SMTP + In-App). | Rappels d'expiration, confirmations de compte, alertes incidents. |
+| **🖥️ Visual Rack Map** | **NOUVEAU !** Représentation visuelle interactive de la baie 42U. | Drag & Drop virtuel, statuts colorés (Vert/Orange) en temps réel. |
+| **⏱️ Live Dashboard** | **NOUVEAU !** Tableau de bord qui se met à jour sans rechargement (AJAX Polling). | Compteurs dynamiques, graphiques animés Chart.js. |
+| **🤖 Assistant IA** | Chatbot intégré nativement pour le support 24/7. | Détection de contexte, suggestions dynamiques. |
+| **📊 Reporting Pro** | Génération de rapports PDF mensuels haute-fidélité. | Mise en page CSS Print, KPI d'infrastructure détaillés. |
+| **🌙 Dark Mode** | Interface responsive avec mode sombre natif. | Persistance des préférences utilisateur (LocalStorage). |
+| **🔔 Smart Alerts** | Notifications "Toast" non-intrusives (SweetAlert2). | Feedback utilisateur immédiat et élégant. |
+| **📂 Data Export** | Export complet des données (Utilisateurs/Ressources) en CSV. | Traitement côté serveur pour les gros volumes de données. |
 
 ## 🛠 Architecture Technique
 

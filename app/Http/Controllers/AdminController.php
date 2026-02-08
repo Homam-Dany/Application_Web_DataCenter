@@ -12,6 +12,19 @@ use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
 {
+    public function rackMap()
+    {
+        $resources = Resource::whereNotNull('rack_position')->get();
+        // Transformation simple : ['U10' => $resource, 'U11' => $resource]
+        $rack = [];
+        foreach ($resources as $res) {
+            $pos = strtoupper($res->rack_position); // U12
+            // Gestion simplifiée: on suppose 1 U pour l'instant ou format U10-U12
+            $rack[$pos] = $res;
+        }
+        return view('admin.rack_map', compact('rack'));
+    }
+
     /**
      * Dashboard Global avec Statistiques (Point 4.3 de l'énoncé)
      */
@@ -37,10 +50,67 @@ class AdminController extends Controller
             : 0;
 
         $resourcesByType = Resource::select('type', DB::raw('count(*) as total'))->groupBy('type')->get();
+
+        // [NEW] Statistiques des incidents par statut
+        $incidentsByStatus = \App\Models\Incident::select('status', DB::raw('count(*) as total'))
+            ->groupBy('status')
+            ->get();
+
         $maintenanceCount = Resource::where('status', 'maintenance')->count();
         $recentLogs = Log::with('user')->latest()->take(10)->get();
 
-        return view('admin.dashboard', compact('stats', 'resourcesByType', 'maintenanceCount', 'recentLogs'));
+        return view('admin.dashboard', compact('stats', 'resourcesByType', 'incidentsByStatus', 'maintenanceCount', 'recentLogs'));
+    }
+
+    public function apiStats()
+    {
+        $totalResources = Resource::count();
+        $occupiedResources = Reservation::whereIn('status', ['Approuvée', 'Active'])
+            ->distinct('resource_id')
+            ->count('resource_id');
+
+        $stats = [
+            'total_users' => User::count(),
+            'total_resources' => $totalResources,
+            'active_reservations' => $occupiedResources,
+            'pending_accounts' => User::where('role', 'guest')->where('is_active', false)->count(),
+            'occupancy_rate' => $totalResources > 0 ? round(($occupiedResources / $totalResources) * 100) : 0,
+            'maintenance_count' => Resource::where('status', 'maintenance')->count(),
+        ];
+
+        $incidentsByStatus = \App\Models\Incident::select('status', DB::raw('count(*) as total'))
+            ->groupBy('status')
+            ->get();
+
+        return response()->json([
+            'stats' => $stats,
+            'incidents' => $incidentsByStatus
+        ]);
+    }
+
+    /**
+     * Export des Utilisateurs (CSV)
+     */
+    public function exportUsers()
+    {
+        $fileName = 'users_' . date('Y-m-d_H-i') . '.csv';
+
+        return response()->streamDownload(function () {
+            $handle = fopen('php://output', 'w');
+            fputcsv($handle, ['ID', 'Nom', 'Email', 'Rôle', 'Actif', 'Inscrit le']);
+
+            foreach (User::cursor() as $user) {
+                fputcsv($handle, [
+                    $user->id,
+                    $user->name,
+                    $user->email,
+                    $user->role,
+                    $user->is_active ? 'Oui' : 'Non',
+                    $user->created_at->format('d/m/Y H:i')
+                ]);
+            }
+            fclose($handle);
+        }, $fileName);
     }
 
     /**

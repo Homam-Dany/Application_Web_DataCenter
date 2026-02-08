@@ -16,6 +16,7 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 Route::get('/catalogue', [ResourceController::class, 'index'])->name('resources.index');
+Route::get('/catalogue/{resource}', [ResourceController::class, 'show'])->name('resources.show');
 Route::get('/chatbot/menu', [App\Http\Controllers\ChatbotController::class, 'index'])->name('chatbot.menu');
 Route::post('/chatbot/ask', [App\Http\Controllers\ChatbotController::class, 'ask'])->name('chatbot.ask');
 
@@ -38,6 +39,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::middleware(['role:user'])->group(function () {
+        Route::get('/mes-reservations/calendrier', [ReservationController::class, 'calendar'])->name('reservations.calendar');
         Route::get('/mes-reservations', [ReservationController::class, 'index'])->name('reservations.index');
         Route::get('/reserver', [ReservationController::class, 'create'])->name('reservations.create');
         Route::post('/reserver', [ReservationController::class, 'store'])->name('reservations.store');
@@ -46,6 +48,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['role:admin,responsable'])->group(function () {
         Route::get('/gestion/ressources', [ResourceController::class, 'managerIndex'])->name('resources.manager');
+        Route::get('/gestion/ressources/export', [ResourceController::class, 'exportResources'])->name('resources.export');
         Route::get('/gestion/incidents', [IncidentController::class, 'index'])->name('incidents.manager');
         Route::patch('/incidents/{incident}/resolu', [IncidentController::class, 'resolve'])->name('incidents.resolve');
 
@@ -54,6 +57,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/gestion/ressources/{resource}/modifier', [ResourceController::class, 'edit'])->name('resources.edit');
         Route::patch('/gestion/ressources/{resource}', [ResourceController::class, 'update'])->name('resources.update');
         Route::patch('/resources/{resource}/toggle-maintenance', [ResourceController::class, 'toggleMaintenance'])->name('resources.toggleMaintenance');
+        Route::get('/resources/{resource}/print-qr', [ResourceController::class, 'printQr'])->name('resources.print_qr');
         Route::post('/reservations/decide/{id}/{action}', [ReservationController::class, 'decide'])->name('reservations.decide');
     });
 
@@ -65,7 +69,11 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['role:admin'])->group(function () {
         Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
         Route::get('/admin/utilisateurs', [AdminController::class, 'users'])->name('admin.users');
+        Route::get('/admin/export/users', [AdminController::class, 'exportUsers'])->name('admin.export.users');
+        Route::get('/admin/rack-map', [AdminController::class, 'rackMap'])->name('admin.rack_map');
+        Route::get('/admin/api/stats', [AdminController::class, 'apiStats'])->name('admin.api.stats');
         Route::get('/admin/logs', [AdminController::class, 'logs'])->name('admin.logs');
+        Route::get('/admin/rapports/mensuel', [App\Http\Controllers\ReportController::class, 'downloadMonthlyReport'])->name('reports.monthly');
         Route::patch('/admin/utilisateurs/{user}', [AdminController::class, 'updateUser'])->name('admin.users.update');
         Route::delete('/admin/utilisateurs/{user}', [AdminController::class, 'destroyUser'])->name('admin.users.destroy');
     });

@@ -5,7 +5,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleBtn = document.getElementById('theme-toggle');
     if (!toggleBtn) return;
 
-    const html = document.documentElement;
+
+
+    // Initialize Theme
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        html.setAttribute('data-theme', 'dark');
+    } else {
+        html.setAttribute('data-theme', 'light');
+    }
 
     // Sync icon on load
     const updateIcon = () => {

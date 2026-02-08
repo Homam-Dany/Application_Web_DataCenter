@@ -25,6 +25,7 @@ export default defineConfig({
                 'resources/css/reservations/create.css',
                 'resources/css/admin/logs.css',
                 'resources/css/admin/users.css',
+                'resources/css/admin/rack_map.css',
                 'resources/js/app.js',
                 'resources/js/theme-init.js',
                 'resources/js/layouts/app.js',

@@ -8,11 +8,7 @@
     <div class="container res-manager-container">
         <h1 class="res-manager-title">Gestion des <span>Demandes</span></h1>
 
-        @if(session('success'))
-            <div class="res-manager-alert">
-                {{ session('success') }}
-            </div>
-        @endif
+
 
         <div class="res-manager-list">
             @forelse($pendingReservations as $res)

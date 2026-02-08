@@ -44,6 +44,12 @@
                         </select>
                     </div>
 
+                    <div class="form-group form-group-custom">
+                        <label class="form-label-custom">Position dans la Baie (Optionnel)</label>
+                        <input type="text" name="rack_position" placeholder="ex: U10, U42" class="form-input-custom"
+                            style="border-left: 4px solid var(--primary);">
+                    </div>
+
                     <div class="form-group form-group-last">
                         <label class="form-label-custom">Catégorie</label>
                         <input type="text" name="category" placeholder="ex: Calcul haute performance" required

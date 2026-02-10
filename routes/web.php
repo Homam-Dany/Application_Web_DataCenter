@@ -59,11 +59,15 @@ Route::middleware(['auth'])->group(function () {
         Route::patch('/resources/{resource}/toggle-maintenance', [ResourceController::class, 'toggleMaintenance'])->name('resources.toggleMaintenance');
         Route::get('/resources/{resource}/print-qr', [ResourceController::class, 'printQr'])->name('resources.print_qr');
         Route::post('/reservations/decide/{id}/{action}', [ReservationController::class, 'decide'])->name('reservations.decide');
+
+        // Shared Reservation Management
+        Route::get('/gestion/demandes', [ReservationController::class, 'managerIndex'])->name('reservations.manager');
+        Route::get('/gestion/historique', [ReservationController::class, 'history'])->name('reservations.history');
     });
 
     Route::middleware(['role:responsable'])->group(function () {
-        Route::get('/gestion/demandes', [ReservationController::class, 'managerIndex'])->name('reservations.manager');
-        Route::get('/gestion/historique', [ReservationController::class, 'history'])->name('reservations.history');
+        Route::get('/engineer/dashboard', [App\Http\Controllers\EngineerController::class, 'dashboard'])->name('engineer.dashboard');
+        Route::get('/engineer/rack-map', [App\Http\Controllers\EngineerController::class, 'rackMap'])->name('engineer.rack_map');
     });
 
     Route::middleware(['role:admin'])->group(function () {

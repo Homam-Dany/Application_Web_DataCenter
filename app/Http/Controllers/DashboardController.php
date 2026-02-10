@@ -21,6 +21,10 @@ class DashboardController extends Controller
             return redirect()->route('admin.dashboard');
         }
 
+        if ($user->role === 'responsable') {
+            return redirect()->route('engineer.dashboard');
+        }
+
         // 1. CALCUL DU TAUX D'OCCUPATION RÉEL
         $totalResources = Resource::where('status', '!=', 'désactivée')->count();
 

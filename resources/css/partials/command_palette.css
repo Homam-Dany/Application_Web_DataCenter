@@ -1,0 +1,215 @@
+/* SOLID & CLEAN STYLE */
+.cmd-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.75);
+    /* Darker backdrop for focus */
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 100px;
+    opacity: 0;
+    animation: fadeIn 0.15s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+.cmd-modal {
+    width: 100%;
+    max-width: 650px;
+    background: #ffffff;
+    /* Solid White */
+    border-radius: 8px;
+    /* Sharper corners */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    /* Strong shadow */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+[data-theme="dark"] .cmd-modal {
+    background: #1e293b;
+    /* Solid Dark Blue-Grey */
+    border: 1px solid #334155;
+}
+
+/* HEADER */
+.cmd-header {
+    padding: 20px;
+    border-bottom: 2px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: #f9fafb;
+}
+
+[data-theme="dark"] .cmd-header {
+    background: #0f172a;
+    border-bottom-color: #334155;
+}
+
+.cmd-icon {
+    color: #6b7280;
+    font-size: 1.4rem;
+}
+
+#cmd-input {
+    flex: 1;
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: #111827;
+    /* Near Black */
+    outline: none;
+    font-weight: 500;
+}
+
+[data-theme="dark"] #cmd-input {
+    color: #f8fafc;
+}
+
+#cmd-input::placeholder {
+    color: #9ca3af;
+}
+
+.cmd-badges {
+    display: flex;
+    gap: 8px;
+}
+
+.cmd-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: #e5e7eb;
+    color: #4b5563;
+    letter-spacing: 0.5px;
+}
+
+[data-theme="dark"] .cmd-badge {
+    background: #334155;
+    color: #94a3b8;
+}
+
+/* CONTENT */
+.cmd-content {
+    max-height: 450px;
+    overflow-y: auto;
+    padding: 10px 0;
+}
+
+.cmd-group-title {
+    padding: 10px 20px 5px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #6b7280;
+    /* Neutral grey */
+    text-transform: uppercase;
+}
+
+[data-theme="dark"] .cmd-group-title {
+    color: #94a3b8;
+}
+
+.cmd-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 14px 20px;
+    text-decoration: none;
+    color: #374151;
+    /* Dark grey text */
+    border-left: 4px solid transparent;
+    transition: background 0.1s;
+}
+
+[data-theme="dark"] .cmd-item {
+    color: #cbd5e1;
+}
+
+/* HOVER / SELECTED STATE - High Contrast */
+.cmd-item.selected,
+.cmd-item:hover {
+    background: #f3f4f6;
+    border-left-color: #3b82f6;
+    /* Blue marker */
+}
+
+[data-theme="dark"] .cmd-item.selected,
+[data-theme="dark"] .cmd-item:hover {
+    background: #334155;
+    border-left-color: #60a5fa;
+}
+
+.cmd-item-icon {
+    width: 24px;
+    text-align: center;
+    font-size: 1.1rem;
+    color: #9ca3af;
+}
+
+.cmd-item.selected .cmd-item-icon {
+    color: #3b82f6;
+}
+
+/* Blue icon on select */
+[data-theme="dark"] .cmd-item.selected .cmd-item-icon {
+    color: #60a5fa;
+}
+
+.cmd-item-text {
+    flex: 1;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.cmd-item-meta {
+    font-size: 0.85rem;
+    color: #9ca3af;
+    background: none;
+    /* Reset if needed */
+}
+
+/* FOOTER */
+.cmd-footer {
+    padding: 12px 20px;
+    background: #f9fafb;
+    border-top: 1px solid #e5e7eb;
+    font-size: 0.8rem;
+    color: #6b7280;
+    text-align: right;
+}
+
+[data-theme="dark"] .cmd-footer {
+    background: #0f172a;
+    border-top-color: #334155;
+    color: #64748b;
+}
+
+.cmd-key {
+    display: inline-block;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    padding: 0 5px;
+    background: white;
+    font-family: inherit;
+    font-size: 0.85em;
+    margin: 0 2px;
+    color: #374151;
+}
+
+[data-theme="dark"] .cmd-key {
+    background: #1e293b;
+    border-color: #475569;
+    color: #e2e8f0;
+}

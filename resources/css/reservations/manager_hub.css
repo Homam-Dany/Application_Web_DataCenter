@@ -1,0 +1,194 @@
+:root {
+    --glass-bg: rgba(255, 255, 255, 0.95);
+    --border-color: rgba(229, 231, 235, 1);
+}
+
+[data-theme="dark"] {
+    --glass-bg: rgba(30, 41, 59, 0.95);
+    --border-color: rgba(255, 255, 255, 0.1);
+}
+
+.hub-container {
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+/* TABS */
+.hub-tabs {
+    display: flex;
+    gap: 20px;
+    border-bottom: 2px solid var(--border-color);
+    margin-bottom: 30px;
+}
+
+.hub-tab-btn {
+    padding: 15px 20px;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    position: relative;
+    transition: color 0.3s;
+}
+
+.hub-tab-btn.active {
+    color: var(--primary);
+}
+
+.hub-tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--primary);
+}
+
+.hub-content {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.hub-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* CARD STYLES REUSED & ENHANCED */
+.req-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.req-info h3 {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.req-info p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.req-justification {
+    background: rgba(var(--bg-secondary-rgb), 0.5);
+    padding: 10px 15px;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary);
+    font-style: italic;
+    color: var(--text-primary);
+    margin-top: 10px;
+}
+
+.req-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 200px;
+}
+
+.btn-accept {
+    background: #10b981;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-refuse {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* CALENDAR CUSTOMIZATION */
+#calendar {
+    background: var(--glass-bg);
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+}
+
+.fc-toolbar-title {
+    font-size: 1.2rem !important;
+    font-weight: 700;
+}
+
+.fc-button-primary {
+    background-color: var(--primary) !important;
+    border-color: var(--primary) !important;
+}
+
+/* HISTORY TABLE */
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--glass-bg);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+.history-table th,
+.history-table td {
+    padding: 15px 20px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.history-table th {
+    background: rgba(var(--bg-secondary-rgb), 0.5);
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.status-pill {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.status-Approuvée {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+}
+
+.status-Refusée {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+}
+
+.status-Terminée {
+    background: rgba(107, 114, 128, 0.1);
+    color: #6b7280;
+}

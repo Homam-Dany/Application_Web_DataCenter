@@ -41,4 +41,9 @@ class Resource extends Model
     {
         return $this->hasMany(Reservation::class);
     }
+
+    public function incidents()
+    {
+        return $this->hasMany(Incident::class);
+    }
 }

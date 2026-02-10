@@ -3,11 +3,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Dark Mode Toggle Logic
     const toggleBtn = document.getElementById('theme-toggle');
-    if (!toggleBtn) return;
+    const html = document.documentElement;
 
-
-
-    // Initialize Theme
+    // Initialize Theme check (redundant but safe if theme-init didn't run or dynamic updates needed)
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         html.setAttribute('data-theme', 'dark');
     } else {
@@ -16,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Sync icon on load
     const updateIcon = () => {
+        if (!toggleBtn) return;
         const icon = toggleBtn.querySelector('i');
         if (!icon) return;
         if (html.getAttribute('data-theme') === 'dark') {
@@ -29,14 +28,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updateIcon();
 
-    toggleBtn.addEventListener('click', function () {
-        const currentTheme = html.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', function () {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
 
-        html.setAttribute('data-theme', newTheme);
-        localStorage.theme = newTheme;
-        updateIcon();
+            html.setAttribute('data-theme', newTheme);
+            localStorage.theme = newTheme;
+            updateIcon();
 
-        console.log('Theme changed to:', newTheme);
-    });
+            console.log('Theme changed to:', newTheme);
+        });
+    }
 });

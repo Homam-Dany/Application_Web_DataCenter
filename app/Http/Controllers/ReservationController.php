@@ -84,19 +84,58 @@ class ReservationController extends Controller
      */
     public function managerIndex()
     {
-        $resources = Resource::where('manager_id', Auth::id())->get();
+        $user = Auth::user();
 
-        $pendingReservations = Reservation::whereHas('resource', function ($query) {
-            // Un admin ou un responsable voit tout
-            if (!auth()->user()->isAdmin() && !auth()->user()->isResponsable()) {
-                $query->where('manager_id', Auth::id());
+        // 1. PENDING REQUESTS
+        $pendingReservations = Reservation::whereHas('resource', function ($query) use ($user) {
+            if (!$user->isAdmin() && !$user->isResponsable()) {
+                $query->where('manager_id', $user->id);
             }
         })
             ->where('status', 'en_attente')
             ->with(['resource', 'user'])
+            ->orderBy('created_at', 'asc')
             ->get();
 
-        return view('reservations.manager', compact('resources', 'pendingReservations'));
+        // 2. HISTORY
+        $historyReservations = Reservation::whereHas('resource', function ($query) use ($user) {
+            if (!$user->isAdmin() && !$user->isResponsable()) {
+                $query->where('manager_id', $user->id);
+            }
+        })
+            ->whereIn('status', ['Approuvée', 'Refusée', 'Terminée', 'Annulée'])
+            ->with(['resource', 'user'])
+            ->orderBy('updated_at', 'desc')
+            ->take(50) // Limit history for performance
+            ->get();
+
+        // 3. CALENDAR EVENTS
+        $calendarReservations = Reservation::whereHas('resource', function ($query) use ($user) {
+            if (!$user->isAdmin() && !$user->isResponsable()) {
+                $query->where('manager_id', $user->id);
+            }
+        })
+            ->whereIn('status', ['Approuvée', 'Active'])
+            ->with(['resource', 'user'])
+            ->get();
+
+        $events = [];
+        foreach ($calendarReservations as $res) {
+            $events[] = [
+                'title' => $res->resource->name . ' (' . $res->user->name . ')',
+                'start' => $res->start_date->format('Y-m-d'),
+                'end' => $res->end_date->addDay()->format('Y-m-d'),
+                'backgroundColor' => '#10b981',
+                'borderColor' => '#10b981',
+                'url' => route('resources.show', $res->resource_id), // Optional click action
+                'extendedProps' => [
+                    'user' => $res->user->name,
+                    'status' => $res->status
+                ]
+            ];
+        }
+
+        return view('reservations.manager', compact('pendingReservations', 'historyReservations', 'events'));
     }
 
     public function create()

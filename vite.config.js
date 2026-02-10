@@ -38,6 +38,18 @@ export default defineConfig({
                 'resources/js/notifications/index.js',
                 'resources/js/incidents/manager.js',
                 'resources/js/about.js',
+                // Refactored Assets
+                'resources/css/engineer/dashboard.css',
+                'resources/css/admin/dashboard.css', // [NEW] Admin Dashboard CSS
+                'resources/css/reservations/manager_hub.css',
+                'resources/js/reservations/manager_hub.js',
+                'resources/css/partials/command_palette.css',
+                'resources/js/partials/command_palette.js',
+                'resources/css/reservations/calendar.css',
+                'resources/js/reservations/calendar.js',
+                'resources/css/resources/print.css',
+                'resources/js/resources/print.js',
+                'resources/js/partials/flash.js',
             ],
             refresh: true,
         }),

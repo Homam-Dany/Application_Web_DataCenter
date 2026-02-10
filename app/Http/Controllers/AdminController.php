@@ -41,6 +41,7 @@ class AdminController extends Controller
             'total_resources' => $totalResources,
             'active_reservations' => $occupiedResources,
             'pending_accounts' => User::where('role', 'guest')->where('is_active', false)->count(),
+            'pending_requests' => Reservation::where('status', 'en_attente')->count(),
             'total_logs' => Log::count(),
         ];
 

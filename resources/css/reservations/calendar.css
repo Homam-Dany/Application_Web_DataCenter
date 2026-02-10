@@ -1,0 +1,20 @@
+.calendar-container {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    min-height: 600px;
+}
+
+.fc-event {
+    cursor: pointer;
+    border: none;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}

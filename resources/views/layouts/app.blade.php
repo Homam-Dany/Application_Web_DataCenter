@@ -9,6 +9,7 @@
 
     <!-- CSS -->
     @vite(['resources/css/layouts/app.css'])
+    @vite(['resources/css/partials/command_palette.css'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -53,15 +54,28 @@
                     <!-- GESTION (RESPONSABLE/ADMIN) -->
                     @if(auth()->user()->role === 'responsable' || auth()->user()->role === 'admin')
                         <li>
+                            <a href="{{ route('reservations.manager') }}"
+                                class="{{ request()->routeIs('reservations.manager') ? 'active' : '' }}">
+                                <i class="fas fa-inbox"></i> Demandes
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{ route('resources.manager') }}"
                                 class="{{ request()->routeIs('resources.manager') ? 'active' : '' }}">
                                 <i class="fas fa-tasks"></i> Ma Gestion
                             </a>
                         </li>
+                        @php
+                            $incidentCount = \App\Models\Incident::where('status', 'ouvert')->count();
+                        @endphp
                         <li>
                             <a href="{{ route('incidents.manager') }}"
-                                class="{{ request()->routeIs('incidents.manager') ? 'active' : '' }}">
+                                class="{{ request()->routeIs('incidents.manager') ? 'active' : '' }}"
+                                style="position: relative;">
                                 <i class="fas fa-exclamation-triangle"></i> Incidents
+                                @if($incidentCount > 0)
+                                    <span class="notification-badge">{{ $incidentCount }}</span>
+                                @endif
                             </a>
                         </li>
                     @endif
@@ -75,11 +89,20 @@
                         </li>
                     @endif
 
-                    @if(auth()->user()->role === 'admin')
+                    @if(auth()->user()->isAdmin())
+                        @php
+                            $pendingUserCount = \App\Models\User::where('role', 'guest')
+                                ->where('is_active', false)
+                                ->whereNull('rejection_reason')
+                                ->count();
+                        @endphp
                         <li>
-                            <a href="{{ route('admin.users') }}"
-                                class="{{ request()->routeIs('admin.users') ? 'active' : '' }}">
+                            <a href="{{ route('admin.users') }}" class="{{ request()->routeIs('admin.users') ? 'active' : '' }}"
+                                style="position: relative;">
                                 <i class="fas fa-users"></i> Utilisateurs
+                                @if($pendingUserCount > 0)
+                                    <span class="notification-badge">{{ $pendingUserCount }}</span>
+                                @endif
                             </a>
                         </li>
                         <li>
@@ -193,52 +216,17 @@
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const toggleBtn = document.getElementById('theme-toggle');
-            const html = document.documentElement;
-
-            // Initialize
-            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                html.setAttribute('data-theme', 'dark');
-            } else {
-                html.setAttribute('data-theme', 'light');
-            }
-
-            const updateIcon = () => {
-                if (!toggleBtn) return;
-                const icon = toggleBtn.querySelector('i');
-                if (!icon) return;
-                if (html.getAttribute('data-theme') === 'dark') {
-                    icon.classList.remove('fa-moon');
-                    icon.classList.add('fa-sun');
-                } else {
-                    icon.classList.remove('fa-sun');
-                    icon.classList.add('fa-moon');
-                }
-            };
-
-            updateIcon();
-
-            if (toggleBtn) {
-                toggleBtn.addEventListener('click', () => {
-                    const currentTheme = html.getAttribute('data-theme');
-                    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-                    html.setAttribute('data-theme', newTheme);
-                    localStorage.theme = newTheme;
-                    updateIcon();
-                    console.log('Theme toggled to:', newTheme);
-                });
-            }
-        });
-    </script>
-    @vite(['resources/js/app.js', 'resources/js/layouts/app.js'])
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {{-- Theme toggle logic moved to resources/js/layouts/app.js --}}
+    @vite(['resources/js/app.js', 'resources/js/layouts/app.js', 'resources/js/partials/command_palette.js', 'resources/js/partials/flash.js'])
 
     @stack('scripts')
 
     <!-- AI Chatbot Widget -->
     @include('partials.chatbot')
+
+    <!-- Global Command Palette -->
+    @include('partials.command_palette')
 </body>
 
 </html>

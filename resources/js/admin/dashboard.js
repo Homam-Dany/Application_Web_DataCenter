@@ -92,13 +92,22 @@ document.addEventListener('DOMContentLoaded', () => {
         const labels = JSON.parse(incidentsCanvas.dataset.labels);
         const data = JSON.parse(incidentsCanvas.dataset.values);
 
+        const statusColors = {
+            'resolu': '#f59e0b', // Orange (au lieu du vert)
+            'ouvert': '#ef4444'   // Rouge
+        };
+        const backgroundColors = labels.map(label => {
+            const cleanLabel = label.trim().toLowerCase();
+            return statusColors[cleanLabel] || '#6366f1';
+        });
+
         new Chart(incidentsCanvas, {
             type: 'doughnut',
             data: {
                 labels: labels,
                 datasets: [{
                     data: data,
-                    backgroundColor: ['#ef4444', '#f59e0b', '#10b981', '#6366f1'],
+                    backgroundColor: backgroundColors,
                     borderWidth: 0,
                     hoverOffset: 10
                 }]

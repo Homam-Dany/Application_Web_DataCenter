@@ -12,8 +12,8 @@
             <div>
                 <h1 class="dashboard-title">
                     <span
-                        style="background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Cockpit
-                        Ingénieur</span>
+                        style="background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Dashboard - Espace
+                        Responsable</span>
                 </h1>
                 <p class="dashboard-subtitle">Gestion temps réel de votre parc informatique.</p>
             </div>

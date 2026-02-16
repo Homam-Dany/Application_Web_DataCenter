@@ -20,9 +20,18 @@ class ReportController extends Controller
             'period' => $startDate->format('F Y'),
             'total_reservations' => Reservation::whereBetween('created_at', [$startDate, $endDate])->count(),
             'approved_reservations' => Reservation::where('status', 'Approuvée')->whereBetween('created_at', [$startDate, $endDate])->count(),
+            'reservations_by_status' => Reservation::whereBetween('created_at', [$startDate, $endDate])
+                ->select('status', \DB::raw('count(*) as count'))
+                ->groupBy('status')
+                ->get(),
             'total_incidents' => \App\Models\Incident::whereBetween('created_at', [$startDate, $endDate])->count(),
-            'resolved_incidents' => \App\Models\Incident::where('status', 'Résolu')->whereBetween('created_at', [$startDate, $endDate])->count(),
+            'resolved_incidents' => \App\Models\Incident::where('status', 'resolu')->whereBetween('created_at', [$startDate, $endDate])->count(),
+            'incidents_by_status' => \App\Models\Incident::whereBetween('created_at', [$startDate, $endDate])
+                ->select('status', \DB::raw('count(*) as count'))
+                ->groupBy('status')
+                ->get(),
             'new_users' => \App\Models\User::whereBetween('created_at', [$startDate, $endDate])->count(),
+            'pending_accounts' => \App\Models\User::where('role', 'guest')->where('is_active', false)->count(),
         ];
 
         // 1.1 Stats Inventaire
@@ -31,11 +40,27 @@ class ReportController extends Controller
             'active' => Resource::where('status', 'disponible')->count(),
             'maintenance' => Resource::where('status', 'maintenance')->count(),
             'racked' => Resource::whereNotNull('rack_position')->count(),
-            'occupancy_percentage' => round((Resource::whereNotNull('rack_position')->count() / 42) * 100, 1)
+            'occupancy_percentage' => round((Resource::whereNotNull('rack_position')->count() / 42) * 100, 1),
+            'by_type' => Resource::select('type', \DB::raw('count(*) as count'))
+                ->groupBy('type')
+                ->get()
         ];
 
-        // 1.2 Top Utilisateurs
-        $topUsers = \App\Models\User::withCount('reservations')
+        // 1.2 Top Utilisateurs & Top Ressources
+        $topUsers = \App\Models\User::withCount([
+            'reservations' => function ($q) use ($startDate, $endDate) {
+                $q->whereBetween('created_at', [$startDate, $endDate]);
+            }
+        ])
+            ->orderByDesc('reservations_count')
+            ->take(5)
+            ->get();
+
+        $topResources = Resource::withCount([
+            'reservations' => function ($q) use ($startDate, $endDate) {
+                $q->whereBetween('created_at', [$startDate, $endDate]);
+            }
+        ])
             ->orderByDesc('reservations_count')
             ->take(5)
             ->get();
@@ -47,7 +72,7 @@ class ReportController extends Controller
             ->get();
 
         // 2. Génération du PDF
-        $pdf = PDF::loadView('reports.monthly_pdf', compact('stats', 'logs', 'resourceStats', 'topUsers'));
+        $pdf = PDF::loadView('reports.monthly_pdf', compact('stats', 'logs', 'resourceStats', 'topUsers', 'topResources'));
 
         // 3. Téléchargement
         return $pdf->download('DataCenter_Rapport_' . now()->format('Y_m') . '.pdf');

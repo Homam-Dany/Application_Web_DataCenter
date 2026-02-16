@@ -179,15 +179,30 @@
         <div class="kpi-box">
             <span class="kpi-value">{{ $stats['total_reservations'] }}</span>
             <span class="kpi-label">Réservations</span>
+            <div style="font-size: 8px; color: #94a3b8; margin-top: 5px;">
+                @foreach($stats['reservations_by_status'] as $rs)
+                    {{ $rs->status }}: {{ $rs->count }}{{ !$loop->last ? ' | ' : '' }}
+                @endforeach
+            </div>
         </div>
         <div class="kpi-box">
             <span class="kpi-value">{{ $stats['total_incidents'] }}</span>
             <span class="kpi-label">Incidents Signalés</span>
+            <div style="font-size: 8px; color: #94a3b8; margin-top: 5px;">
+                @foreach($stats['incidents_by_status'] as $is)
+                    {{ $is->status }}: {{ $is->count }}{{ !$loop->last ? ' | ' : '' }}
+                @endforeach
+            </div>
         </div>
-        <div class="kpi-box">
+        <div class="kpi-box" style="width: 22%; margin-right: 1.5%;">
             <span class="kpi-value"
                 style="color: {{ $stats['new_users'] > 0 ? '#10b981' : '#64748b' }}">+{{ $stats['new_users'] }}</span>
             <span class="kpi-label">Nouveaux Comptes</span>
+        </div>
+        <div class="kpi-box" style="width: 22%;">
+            <span class="kpi-value"
+                style="color: {{ $stats['pending_accounts'] > 0 ? '#ef4444' : '#64748b' }}">{{ $stats['pending_accounts'] }}</span>
+            <span class="kpi-label">Comptes en Attente</span>
         </div>
     </div>
 
@@ -195,10 +210,10 @@
     <div class="section-title">État de l'Infrastructure</div>
     <table style="margin-bottom: 20px;">
         <tr>
-            <td width="50%" style="vertical-align: top; border: none; padding: 0;">
+            <td width="45%" style="vertical-align: top; border: none; padding: 0;">
                 <table style="border: 1px solid #e2e8f0; border-radius: 6px;">
                     <tr>
-                        <th colspan="2">Parc Informatique</th>
+                        <th colspan="2">Statut du Parc</th>
                     </tr>
                     <tr>
                         <td>Total Équipements</td>
@@ -212,32 +227,73 @@
                     <tr>
                         <td><span class="status-dot bg-orange"></span> En Maintenance</td>
                         <td style="font-weight: bold; text-align: right; color: #f59e0b;">
-                            {{ $resourceStats['maintenance'] }}</td>
+                            {{ $resourceStats['maintenance'] }}
+                        </td>
                     </tr>
                 </table>
             </td>
-            <td width="5%" style="border: none;"></td>
+            <td width="10%" style="border: none;"></td>
             <td width="45%" style="vertical-align: top; border: none; padding: 0;">
-                <div
-                    style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; text-align: center; border-radius: 6px;">
-                    <div style="font-size: 10px; color: #64748b; margin-bottom: 5px;">TAUX D'OCCUPATION BAIE (RACK)
-                    </div>
-                    <div style="font-size: 32px; font-weight: 800; color: #4f46e5;">
-                        {{ $resourceStats['occupancy_percentage'] }}%</div>
-                    <div style="font-size: 10px; color: #94a3b8;">{{ $resourceStats['racked'] }} / 42 UNITÉS</div>
-                </div>
+                <table style="border: 1px solid #e2e8f0; border-radius: 6px;">
+                    <tr>
+                        <th colspan="2">Répartition par Type</th>
+                    </tr>
+                    @foreach($resourceStats['by_type'] as $rt)
+                        <tr>
+                            <td>{{ $rt->type }}</td>
+                            <td style="font-weight: bold; text-align: right;">{{ $rt->count }}</td>
+                        </tr>
+                    @endforeach
+                </table>
             </td>
         </tr>
     </table>
 
-    <!-- TOP USERS -->
-    <div class="section-title">Top Contributeurs</div>
+    <div style="margin-bottom: 30px;">
+        <div
+            style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; text-align: center; border-radius: 6px;">
+            <div style="font-size: 10px; color: #64748b; margin-bottom: 5px;">TAUX D'OCCUPATION BAIE (RACK)</div>
+            <div style="font-size: 32px; font-weight: 800; color: #4f46e5;">
+                {{ $resourceStats['occupancy_percentage'] }}%</div>
+            <div style="font-size: 10px; color: #94a3b8;">{{ $resourceStats['racked'] }} / 42 UNITÉS</div>
+        </div>
+    </div>
+
+    <!-- TOP RESOURCES -->
+    <div class="section-title">Équipements les plus sollicités</div>
     <table>
         <thead>
             <tr>
-                <th>Utilisateur (Responsable)</th>
+                <th>Ressource</th>
+                <th>Type</th>
+                <th>Localisation</th>
+                <th style="text-align: right;">Total Réservations</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse($topResources as $res)
+                <tr>
+                    <td>{{ $res->name }}</td>
+                    <td>{{ $res->type }}</td>
+                    <td>{{ $res->location }}</td>
+                    <td style="text-align: right; font-weight: bold;">{{ $res->reservations_count }}</td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="4" style="text-align: center;">Aucune donnée.</td>
+                </tr>
+            @endforelse
+        </tbody>
+    </table>
+
+    <!-- TOP USERS -->
+    <div class="section-title">Top Contributeurs (Ce mois)</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Utilisateur</th>
                 <th>Rôle</th>
-                <th style="text-align: right;">Réservations Ce Mois</th>
+                <th style="text-align: right;">Réservations</th>
             </tr>
         </thead>
         <tbody>

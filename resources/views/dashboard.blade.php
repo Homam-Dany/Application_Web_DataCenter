@@ -11,7 +11,7 @@
         <div class="page-header dashboard-header">
             <div>
                 <h1 class="dashboard-title">
-                    Dashboard
+                    Dashboard - Espace Ingénieur
                 </h1>
                 <p class="dashboard-subtitle">Bienvenue sur votre interface de gestion
                     centralisée.</p>

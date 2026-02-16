@@ -1,100 +1,110 @@
-# <div align="center"><img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/server.svg" width="40" height="40" style="margin-right: 10px; vertical-align: middle;" /> DC-Manager : Next-Gen Infrastructure Orchestrator</div>
+# <div align="center"><img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/server.svg" width="45" height="45" style="margin-right: 15px; vertical-align: middle;" /> DC-Manager : Enterprise-Grade DCIM</div>
 
 <div align="center">
 
-![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
-![PHP](https://img.shields.io/badge/PHP-8.1%2B-777BB4?style=for-the-badge&logo=php&logoColor=white)
-![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite-Bundler-646CFF?style=for-the-badge&logo=vite&logoColor=white)
-![SweetAlert2](https://img.shields.io/badge/SweetAlert2-EF2D5E?style=for-the-badge&logo=sweetalert2&logoColor=white)
-![Chart.js](https://img.shields.io/badge/Chart.js-F5788D?style=for-the-badge&logo=chart.js&logoColor=white)
+[![Laravel](https://img.shields.io/badge/Laravel-10.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)](https://laravel.com)
+[![PHP](https://img.shields.io/badge/PHP-8.1%2B-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://php.net)
+[![Vite](https://img.shields.io/badge/Vite-Bundler-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://mysql.com)
 
-**La solution de gestion de Data Center ultime, propulsée par l'Intelligence Artificielle.**
-*Performance native. Architecture Événementielle. Sécurité de niveau entreprise.*
+**L'orchestrateur d'infrastructure nouvelle génération pour le Data Center FST Tanger.**
+*Performance native • Architecture Sécurisée • Expérience Utilisateur Intuitive*
 
-[🚀 Démo](#) • [📚 Documentation Technique](RAPPORT_TECHNIQUE.md) • [🐛 Signaler un bug](https://github.com/Homam-Dany/Application_Web_DataCenter/issues)
+[📚 Rapport Technique](RAPPORT_TECHNIQUE.md) • [🚀 Guide d'Installation](#-installation-rapide) • [✨ Fonctionnalités](#-caractéristiques-majeures)
 
 ---
 </div>
 
-## 🌟 Vision du Projet
+## 🌐 Présentation
 
-**DC-Manager** n'est pas qu'un simple outil de gestion ; c'est une refonte complète de l'expérience d'administration IT. Conçu pour le **Data Center FST Tanger**, il remplace les processus manuels et les interfaces datées par une plateforme fluide, réactive et intelligente.
+**DC-Manager** est une plateforme **DCIM** (Data Center Infrastructure Management) sophistiquée conçue pour centraliser et automatiser la gestion des ressources critiques. Développée pour répondre aux exigences de la **FST Tanger**, elle transforme la complexité technique en une interface fluide et performante.
 
-> **Notre philosophie :** "La complexité du backend doit être invisible derrière une élégance frontend absolue."
+> [!TIP]
+> **Pourquoi DC-Manager ?**
+> Contrairement aux feuilles de calcul traditionnelles, DC-Manager offre une traçabilité totale, une visualisation en temps réel et une intelligence embarquée pour anticiper les besoins d'infrastructure.
 
-## 🔥 Fonctionnalités "Flagship" (v2.0)
+---
 
-| Module | Description | Innovation |
+## ✨ Caractéristiques Majeures
+
+````carousel
+### 📊 Dashboard Intelligent
+Visualisez l'état de santé de votre parc en un clin d'œil. Graphiques dynamiques, KPIs en temps réel et alertes instantanées.
+<!-- slide -->
+### 🖥️ Rack Map Interactive
+Une représentation visuelle précise de votre baie 42U. Repérez instantanément les serveurs actifs, les unités libres et les besoins de maintenance.
+<!-- slide -->
+### 📅 Orchestration des Réservations
+Système de gestion des demandes avec flux d'approbation multiniveau. Prévention automatique des conflits et gestion des périodes.
+<!-- slide -->
+### 🤖 Assistant IA 24/7
+Un support interactif intégré pour guider les utilisateurs, résoudre les problèmes courants et faciliter l'accès à l'information.
+````
+
+---
+
+## 🛠 Stack Tecnologique
+
+| Couche | Technologie | Excellence Technique |
 | :--- | :--- | :--- |
-| **🖥️ Visual Rack Map** | **NOUVEAU !** Représentation visuelle interactive de la baie 42U. | Drag & Drop virtuel, statuts colorés (Vert/Orange) en temps réel. |
-| **⏱️ Live Dashboard** | **NOUVEAU !** Tableau de bord qui se met à jour sans rechargement (AJAX Polling). | Compteurs dynamiques, graphiques animés Chart.js. |
-| **🤖 Assistant IA** | Chatbot intégré nativement pour le support 24/7. | Détection de contexte, suggestions dynamiques. |
-| **📊 Reporting Pro** | Génération de rapports PDF mensuels haute-fidélité. | Mise en page CSS Print, KPI d'infrastructure détaillés. |
-| **🌙 Dark Mode** | Interface responsive avec mode sombre natif. | Persistance des préférences utilisateur (LocalStorage). |
-| **🔔 Smart Alerts** | Notifications "Toast" non-intrusives (SweetAlert2). | Feedback utilisateur immédiat et élégant. |
-| **📂 Data Export** | Export complet des données (Utilisateurs/Ressources) en CSV. | Traitement côté serveur pour les gros volumes de données. |
+| **Backend** | Laravel 10 (PHP 8.1+) | Architecture MVC, Eloquent ORM, Service Pattern. |
+| **Frontend** | Vanilla JS / Vite | Performance maximale, sans dépendances lourdes, compilation optimisée. |
+| **Design** | CSS3 Custom Properties | Design System "Aurora", animations 60 FPS, Dark Mode natif. |
+| **Storage** | MySQL 8.0 | Intégrité transactionnelle et performances relationnelles. |
+| **Reporting** | DOMPDF / Chart.js | Rapports PDF haute fidélité et data-visualisation interactive. |
 
-## 🛠 Architecture Technique
+---
 
-Ce projet démontre une maîtrise avancée de l'écosystème **Laravel Fullstack** :
-
-- **Backend :** Laravel 10 (MVC, Service Layer Pattern, Mailables, Notifications, Policies).
-- **Frontend :** Vanilla JS (ES6+) pour une légèreté maximale, CSS Custom (Variables, Grid/Flexbox).
-- **Build System :** Vite pour le HMR (Hot Module Replacement) et la compilation optimisée des assets.
-- **Base de Données :** MySQL avec schéma relationnel normalisé (3NF).
-
-## 🚀 Guide d'Installation Rapide
+## 🚀 Installation Rapide
 
 ### Prérequis
-- PHP 8.1 ou supérieur
-- Composer & NPM
-- Serveur de base de données (MySQL/MariaDB)
+- **PHP** >= 8.1
+- **Composer** & **NPM**
+- **MySQL** >= 8.0
 
-### Déploiement
+### Déploiement en 5 étapes
 
 ```bash
-# 1. Cloner le repository
-git clone https://github.com/Homam-Dany/Application_Web_DataCenter.git
-cd Application_Web_DataCenter
+# 1. Acquisition
+git clone https://github.com/Homam-Dany/Application_Web_DataCenter.git && cd Application_Web_DataCenter
 
-# 2. Installer les dépendances Backend & Frontend
-composer install
-npm install
+# 2. Dépendances
+composer install && npm install
 
-# 3. Configuration de l'environnement
+# 3. Environnement
 cp .env.example .env
 php artisan key:generate
 
-# 4. Configuration Base de données (dans .env)
-# DB_DATABASE=votre_db
-# DB_USERNAME=votre_user
-# DB_PASSWORD=votre_password
-
-# 5. Migration et Seed (Données de test)
+# 4. Persistence (Configurez .env avant)
 php artisan migrate --seed
 
-# 6. Compilation et Lancement
-npm run build
+# 5. Lancement
+npm run dev # ou npm run build pour la production
 php artisan serve
 ```
 
-## 👥 L'Équipe (La "Tech Team")
+---
 
-Projet réalisé dans le cadre de la **Licence en Ingénierie de Développement d'Applications Informatiques (IDAI)** à la **FST Tanger**.
+## 🏛️ Architecture & Conception
 
-<div align="center">
+Pour une analyse approfondie des choix techniques, de la modélisation de la base de données et des flux logiques, veuillez consulter le :
 
-| Membre | Rôle | Expertise Clé |
-| :--- | :--- | :--- |
-| **Homam Dany** | Lead Developer | Fullstack Architecture, AI Integration, Security |
+👉 **[RAPPORT_TECHNIQUE.md](file:///c:/xampp/htdocs/dashboard/Homam_Projet/RAPPORT_TECHNIQUE.md)**
 
-</div>
+---
+
+## 👥 L'Équipe
+
+Réalisé avec passion par l'équipe **IDAI - FST Tanger** :
+
+- **Homam Dany** - *Lead Architecture & Fullstack Development*
 
 ---
 
 <div align="center">
-    <i>"Code is poetry." - Une réalisation académique d'excellence.</i>
     <br>
-    © 2026 Université Abdelmalek Essaâdi
+    <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/graduation-cap.svg" width="20" height="20" style="vertical-align: middle;" /> 
+    <b>Licence IDAI • Faculté des Sciences et Techniques de Tanger</b>
+    <br>
+    <i>Université Abdelmalek Essaâdi • 2026</i>
 </div>

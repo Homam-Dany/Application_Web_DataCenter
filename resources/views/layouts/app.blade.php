@@ -55,8 +55,21 @@
                     @if(auth()->user()->role === 'responsable' || auth()->user()->role === 'admin')
                         <li>
                             <a href="{{ route('reservations.manager') }}"
-                                class="{{ request()->routeIs('reservations.manager') ? 'active' : '' }}">
+                                class="{{ request()->routeIs('reservations.manager') ? 'active' : '' }}"
+                                style="position: relative;">
                                 <i class="fas fa-inbox"></i> Demandes
+                                @php
+                                    $pendingCount = \App\Models\Reservation::where('status', 'en_attente')
+                                        ->whereHas('resource', function ($q) {
+                                            if (auth()->user()->role !== 'admin') {
+                                                $q->where('manager_id', auth()->id());
+                                            }
+                                        })
+                                        ->count();
+                                @endphp
+                                @if($pendingCount > 0)
+                                    <span class="notification-badge">{{ $pendingCount }}</span>
+                                @endif
                             </a>
                         </li>
                         <li>

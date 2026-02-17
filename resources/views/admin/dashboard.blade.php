@@ -19,9 +19,6 @@
                 <a href="{{ route('reservations.manager') }}" class="btn btn-header-secondary">
                     <i class="fas fa-inbox"></i>
                     Demandes
-                    @if($stats['pending_requests'] > 0)
-                        <span class="notification-badge">{{ $stats['pending_requests'] }}</span>
-                    @endif
                 </a>
 
                 <a href="{{ route('reports.monthly') }}" class="btn btn-header-outline">

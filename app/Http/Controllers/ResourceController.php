@@ -143,10 +143,31 @@ class ResourceController extends Controller
             abort(403);
         }
 
-        $newStatus = ($resource->status === 'maintenance') ? 'disponible' : 'maintenance';
+        // Logic refined: if maintenance OR disabled -> back to disponible.
+        // If disponible -> go to maintenance.
+        if ($resource->status === 'maintenance' || $resource->status === 'désactivée') {
+            $newStatus = 'disponible';
+        } else {
+            $newStatus = 'maintenance';
+        }
+
         $resource->update(['status' => $newStatus]);
 
-        return redirect()->back()->with('success', "État de la ressource changé en {$newStatus}.");
+        $statusLabel = $newStatus === 'disponible' ? 'activée' : 'mise en maintenance';
+        return redirect()->back()->with('success', "La ressource a été {$statusLabel} avec succès.");
+    }
+
+    public function toggleDeactivate(Resource $resource)
+    {
+        if ($resource->manager_id !== Auth::id() && Auth::user()->role !== 'admin') {
+            abort(403);
+        }
+
+        $newStatus = ($resource->status === 'désactivée') ? 'disponible' : 'désactivée';
+        $resource->update(['status' => $newStatus]);
+
+        $action = $newStatus === 'désactivée' ? 'bloquée' : 'activée';
+        return redirect()->back()->with('success', "La ressource a été {$action} avec succès.");
     }
 
     public function printQr(Resource $resource)

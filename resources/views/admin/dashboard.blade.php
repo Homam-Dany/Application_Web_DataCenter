@@ -40,69 +40,65 @@
         <div class="dashboard-stats-grid">
             {{-- 1. Occupation --}}
             <div class="stat-card-custom">
-                <p class="stat-card-label">Taux d'Occupation</p>
+                <p class="stat-card-label">Occupation</p>
                 <div class="stat-card-body">
-                    <h2 class="stat-card-value" id="stat-occupancy">{{ $stats['occupancy_rate'] }}%</h2>
-                    <div class="stat-card-icon-wrapper" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">
+                    <h2 class="stat-card-value">{{ $stats['occupancy_rate'] }}%</h2>
+                    <div class="stat-card-icon-wrapper" style="background: rgba(99, 102, 241, 0.1); color: #6366f1;">
                         <i class="fas fa-chart-pie"></i>
                     </div>
                 </div>
-                <div class="stat-progress-container"
-                    style="margin-top: 15px; background: rgba(0,0,0,0.05); height: 6px; border-radius: 3px; overflow: hidden;">
-                    <div class="stat-progress-fill"
-                        style="width: {{ $stats['occupancy_rate'] }}%; background: #3b82f6; height: 100%;"></div>
+                <div class="stat-progress-container" style="margin-top: 15px; height: 6px;">
+                    <div class="stat-progress-fill" style="width: {{ $stats['occupancy_rate'] }}%; background: #6366f1;">
+                    </div>
                 </div>
             </div>
 
-            {{-- 2. Total Unités --}}
+            {{-- 2. Total --}}
             <div class="stat-card-custom">
                 <p class="stat-card-label">Ressources Total</p>
                 <div class="stat-card-body">
-                    <h2 class="stat-card-value" id="stat-total">{{ $stats['total_resources'] }}</h2>
-                    <div class="stat-card-icon-wrapper" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
-                        <i class="fas fa-server"></i>
+                    <h2 class="stat-card-value">{{ $stats['total_resources'] }}</h2>
+                    <div class="stat-card-icon-wrapper" style="background: rgba(100, 116, 139, 0.1); color: #64748b;">
+                        <i class="fas fa-layer-group"></i>
                     </div>
                 </div>
-                <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: auto; padding-top: 10px;">
-                    Matériel physique et virtuel
-                </p>
+                <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: auto;">Inventaire Complet</p>
             </div>
 
-            {{-- 3. Maintenance --}}
+            {{-- 3. Disponible --}}
+            <div class="stat-card-custom">
+                <p class="stat-card-label">Disponible</p>
+                <div class="stat-card-body">
+                    <h2 class="stat-card-value" style="color: #10b981;">{{ $availableCount }}</h2>
+                    <div class="stat-card-icon-wrapper" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                </div>
+                <p style="font-size: 0.8rem; color: #10b981; font-weight: 600; margin-top: auto;">Opérationnel</p>
+            </div>
+
+            {{-- 4. Maintenance --}}
             <div class="stat-card-custom">
                 <p class="stat-card-label">Maintenance</p>
                 <div class="stat-card-body">
-                    <h2 class="stat-card-value" id="stat-maintenance">{{ $maintenanceCount }}</h2>
+                    <h2 class="stat-card-value" style="color: #f59e0b;">{{ $maintenanceCount }}</h2>
                     <div class="stat-card-icon-wrapper" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">
                         <i class="fas fa-tools"></i>
                     </div>
                 </div>
-                <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: auto; padding-top: 10px;">
-                    Interventions en cours
-                </p>
+                <p style="font-size: 0.8rem; color: #f59e0b; font-weight: 600; margin-top: auto;">En réparation</p>
             </div>
 
-            {{-- 4. Comptes en Attente --}}
+            {{-- 5. Bloqué --}}
             <div class="stat-card-custom">
-                <p class="stat-card-label">Utilisateurs</p>
+                <p class="stat-card-label">Bloqué</p>
                 <div class="stat-card-body">
-                    <h2 class="stat-card-value">{{ $stats['total_users'] }}</h2>
-                    <div class="stat-card-icon-wrapper" style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6;">
-                        <i class="fas fa-users"></i>
+                    <h2 class="stat-card-value" style="color: #ef4444;">{{ $blockedCount }}</h2>
+                    <div class="stat-card-icon-wrapper" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">
+                        <i class="fas fa-ban"></i>
                     </div>
                 </div>
-                @if($stats['pending_accounts'] > 0)
-                    <p style="font-size: 0.8rem; color: #ef4444; margin-top: auto; padding-top: 10px; font-weight: 600;"
-                        id="stat-pending-wrapper">
-                        <i class="fas fa-exclamation-circle"></i> <span
-                            id="stat-pending">{{ $stats['pending_accounts'] }}</span> en attente validation
-                    </p>
-                @else
-                    <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: auto; padding-top: 10px;"
-                        id="stat-pending-wrapper">
-                        Tous les comptes sont à jour
-                    </p>
-                @endif
+                <p style="font-size: 0.8rem; color: #ef4444; font-weight: 600; margin-top: auto;">Hors service</p>
             </div>
         </div>
 

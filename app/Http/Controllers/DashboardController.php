@@ -41,8 +41,9 @@ class DashboardController extends Controller
         $data = [
             'occupancyRate' => $occupancyRate,
             'totalResources' => $totalResources,
-            // 'maintenanceCount' => Resource::where('status', 'maintenance')->count(), // Assuming 'maintenance' status exists or using boolean
-            'maintenanceCount' => Resource::where('en_maintenance', true)->orWhere('status', 'maintenance')->count(),
+            'availableCount' => Resource::where('status', 'disponible')->count(),
+            'maintenanceCount' => Resource::where('status', 'maintenance')->count(),
+            'blockedCount' => Resource::where('status', 'désactivée')->count(),
         ];
 
         // 3. STATISTIQUES SELON LE RÔLE

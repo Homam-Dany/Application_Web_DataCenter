@@ -39,6 +39,7 @@ class ReportController extends Controller
             'total' => Resource::count(),
             'active' => Resource::where('status', 'disponible')->count(),
             'maintenance' => Resource::where('status', 'maintenance')->count(),
+            'blocked' => Resource::where('status', 'désactivée')->count(),
             'racked' => Resource::whereNotNull('rack_position')->count(),
             'occupancy_percentage' => round((Resource::whereNotNull('rack_position')->count() / 42) * 100, 1),
             'by_type' => Resource::select('type', \DB::raw('count(*) as count'))

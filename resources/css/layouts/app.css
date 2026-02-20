@@ -242,7 +242,8 @@ body {
     z-index: 1000;
     box-shadow: var(--shadow-sm);
     width: 100%;
-    overflow: hidden;
+    /* overflow: hidden; */
+    /* Permet aux badges de dépasser légèrement si besoin */
     display: flex;
     align-items: center;
 }
@@ -272,7 +273,7 @@ body {
 }
 
 .navbar-logo-icon {
-    font-size: 1.4rem;
+    font-size: 1.8rem;
     color: var(--primary);
     display: flex;
     align-items: center;
@@ -280,15 +281,13 @@ body {
 }
 
 .navbar-title {
-    font-size: 1rem;
+    font-size: 1.3rem;
     font-weight: 800;
-    /* Bolder */
-    color: var(--text-primary);
-    letter-spacing: -0.5px;
+    color: #1e293b;
+    letter-spacing: -0.8px;
     white-space: nowrap;
     line-height: 1;
     display: block;
-    /* Ensure visible */
 }
 
 /* Only hide "Manager" on very small screens, keep "DC-" */
@@ -322,7 +321,8 @@ body {
     /* Allow growth/shrink */
     justify-content: center;
     /* Center the menu */
-    overflow: hidden;
+    /* overflow: hidden; */
+    /* Permet aux badges de dépasser du menu */
 }
 
 .navbar-nav a {
@@ -524,18 +524,16 @@ body {
 /* Update Notification Badge for relative positioning */
 .notification-badge {
     position: absolute;
-    top: 0px;
-    /* Lowered from negative values */
-    right: 0px;
+    top: 2px;
+    right: 2px;
     background: #ef4444;
     color: #ffffff;
     font-size: 0.55rem;
-    /* User liked this small size */
-    font-weight: 800;
-    min-width: 14px;
-    height: 14px;
+    font-weight: 900;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
-    border: 1.5px solid var(--bg-card);
+    border: 1px solid var(--bg-card);
     display: flex;
     align-items: center;
     justify-content: center;

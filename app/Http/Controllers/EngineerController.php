@@ -36,7 +36,9 @@ class EngineerController extends Controller
                 : Reservation::whereIn('resource_id', $managedResourceIds)
                     ->where('status', 'en_attente')
                     ->count(),
-            'maintenance_mode' => $managedResourcesQuery->where('status', 'maintenance')->count(),
+            'maintenance_mode' => $managedResourcesQuery->clone()->where('status', 'maintenance')->count(),
+            'blocked_count' => $managedResourcesQuery->clone()->where('status', 'désactivée')->count(),
+            'available_count' => $managedResourcesQuery->clone()->where('status', 'disponible')->count(),
         ];
 
         // 3. Mini-Graphique d'Occupation (Pour les ressources gérées uniquement)

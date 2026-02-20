@@ -176,8 +176,14 @@ class ReservationController extends Controller
         $hasConflict = Reservation::where('resource_id', $request->resource_id)
             ->where('status', 'Approuvée')
             ->where(function ($query) use ($request) {
-                $query->whereBetween('start_date', [$request->start_date, $request->end_date])
-                    ->orWhereBetween('end_date', [$request->start_date, $request->end_date]);
+                $query->where(function ($q) use ($request) {
+                    $q->whereBetween('start_date', [$request->start_date, $request->end_date])
+                        ->orWhereBetween('end_date', [$request->start_date, $request->end_date])
+                        ->orWhere(function ($inner) use ($request) {
+                            $inner->where('start_date', '<=', $request->start_date)
+                                ->where('end_date', '>=', $request->end_date);
+                        });
+                });
             })->exists();
 
         if ($hasConflict) {
@@ -278,5 +284,24 @@ class ReservationController extends Controller
             ->get();
 
         return view('reservations.history', compact('reservations'));
+    }
+
+    /**
+     * Fetch availability for a specific resource (AJAX)
+     */
+    public function availability(Resource $resource)
+    {
+        $reservations = Reservation::where('resource_id', $resource->id)
+            ->whereIn('status', ['Approuvée', 'Active'])
+            ->get();
+
+        $data = $reservations->map(function ($res) {
+            return [
+                'start_date' => $res->start_date->format('Y-m-d'),
+                'end_date' => $res->end_date->format('Y-m-d'),
+            ];
+        });
+
+        return response()->json($data);
     }
 }

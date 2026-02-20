@@ -4,9 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mot de passe oublié | DC-Manager</title>
+    <title>Mot de passe oublié | DataHub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     @vite(['resources/css/auth/forgot-password.css'])
+    <style>
+        body {
+            background: url("{{ asset('images/bgdc.png') }}") no-repeat center center fixed !important;
+            background-size: cover !important;
+        }
+    </style>
 </head>
 
 <body>

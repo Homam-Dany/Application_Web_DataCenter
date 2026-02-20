@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Rapport Mensuel - DC Manager</title>
+    <title>Rapport Mensuel - DataHub</title>
     <style>
         @page {
             margin: 0px;
@@ -163,7 +163,7 @@
     <div class="header-bg"></div>
 
     <div class="header">
-        <div class="logo">DC-Manager</div>
+        <div class="logo">DataHub</div>
         <div class="report-title">Rapport Mensuel d'Activité</div>
     </div>
 
@@ -230,6 +230,12 @@
                             {{ $resourceStats['maintenance'] }}
                         </td>
                     </tr>
+                    <tr>
+                        <td><span class="status-dot bg-red"></span> Bloqués</td>
+                        <td style="font-weight: bold; text-align: right; color: #ef4444;">
+                            {{ $resourceStats['blocked'] }}
+                        </td>
+                    </tr>
                 </table>
             </td>
             <td width="10%" style="border: none;"></td>
@@ -254,7 +260,8 @@
             style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; text-align: center; border-radius: 6px;">
             <div style="font-size: 10px; color: #64748b; margin-bottom: 5px;">TAUX D'OCCUPATION BAIE (RACK)</div>
             <div style="font-size: 32px; font-weight: 800; color: #4f46e5;">
-                {{ $resourceStats['occupancy_percentage'] }}%</div>
+                {{ $resourceStats['occupancy_percentage'] }}%
+            </div>
             <div style="font-size: 10px; color: #94a3b8;">{{ $resourceStats['racked'] }} / 42 UNITÉS</div>
         </div>
     </div>

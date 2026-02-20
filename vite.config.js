@@ -50,6 +50,8 @@ export default defineConfig({
                 'resources/css/resources/print.css',
                 'resources/js/resources/print.js',
                 'resources/js/partials/flash.js',
+                'resources/css/reservations/premium_reservation.css',
+                'resources/js/reservations/premium_calendar.js',
             ],
             refresh: true,
         }),

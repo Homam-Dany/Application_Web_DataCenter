@@ -42,6 +42,7 @@
 .dashboard-title span {
     background: var(--title-gradient) !important;
     -webkit-background-clip: text !important;
+    background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
     display: inline-block;
 }
@@ -75,25 +76,7 @@
     /* Ensure badge is relative to button */
 }
 
-/* Notification Badge Style */
-.notification-badge {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    background: #ef4444;
-    color: white;
-    font-size: 0.75rem;
-    font-weight: 700;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 4px rgba(239, 68, 68, 0.4);
-    border: 2px solid white;
-    /* separation from button */
-}
+/* Notification Badge Style handled by layouts/app.css */
 
 .btn-header-outline {
     background: transparent !important;

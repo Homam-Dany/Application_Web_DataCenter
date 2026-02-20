@@ -4,9 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Réinitialisation Mot de passe | DC-Manager</title>
+    <title>Réinitialisation Mot de passe | DataHub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     @vite(['resources/css/auth/reset-password.css'])
+    <style>
+        body {
+            background: url("{{ asset('images/bgdc.png') }}") no-repeat center center fixed !important;
+            background-size: cover !important;
+        }
+    </style>
 </head>
 
 <body>

@@ -57,6 +57,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/gestion/ressources/{resource}/modifier', [ResourceController::class, 'edit'])->name('resources.edit');
         Route::patch('/gestion/ressources/{resource}', [ResourceController::class, 'update'])->name('resources.update');
         Route::patch('/resources/{resource}/toggle-maintenance', [ResourceController::class, 'toggleMaintenance'])->name('resources.toggleMaintenance');
+        Route::patch('/resources/{resource}/toggle-deactivate', [ResourceController::class, 'toggleDeactivate'])->name('resources.toggleDeactivate');
         Route::get('/resources/{resource}/print-qr', [ResourceController::class, 'printQr'])->name('resources.print_qr');
         Route::post('/reservations/decide/{id}/{action}', [ReservationController::class, 'decide'])->name('reservations.decide');
 
@@ -64,6 +65,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/gestion/demandes', [ReservationController::class, 'managerIndex'])->name('reservations.manager');
         Route::get('/gestion/historique', [ReservationController::class, 'history'])->name('reservations.history');
     });
+
+    Route::get('/reservations/availability/{resource}', [ReservationController::class, 'availability'])->name('reservations.availability');
 
     Route::middleware(['role:responsable'])->group(function () {
         Route::get('/engineer/dashboard', [App\Http\Controllers\EngineerController::class, 'dashboard'])->name('engineer.dashboard');

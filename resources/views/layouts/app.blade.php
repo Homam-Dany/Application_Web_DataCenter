@@ -26,8 +26,13 @@
             <!-- Logo & Brand -->
             <a href="{{ auth()->check() && auth()->user()->role === 'admin' ? route('admin.dashboard') : route('dashboard') }}"
                 class="navbar-brand">
-                <span class="navbar-logo navbar-logo-icon"><i class="fas fa-server"></i></span>
-                <span class="navbar-title">DC-<span>Manager</span></span>
+                <span class="navbar-logo navbar-logo-icon">
+                    <i class="fas fa-cloud" style="position: relative;">
+                        <i class="fas fa-server"
+                            style="position: absolute; font-size: 0.5em; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white;"></i>
+                    </i>
+                </span>
+                <span class="navbar-title">Data<span>Hub</span></span>
             </a>
 
             <!-- Navigation Links -->
@@ -59,13 +64,7 @@
                                 style="position: relative;">
                                 <i class="fas fa-inbox"></i> Demandes
                                 @php
-                                    $pendingCount = \App\Models\Reservation::where('status', 'en_attente')
-                                        ->whereHas('resource', function ($q) {
-                                            if (auth()->user()->role !== 'admin') {
-                                                $q->where('manager_id', auth()->id());
-                                            }
-                                        })
-                                        ->count();
+                                    $pendingCount = \App\Models\Reservation::where('status', 'en_attente')->count();
                                 @endphp
                                 @if($pendingCount > 0)
                                     <span class="notification-badge">{{ $pendingCount }}</span>
@@ -224,7 +223,7 @@
 
     <!-- FOOTER -->
     <footer class="main-footer">
-        <p>&copy; {{ date('Y') }} - Gestion de Ressources Data Center IDAI</p>
+        <p>&copy; {{ date('Y') }} - DataHub | Gestion de Ressources Data Center</p>
     </footer>
 
     <!-- Scripts -->

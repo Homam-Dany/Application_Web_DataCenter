@@ -12,7 +12,8 @@
             <div>
                 <h1 class="dashboard-title">
                     <span
-                        style="background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Dashboard - Espace
+                        style="background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Dashboard
+                        - Espace
                         Responsable</span>
                 </h1>
                 <p class="dashboard-subtitle">Gestion temps réel de votre parc informatique.</p>
@@ -22,9 +23,6 @@
                     style="background: white; color: var(--text-primary); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); font-weight: 600; position: relative;">
                     <i class="fas fa-inbox" style="margin-right: 8px; color: var(--text-secondary);"></i>
                     Demandes
-                    @if($stats['pending_requests'] > 0)
-                        <span class="notification-badge">{{ $stats['pending_requests'] }}</span>
-                    @endif
                 </a>
                 <a href="{{ route('resources.create') }}" class="btn"
                     style="background: var(--primary-gradient); color: white; border: none; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);">
@@ -35,48 +33,67 @@
 
         {{-- METRICS ROW --}}
         <div class="dashboard-stats-grid">
-            {{-- 1. Total Managed --}}
+            {{-- 1. Occupation --}}
             <div class="card stat-card-custom">
-                <p class="stat-card-label">Serveurs Gérés</p>
+                <p class="stat-card-label">Occupation</p>
+                <div class="stat-card-body">
+                    <h2 class="stat-card-value">{{ $stats['occupancy_rate'] }}%</h2>
+                    <div class="stat-card-icon-wrapper" style="background: rgba(99, 102, 241, 0.1); color: #6366f1;">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                </div>
+                <div class="stat-progress-container" style="margin-top: 15px; height: 6px;">
+                    <div class="stat-progress-bar" style="width: {{ $stats['occupancy_rate'] }}%; background: #6366f1;">
+                    </div>
+                </div>
+            </div>
+
+            {{-- 2. Total Managed --}}
+            <div class="card stat-card-custom">
+                <p class="stat-card-label">Gérés</p>
                 <div class="stat-card-body">
                     <h2 class="stat-card-value">{{ $stats['total_managed'] }}</h2>
-                    <div class="stat-card-icon-wrapper" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">
+                    <div class="stat-card-icon-wrapper" style="background: rgba(100, 116, 139, 0.1); color: #64748b;">
                         <i class="fas fa-server"></i>
                     </div>
                 </div>
-                <div class="stat-progress-container">
-                    <div class="stat-progress-bar"
-                        style="width: {{ $stats['occupancy_rate'] }}%; background: var(--primary-gradient);"></div>
-                </div>
-                <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 8px; font-weight: 500;">
-                    <span style="color: #10b981;">{{ $stats['occupancy_rate'] }}%</span> Occupation
-                </p>
+                <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: auto;">Vos ressources</p>
             </div>
 
-            {{-- 2. Maintenance --}}
+            {{-- 3. Disponible --}}
             <div class="card stat-card-custom">
-                <p class="stat-card-label">En Maintenance</p>
+                <p class="stat-card-label">Disponible</p>
                 <div class="stat-card-body">
-                    <h2 class="stat-card-value">{{ $stats['maintenance_mode'] }}</h2>
+                    <h2 class="stat-card-value" style="color: #10b981;">{{ $stats['available_count'] }}</h2>
+                    <div class="stat-card-icon-wrapper" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                </div>
+                <p style="font-size: 0.8rem; color: #10b981; font-weight: 600; margin-top: auto;">Prêt</p>
+            </div>
+
+            {{-- 4. Maintenance --}}
+            <div class="card stat-card-custom">
+                <p class="stat-card-label">Maintenance</p>
+                <div class="stat-card-body">
+                    <h2 class="stat-card-value" style="color: #f59e0b;">{{ $stats['maintenance_mode'] }}</h2>
                     <div class="stat-card-icon-wrapper" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">
                         <i class="fas fa-tools"></i>
                     </div>
                 </div>
-                <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: auto; padding-top: 10px;">
-                    Interventions en cours</p>
+                <p style="font-size: 0.8rem; color: #f59e0b; font-weight: 600; margin-top: auto;">En cours</p>
             </div>
 
-            {{-- 3. Incidents --}}
+            {{-- 5. Bloqué --}}
             <div class="card stat-card-custom">
-                <p class="stat-card-label">Incidents Actifs</p>
+                <p class="stat-card-label">Bloqué</p>
                 <div class="stat-card-body">
-                    <h2 class="stat-card-value" style="color: #ef4444;">{{ $stats['active_incidents'] }}</h2>
+                    <h2 class="stat-card-value" style="color: #ef4444;">{{ $stats['blocked_count'] }}</h2>
                     <div class="stat-card-icon-wrapper" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">
-                        <i class="fas fa-exclamation-triangle"></i>
+                        <i class="fas fa-ban"></i>
                     </div>
                 </div>
-                <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: auto; padding-top: 10px;">Requiert
-                    attention immédiate</p>
+                <p style="font-size: 0.8rem; color: #ef4444; font-weight: 600; margin-top: auto;">À vérifier</p>
             </div>
         </div>
 
@@ -154,7 +171,8 @@
                                 <div style="flex: 1;">
                                     <div
                                         style="font-weight: 600; font-size: 0.9rem; color: var(--text-primary); margin-bottom: 2px;">
-                                        {{ $log->action }}</div>
+                                        {{ $log->action }}
+                                    </div>
                                     <div style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.4;">
                                         {{ Str::limit($log->description, 60) }}
                                     </div>

@@ -21,7 +21,7 @@
         <p style="font-size: 14px;">Scannez pour accéder à la fiche technique</p>
     </div>
 
-    <div class="footer">DC-Manager Asset Tracking</div>
+    <div class="footer">DataHub Asset Tracking</div>
 </body>
 
 </html>

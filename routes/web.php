@@ -92,5 +92,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::delete('/reservations/{reservation}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
 });
+Route::get('/logout', function () {
+    Auth::logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+    return redirect('/login');
+});
 
 require __DIR__ . '/auth.php';

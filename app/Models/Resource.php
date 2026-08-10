@@ -20,6 +20,7 @@ class Resource extends Model
         'bandwidth',
         'os',
         'location',
+        'image',
         'status', // disponible, maintenance, désactivée
         'manager_id',
         'maintenance_start', // NOUVEAU : Pour point 4.4

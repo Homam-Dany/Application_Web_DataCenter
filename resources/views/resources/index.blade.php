@@ -64,11 +64,17 @@
                 data-status="{{ strtolower($resource->status) }}">
                 <div class="premium-resource-card">
                     <!-- Card Top Area -->
-                    <div class="card-top">
-                        <div class="resource-icon-box">
-                            <i
-                                class="fas {{ $resource->type === 'Serveur' ? 'fa-server' : ($resource->type === 'Switch' ? 'fa-network-wired' : 'fa-microchip') }}"></i>
-                        </div>
+                    <div class="card-top" @if($resource->image) style="padding: 0; display: block;" @endif>
+                        @if($resource->image)
+                            <div style="width: 100%; height: 100%; overflow: hidden; position: relative;">
+                                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.4)); z-index: 1;"></div>
+                                <img src="{{ asset($resource->image) }}" alt="{{ $resource->name }}" style="width: 100%; height: 100%; object-fit: cover; position: relative; z-index: 0;">
+                            </div>
+                        @else
+                            <div class="resource-icon-box">
+                                <i class="fas {{ $resource->type === 'Serveur' ? 'fa-server' : ($resource->type === 'Switch' ? 'fa-network-wired' : 'fa-microchip') }}"></i>
+                            </div>
+                        @endif
                         @php
                             $statusLabel = match ($resource->status) {
                                 'disponible' => 'Disponible',
@@ -85,7 +91,7 @@
                                 default => 'state-danger'
                             };
                         @endphp
-                        <div class="status-floating-pill {{ $statusState }}">
+                        <div class="status-floating-pill {{ $statusState }}" style="z-index: 2;">
                             <span class="status-dot"></span> {{ $statusLabel }}
                         </div>
                     </div>

@@ -25,6 +25,7 @@ return new class extends Migration
     $table->string('bandwidth')->nullable();
     $table->string('os')->nullable();
     $table->string('location')->nullable();
+    $table->string('image')->nullable();
     $table->string('status')->default('disponible');
     $table->foreignId('manager_id')->constrained('users');
     $table->timestamps();

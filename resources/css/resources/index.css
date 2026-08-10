@@ -166,7 +166,7 @@
 
 /* TOP AREA */
 .card-top {
-    height: 120px;
+    height: 200px;
     background: linear-gradient(to bottom, rgba(99, 102, 241, 0.1), transparent);
     position: relative;
     display: flex;

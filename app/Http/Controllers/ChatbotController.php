@@ -85,30 +85,21 @@ Cliquez sur 'Mot de passe oublié ?' sur la page de connexion. Entrez votre emai
     /**
      * Traite la question (soit par ID de menu, soit par texte libre)
      */
-    public function ask(Request $request)
+    public function ask(Request $request, \App\Services\AiDatabaseChatbotService $aiService)
     {
         $request->validate([
             'message' => 'required|string|max:1000',
+            'image' => 'nullable|string', // Base64 image
         ]);
 
         $input = $request->input('message');
-        $response = "Désolé, je ne comprends pas votre demande. Essayez d'utiliser le menu ci-dessous.";
+        $imageBase64 = $request->input('image');
 
-        // 1. Recherche exacte (si l'utilisateur clique sur le menu)
-        foreach ($this->knowledgeBase as $item) {
-            if ($item['question'] === $input) {
-                return response()->json([
-                    'success' => true,
-                    'message' => $item['answer']
-                ]);
-            }
-        }
-
-        // 2. Recherche par mots-clés (si l'utilisateur tape du texte)
-        $inputLower = strtolower($input);
-        foreach ($this->knowledgeBase as $item) {
-            foreach ($item['keywords'] as $keyword) {
-                if (stripos($inputLower, $keyword) !== false) {
+        // 1. Recherche exacte (si l'utilisateur clique sur un bouton du menu)
+        // Ignoré si on a une image jointe
+        if (!$imageBase64) {
+            foreach ($this->knowledgeBase as $item) {
+                if ($item['question'] === $input) {
                     return response()->json([
                         'success' => true,
                         'message' => $item['answer']
@@ -117,9 +108,12 @@ Cliquez sur 'Mot de passe oublié ?' sur la page de connexion. Entrez votre emai
             }
         }
 
+        // 2. Si ce n'est pas une question exacte du menu, on interroge l'IA avec le contexte DB (et potentiellement l'image)
+        $aiResponse = $aiService->ask($input, $imageBase64);
+
         return response()->json([
             'success' => true,
-            'message' => $response
+            'message' => $aiResponse
         ]);
     }
 }

@@ -7,131 +7,151 @@
 @endpush
 
 @section('content')
-    <div class="dashboard-wrapper">
-        <div class="page-header dashboard-header">
+<!-- Animated Cyber Background -->
+<div class="cyber-background"></div>
+
+<div class="pd-container" style="position: relative; z-index: 10;">
+    {{-- HEADER --}}
+    <div class="pd-header" style="border-bottom: 2px solid var(--cyber-panel-border); padding-bottom: 1rem;">
+        <div>
+            <h1 class="pd-title">USER.TERMINAL</h1>
+            <p class="pd-subtitle">>> Welcome to the Global Data Grid.</p>
+        </div>
+        <div>
+            <a href="{{ route('resources.index') }}" class="cyber-btn" style="box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);">
+                <i class="fas fa-search" style="margin-right: 8px;"></i> [BROWSE CATALOG]
+            </a>
+        </div>
+    </div>
+
+    {{-- METRICS ROW --}}
+    <div class="pd-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom: 2rem;">
+        {{-- 1. Occupation --}}
+        <div class="pd-card" style="display: flex; align-items: center; justify-content: space-between;">
             <div>
-                <h1 class="dashboard-title">
-                    Dashboard - Espace Ingénieur
-                </h1>
-                <p class="dashboard-subtitle">Bienvenue sur votre interface de gestion
-                    centralisée.</p>
+                <h4 style="font-family: monospace; color: var(--cyber-primary); margin: 0 0 10px 0; font-size: 1rem;">GRID.LOAD</h4>
+                <div style="font-size: 2rem; font-weight: 900; text-shadow: var(--cyber-glow-primary);">{{ $occupancyRate }}%</div>
+            </div>
+            <div class="cyber-radial" style="--val: {{ $occupancyRate }};">
+                <i class="fas fa-chart-pie" style="color: var(--cyber-primary); font-size: 1.5rem; position: relative; z-index: 10;"></i>
             </div>
         </div>
 
-        {{-- Ligne des statistiques --}}
-        <div class="dashboard-stats-grid">
+        {{-- 2. Total --}}
+        @php
+            $resTitle = isset($myResourcesCount) ? 'NODES.OWNED' : 'NODES.TOTAL';
+            $resValue = $myResourcesCount ?? $totalResources;
+        @endphp
+        <div class="pd-card" style="display: flex; align-items: center; justify-content: space-between;">
+            <div>
+                <h4 style="font-family: monospace; color: var(--cyber-text); margin: 0 0 10px 0; font-size: 1rem;">{{ $resTitle }}</h4>
+                <div style="font-size: 2rem; font-weight: 900;">{{ $resValue }}</div>
+            </div>
+            <div class="cyber-radial" style="--val: 100; background: conic-gradient(rgba(255,255,255,0.2) 100%, transparent 0);">
+                <i class="fas fa-server" style="color: var(--cyber-text); font-size: 1.5rem; position: relative; z-index: 10;"></i>
+            </div>
+        </div>
 
-            {{-- 1. Taux d'Occupation --}}
-            <div class="card stat-card-custom">
-                <p class="stat-card-label">Occupation</p>
-                <div class="stat-card-body">
-                    <h2 class="stat-card-value">{{ $occupancyRate }}%</h2>
-                    <div class="stat-card-icon-wrapper stat-card-icon-primary">
-                        <i class="fas fa-chart-pie"></i>
-                    </div>
-                </div>
-                <div class="stat-progress-container">
-                    <div class="stat-progress-bar" style="width: {{ $occupancyRate }}%;"></div>
+        {{-- 3. Disponible --}}
+        <div class="pd-card" style="display: flex; align-items: center; justify-content: space-between;">
+            <div>
+                <h4 style="font-family: monospace; color: var(--cyber-success); margin: 0 0 10px 0; font-size: 1rem;">NODES.READY</h4>
+                <div style="font-size: 2rem; font-weight: 900; color: var(--cyber-success); text-shadow: var(--cyber-glow-success);">{{ $availableCount }}</div>
+            </div>
+            <div class="cyber-radial success" style="--val: 100;">
+                <i class="fas fa-check-circle" style="color: var(--cyber-success); font-size: 1.5rem; position: relative; z-index: 10;"></i>
+            </div>
+        </div>
+
+        {{-- 4. Maintenance / Bloqué --}}
+        <div class="pd-card" style="display: flex; align-items: center; justify-content: space-between; border-color: rgba(255,184,0,0.5);">
+            <div>
+                <h4 style="font-family: monospace; color: var(--cyber-warning); margin: 0 0 10px 0; font-size: 1rem;">NODES.LOCKED</h4>
+                <div style="font-size: 2rem; font-weight: 900; color: var(--cyber-warning);">{{ $maintenanceCount + $blockedCount }}</div>
+            </div>
+            <div class="cyber-radial warning" style="--val: 100;">
+                <i class="fas fa-lock" style="color: var(--cyber-warning); font-size: 1.5rem; position: relative; z-index: 10;"></i>
+            </div>
+        </div>
+    </div>
+
+    {{-- MAIN GRID --}}
+    <div class="pd-grid pd-grid-main">
+        
+        {{-- LEFT COLUMN: Charts & Info --}}
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            {{-- Welcome Banner --}}
+            <div class="pd-card" style="background: rgba(0,240,255,0.1); border: 1px solid var(--cyber-primary); box-shadow: var(--cyber-glow-primary);">
+                <h3 style="font-size: 1.5rem; font-weight: 700; margin: 0 0 10px 0; color: var(--cyber-primary); text-transform: uppercase;"><i class="fas fa-globe-americas"></i> Access Granted.</h3>
+                <p style="font-family: monospace; line-height: 1.6; color: var(--cyber-text);">
+                    > Connection established to Mainframe.<br>
+                    > Active Reservations detected: <span style="color: var(--cyber-primary); font-weight: bold; font-size: 1.2rem;">{{ $myActiveReservations ?? 0 }}</span><br>
+                    > You are clear to deploy new instances or monitor current operations.
+                </p>
+                <div style="margin-top: 20px;">
+                    <a href="{{ route('reservations.index') }}" class="cyber-btn cyber-btn-secondary">
+                        [MY_RESERVATIONS]
+                    </a>
                 </div>
             </div>
 
-            {{-- 2. Total --}}
-            @php
-                $resTitle = isset($myResourcesCount) ? 'Gérés' : 'Ressources';
-                $resValue = $myResourcesCount ?? $totalResources;
-            @endphp
-            <div class="card stat-card-custom">
-                <p class="stat-card-label">{{ $resTitle }}</p>
-                <div class="stat-card-body">
-                    <h2 class="stat-card-value">{{ $resValue }}</h2>
-                    <div class="stat-card-icon-wrapper" style="background: rgba(100, 116, 139, 0.1); color: #64748b;">
-                        <i class="fas fa-server"></i>
-                    </div>
+            @if(auth()->user()->role === 'user' && isset($userReservationsByStatus))
+            <div class="pd-card">
+                <h3 class="pd-card-title"><i class="fas fa-chart-pie"></i> REQ.STATUS_MATRIX</h3>
+                <div class="pd-chart-container" style="height: 250px;">
+                    <canvas id="userStatusChart" data-labels="{{ json_encode($userReservationsByStatus->pluck('status')) }}" data-values="{{ json_encode($userReservationsByStatus->pluck('total')) }}"></canvas>
                 </div>
-                <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 10px;">Total unités</p>
             </div>
-
-            {{-- 3. Disponible --}}
-            <div class="card stat-card-custom stat-card-success-accent">
-                <p class="stat-card-label">Disponible</p>
-                <div class="stat-card-body">
-                    <h2 class="stat-card-value" style="color: #10b981;">{{ $availableCount }}</h2>
-                    <div class="stat-card-icon-wrapper stat-card-icon-success">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                </div>
-                <p style="font-size: 0.75rem; color: #10b981; margin-top: 10px; font-weight: 700;">Prêt à l'usage</p>
-            </div>
-
-            {{-- 4. Maintenance --}}
-            <div class="card stat-card-custom" style="border-left-color: #f59e0b;">
-                <p class="stat-card-label">Maintenance</p>
-                <div class="stat-card-body">
-                    <h2 class="stat-card-value" style="color: #f59e0b;">{{ $maintenanceCount }}</h2>
-                    <div class="stat-card-icon-wrapper" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">
-                        <i class="fas fa-tools"></i>
-                    </div>
-                </div>
-                <p style="font-size: 0.75rem; color: #f59e0b; margin-top: 10px; font-weight: 700;">En entretien</p>
-            </div>
-
-            {{-- 5. Bloqué --}}
-            <div class="card stat-card-custom" style="border-left-color: #ef4444;">
-                <p class="stat-card-label">Bloqué</p>
-                <div class="stat-card-body">
-                    <h2 class="stat-card-value" style="color: #ef4444;">{{ $blockedCount }}</h2>
-                    <div class="stat-card-icon-wrapper" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">
-                        <i class="fas fa-ban"></i>
-                    </div>
-                </div>
-                <p style="font-size: 0.75rem; color: #ef4444; margin-top: 10px; font-weight: 700;">Désactivé</p>
-            </div>
-
-            {{-- 6. Alertes/Demandes --}}
-            @php
-                $alertColor = '#8b5cf6';
-                $alertIcon = 'fa-clock';
-                $alertTitle = 'Activités';
-                $alertValue = 0;
-
-                if (isset($pendingRequests)) {
-                    $alertTitle = 'Demandes';
-                    $alertValue = $pendingRequests;
-                    $alertIcon = 'fa-inbox';
-                } elseif (isset($myPendingRequests)) {
-                    $alertTitle = 'Mes Demandes';
-                    $alertValue = $myPendingRequests;
-                    $alertIcon = 'fa-hourglass-half';
-                }
-            @endphp
-            @if($alertValue > 0)
-                <div class="card stat-card-custom stat-card-alt-accent" style="--alert-color: {{ $alertColor }};">
-                    <p class="stat-card-label">{{ $alertTitle }}</p>
-                    <div class="stat-card-body">
-                        <h2 class="stat-card-value">{{ $alertValue }}</h2>
-                        <div class="stat-card-icon-wrapper" style="background: {{ $alertColor }}15; color: {{ $alertColor }};">
-                            <i class="fas {{ $alertIcon }}"></i>
-                        </div>
-                    </div>
-                    <p style="font-size: 0.75rem; color: {{ $alertColor }}; margin-top: 10px; font-weight: 700;">En attente</p>
-                </div>
             @endif
         </div>
 
-        {{-- Résumé / Actions --}}
-        <div class="card dashboard-info-card">
-            <h3 class="info-card-title">
-                <i class="fas fa-info-circle" style="color: var(--primary);"></i> État de votre compte
-            </h3>
-            <p class="info-card-text">
-                Bienvenue dans le système de gestion du Data Center.
-                @if(auth()->user()->role === 'user')
-                    Vous avez actuellement <strong>{{ $myActiveReservations ?? 0 }}</strong> réservations actives.
-                @elseif(auth()->user()->role === 'responsable')
-                    Vous gérez <strong>{{ $myResourcesCount ?? 0 }}</strong> ressources stratégiques.
-                @endif
-                Utilisez le menu supérieur pour accéder au catalogue ou signaler un incident.
-            </p>
+        {{-- RIGHT COLUMN: Recent Activity --}}
+        <div class="pd-card" style="display: flex; flex-direction: column; background: var(--cyber-panel);">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(59,130,246,0.2); padding-bottom: 10px; margin-bottom: 15px;">
+                <h3 class="pd-card-title" style="margin: 0;"><i class="fas fa-history"></i> REQ.HISTORY</h3>
+            </div>
+            
+            @if(isset($recentReservations) && $recentReservations->isEmpty())
+                <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--cyber-text-muted); min-height: 200px; font-family: monospace;">
+                    > NO HISTORY FOUND.
+                </div>
+            @elseif(isset($recentReservations))
+                <ul class="cyber-list" style="flex: 1; overflow-y: auto;">
+                    @foreach($recentReservations as $res)
+                        @php
+                            $statusColor = match($res->status) {
+                                'Approuvée' => 'var(--cyber-success)',
+                                'Rejetée' => 'var(--cyber-accent)',
+                                default => 'var(--cyber-warning)'
+                            };
+                        @endphp
+                        <li>
+                            <div class="cyber-list-time">[{{ $res->start_date->format('d/m') }}]</div>
+                            <div class="cyber-list-content">
+                                <div class="cyber-list-action">{{ $res->resource->name ?? 'UNKNOWN_NODE' }}</div>
+                                <div class="cyber-list-detail">TO: {{ $res->end_date->format('d/m/y') }}</div>
+                            </div>
+                            <div style="font-family: monospace; font-size: 0.8rem; color: {{ $statusColor }}; border: 1px solid {{ $statusColor }}; padding: 2px 8px;">
+                                {{ strtoupper($res->status) }}
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+            @endif
         </div>
+
     </div>
+</div>
 @endsection
+
+@push('scripts')
+    @if(auth()->user()->role === 'user')
+        @vite(['resources/js/dashboard.js'])
+    @endif
+    <script>
+        if(typeof Chart !== 'undefined') {
+            Chart.defaults.color = '#6b7599';
+            Chart.defaults.borderColor = 'rgba(255,255,255,0.05)';
+        }
+    </script>
+@endpush

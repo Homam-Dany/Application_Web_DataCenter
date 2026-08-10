@@ -133,6 +133,56 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // [NEW] Reservations Chart
+    const reservationsCanvas = document.getElementById('reservationsChart');
+    if (reservationsCanvas) {
+        const labels = JSON.parse(reservationsCanvas.dataset.labels);
+        const data = JSON.parse(reservationsCanvas.dataset.values);
+
+        const statusColors = {
+            'approuvée': '#10b981', // green
+            'rejetée': '#ef4444',   // red
+            'en_attente': '#f59e0b', // yellow/orange
+            'active': '#6366f1',    // blue
+            'terminée': '#64748b'   // gray
+        };
+        const backgroundColors = labels.map(label => {
+            const cleanLabel = label.trim().toLowerCase();
+            return statusColors[cleanLabel] || '#94a3b8';
+        });
+
+        new Chart(reservationsCanvas, {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: data,
+                    backgroundColor: backgroundColors,
+                    borderWidth: 0,
+                    hoverOffset: 10
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        labels: {
+                            color: '#64748b',
+                            usePointStyle: true,
+                            padding: 15,
+                            font: { size: 11 }
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: '#1e293b'
+                    }
+                }
+            }
+        });
+    }
+
     // [NEW] Live Dashboard Polling (Every 30s)
     setInterval(() => {
         fetch('/admin/api/stats')

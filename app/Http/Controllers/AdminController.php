@@ -57,12 +57,17 @@ class AdminController extends Controller
             ->groupBy('status')
             ->get();
 
+        // [NEW] Statistiques des réservations par statut
+        $reservationsByStatus = \App\Models\Reservation::select('status', DB::raw('count(*) as total'))
+            ->groupBy('status')
+            ->get();
+
         $availableCount = Resource::where('status', 'disponible')->count();
         $maintenanceCount = Resource::where('status', 'maintenance')->count();
         $blockedCount = Resource::where('status', 'désactivée')->count();
         $recentLogs = Log::with('user')->latest()->take(10)->get();
 
-        return view('admin.dashboard', compact('stats', 'resourcesByType', 'incidentsByStatus', 'availableCount', 'maintenanceCount', 'blockedCount', 'recentLogs'));
+        return view('admin.dashboard', compact('stats', 'resourcesByType', 'incidentsByStatus', 'reservationsByStatus', 'availableCount', 'maintenanceCount', 'blockedCount', 'recentLogs'));
     }
 
     public function apiStats()

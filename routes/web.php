@@ -38,6 +38,11 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    // Messagerie Interne
+    Route::get('/messagerie', [\App\Http\Controllers\MessageController::class, 'index'])->name('messagerie.index');
+    Route::get('/messagerie/{user}/messages', [\App\Http\Controllers\MessageController::class, 'fetchMessages'])->name('messagerie.fetch');
+    Route::post('/messagerie/send', [\App\Http\Controllers\MessageController::class, 'sendMessage'])->name('messagerie.send');
+
     Route::middleware(['role:user'])->group(function () {
         Route::get('/mes-reservations/calendrier', [ReservationController::class, 'calendar'])->name('reservations.calendar');
         Route::get('/mes-reservations', [ReservationController::class, 'index'])->name('reservations.index');

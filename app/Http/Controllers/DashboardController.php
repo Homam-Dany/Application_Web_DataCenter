@@ -65,6 +65,19 @@ class DashboardController extends Controller
             $data['myPendingRequests'] = Reservation::where('user_id', $user->id)
                 ->where('status', 'en_attente')
                 ->count();
+
+            // New chart data for user
+            $userReservationsByStatus = Reservation::where('user_id', $user->id)
+                ->select('status', \Illuminate\Support\Facades\DB::raw('count(*) as total'))
+                ->groupBy('status')
+                ->get();
+            $data['userReservationsByStatus'] = $userReservationsByStatus;
+
+            $data['recentReservations'] = Reservation::where('user_id', $user->id)
+                ->with('resource')
+                ->latest()
+                ->take(5)
+                ->get();
         }
 
         // Return view with data

@@ -2,209 +2,152 @@
 
 @push('styles')
     @vite(['resources/css/dashboard.css', 'resources/css/admin/dashboard.css'])
+    <!-- Rely on resources/css/premium-dashboards.css which is included in app.blade.php -->
 @endpush
 
 @section('content')
-    <div class="dashboard-wrapper">
-        {{-- HEADER --}}
-        <div class="dashboard-header">
-            <div>
-                <h1 class="dashboard-title">
-                    <span>Admin Center</span>
-                </h1>
-                <p class="dashboard-subtitle">Supervision globale et gestion du système.</p>
-            </div>
+<!-- Animated Cyber Background -->
+<div class="cyber-background"></div>
 
-            <div class="header-actions">
-                <a href="{{ route('reservations.manager') }}" class="btn btn-header-secondary">
-                    <i class="fas fa-inbox"></i>
-                    Demandes
-                </a>
-
-                <a href="{{ route('reports.monthly') }}" class="btn btn-header-outline">
-                    <i class="fas fa-file-pdf"></i> Rapport
-                </a>
-
-                <a href="{{ route('admin.rack_map') }}" class="btn"
-                    style="background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: white; font-weight: 600; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);">
-                    <i class="fas fa-th" style="margin-right: 8px;"></i> Visual Map
-                </a>
-
-                <div class="admin-badge">
-                    <i class="fas fa-shield-alt"></i> ADM
-                </div>
-            </div>
+<div class="pd-container" style="position: relative; z-index: 10;">
+    {{-- HEADER --}}
+    <div class="pd-header" style="border-bottom: 2px solid var(--cyber-panel-border); padding-bottom: 1rem;">
+        <div>
+            <h1 class="pd-title">SYSTEM.NOC_ADMIN</h1>
+            <p class="pd-subtitle">>> Accessing root supervision matrix...</p>
         </div>
 
-        {{-- METRICS ROW --}}
-        <div class="dashboard-stats-grid">
-            {{-- 1. Occupation --}}
-            <div class="stat-card-custom">
-                <p class="stat-card-label">Occupation</p>
-                <div class="stat-card-body">
-                    <h2 class="stat-card-value">{{ $stats['occupancy_rate'] }}%</h2>
-                    <div class="stat-card-icon-wrapper" style="background: rgba(99, 102, 241, 0.1); color: #6366f1;">
-                        <i class="fas fa-chart-pie"></i>
-                    </div>
-                </div>
-                <div class="stat-progress-container" style="margin-top: 15px; height: 6px;">
-                    <div class="stat-progress-fill" style="width: {{ $stats['occupancy_rate'] }}%; background: #6366f1;">
-                    </div>
-                </div>
-            </div>
+        <div style="display: flex; gap: 15px; align-items: center;">
+            <a href="{{ route('reservations.manager') }}" class="cyber-btn">
+                <i class="fas fa-inbox" style="margin-right: 8px;"></i> [Demandes]
+            </a>
 
-            {{-- 2. Total --}}
-            <div class="stat-card-custom">
-                <p class="stat-card-label">Ressources Total</p>
-                <div class="stat-card-body">
-                    <h2 class="stat-card-value">{{ $stats['total_resources'] }}</h2>
-                    <div class="stat-card-icon-wrapper" style="background: rgba(100, 116, 139, 0.1); color: #64748b;">
-                        <i class="fas fa-layer-group"></i>
-                    </div>
-                </div>
-                <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: auto;">Inventaire Complet</p>
-            </div>
-
-            {{-- 3. Disponible --}}
-            <div class="stat-card-custom">
-                <p class="stat-card-label">Disponible</p>
-                <div class="stat-card-body">
-                    <h2 class="stat-card-value" style="color: #10b981;">{{ $availableCount }}</h2>
-                    <div class="stat-card-icon-wrapper" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                </div>
-                <p style="font-size: 0.8rem; color: #10b981; font-weight: 600; margin-top: auto;">Opérationnel</p>
-            </div>
-
-            {{-- 4. Maintenance --}}
-            <div class="stat-card-custom">
-                <p class="stat-card-label">Maintenance</p>
-                <div class="stat-card-body">
-                    <h2 class="stat-card-value" style="color: #f59e0b;">{{ $maintenanceCount }}</h2>
-                    <div class="stat-card-icon-wrapper" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">
-                        <i class="fas fa-tools"></i>
-                    </div>
-                </div>
-                <p style="font-size: 0.8rem; color: #f59e0b; font-weight: 600; margin-top: auto;">En réparation</p>
-            </div>
-
-            {{-- 5. Bloqué --}}
-            <div class="stat-card-custom">
-                <p class="stat-card-label">Bloqué</p>
-                <div class="stat-card-body">
-                    <h2 class="stat-card-value" style="color: #ef4444;">{{ $blockedCount }}</h2>
-                    <div class="stat-card-icon-wrapper" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">
-                        <i class="fas fa-ban"></i>
-                    </div>
-                </div>
-                <p style="font-size: 0.8rem; color: #ef4444; font-weight: 600; margin-top: auto;">Hors service</p>
-            </div>
-        </div>
-
-        {{-- MAIN CONTENT GRID --}}
-        <div class="reference-grid">
-            {{-- LEFT COLUMN: Charts --}}
-            <div class="charts-section">
-                {{-- Row of 2 Small Charts --}}
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
-                    <div class="chart-card">
-                        <div class="chart-header">
-                            <h3 class="chart-title"><i class="fas fa-chart-donut" style="color: var(--primary);"></i>
-                                Disponibilité</h3>
-                        </div>
-                        <div style="height: 200px; position: relative;">
-                            <canvas id="occupancyChart" data-active="{{ $stats['active_reservations'] }}"
-                                data-total="{{ $stats['total_resources'] }}">
-                            </canvas>
-                        </div>
-                    </div>
-
-                    <div class="chart-card">
-                        <div class="chart-header">
-                            <h3 class="chart-title"><i class="fas fa-exclamation-circle" style="color: var(--danger);"></i>
-                                Incidents</h3>
-                        </div>
-                        <div style="height: 200px; position: relative;">
-                            <canvas id="incidentsChart" data-labels="{{ json_encode($incidentsByStatus->pluck('status')) }}"
-                                data-values="{{ json_encode($incidentsByStatus->pluck('total')) }}">
-                            </canvas>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Full Width Bar Chart --}}
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h3 class="chart-title"><i class="fas fa-boxes" style="color: var(--success);"></i> Inventaire
-                            Matériel</h3>
-                    </div>
-                    <div style="height: 250px; position: relative;">
-                        <canvas id="inventoryChart" data-labels="{{ json_encode($resourcesByType->pluck('type')) }}"
-                            data-values="{{ json_encode($resourcesByType->pluck('total')) }}">
-                        </canvas>
-                    </div>
-                </div>
-            </div>
-
-            {{-- RIGHT COLUMN: Logs & Quick Activity --}}
-            <div style="display: flex; flex-direction: column; gap: 24px;">
-                <div class="logs-card">
-                    <div class="logs-header">
-                        <h3 class="chart-title"><i class="fas fa-history" style="color: #64748b;"></i> Audit Logs</h3>
-                        <a href="{{ route('admin.logs') }}"
-                            style="font-size: 0.85rem; font-weight: 600; color: var(--primary); text-decoration: none;">Voir
-                            tout <i class="fas fa-arrow-right"></i></a>
-                    </div>
-
-                    <div style="overflow-x: auto;">
-                        <table class="table-custom">
-                            <thead>
-                                <tr>
-                                    <th>Qui</th>
-                                    <th>Quoi</th>
-                                    <th>Quand</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($recentLogs as $log)
-                                    @php
-                                        $actionColor = match ($log->action) {
-                                            'Signalement' => 'var(--warning)',
-                                            'Incident Résolu' => 'var(--success)',
-                                            'Demande Réservation' => 'var(--primary)',
-                                            'Gestion Admin' => '#8b5cf6',
-                                            'Admin: Mise à jour' => '#06b6d4',
-                                            default => 'var(--primary)'
-                                        };
-                                    @endphp
-                                    <tr>
-                                        <td>
-                                            <div style="font-weight: 600; font-size: 0.9rem;">
-                                                {{ $log->user->name ?? 'Système' }}
-                                            </div>
-                                            <div style="font-size: 0.75rem; color: var(--text-muted);">
-                                                {{ $log->user->role ?? '' }}
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <span
-                                                style="font-weight: 700; color: {{ $actionColor }}; font-size: 0.8rem;">{{ $log->action }}</span>
-                                        </td>
-                                        <td style="color: var(--text-secondary); font-size: 0.8rem; white-space: nowrap;">
-                                            {{ $log->created_at->format('d/m H:i') }}
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            <a href="{{ route('reports.monthly') }}" class="cyber-btn cyber-btn-secondary">
+                <i class="fas fa-file-pdf" style="margin-right: 8px;"></i> [Rapport]
+            </a>
+            
+            <div style="background: rgba(255, 0, 60, 0.1); color: var(--cyber-accent); padding: 8px 15px; border: 1px solid var(--cyber-accent); font-family: monospace; font-weight: bold; letter-spacing: 2px; box-shadow: var(--cyber-glow-danger);">
+                <i class="fas fa-shield-alt"></i> SEC_LEVEL: ALPHA
             </div>
         </div>
     </div>
+
+    {{-- TOP METRICS ROW --}}
+    <div class="pd-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom: 2rem;">
+        {{-- 1. Occupation Radial --}}
+        <div class="pd-card" style="display: flex; align-items: center; justify-content: space-between;">
+            <div>
+                <h4 style="font-family: monospace; color: var(--cyber-primary); margin: 0 0 10px 0; font-size: 1rem;">SYS.LOAD</h4>
+                <div style="font-size: 2rem; font-weight: 900; text-shadow: var(--cyber-glow-primary);">{{ $stats['occupancy_rate'] }}%</div>
+            </div>
+            <div class="cyber-radial" style="--val: {{ $stats['occupancy_rate'] }};">
+                <i class="fas fa-microchip" style="color: var(--cyber-primary); font-size: 1.5rem; position: relative; z-index: 10;"></i>
+            </div>
+        </div>
+
+        {{-- 2. Disponible --}}
+        <div class="pd-card" style="display: flex; align-items: center; justify-content: space-between;">
+            <div>
+                <h4 style="font-family: monospace; color: var(--cyber-success); margin: 0 0 10px 0; font-size: 1rem;">SYS.AVAILABLE</h4>
+                <div style="font-size: 2rem; font-weight: 900; color: var(--cyber-success); text-shadow: var(--cyber-glow-success);">{{ $availableCount }}</div>
+            </div>
+            <div class="cyber-radial success" style="--val: {{ $availableCount > 0 ? 100 : 0 }};">
+                <i class="fas fa-check" style="color: var(--cyber-success); font-size: 1.5rem; position: relative; z-index: 10;"></i>
+            </div>
+        </div>
+
+        {{-- 3. Maintenance --}}
+        <div class="pd-card" style="display: flex; align-items: center; justify-content: space-between;">
+            <div>
+                <h4 style="font-family: monospace; color: var(--cyber-warning); margin: 0 0 10px 0; font-size: 1rem;">SYS.MAINT</h4>
+                <div style="font-size: 2rem; font-weight: 900; color: var(--cyber-warning);">{{ $maintenanceCount }}</div>
+            </div>
+            <div class="cyber-radial warning" style="--val: {{ $stats['total_resources'] > 0 ? ($maintenanceCount / $stats['total_resources'] * 100) : 0 }};">
+                <i class="fas fa-tools" style="color: var(--cyber-warning); font-size: 1.5rem; position: relative; z-index: 10;"></i>
+            </div>
+        </div>
+
+        {{-- 4. Alert --}}
+        <div class="pd-card" style="display: flex; align-items: center; justify-content: space-between; border-color: rgba(255,0,60,0.5);">
+            <div>
+                <h4 style="font-family: monospace; color: var(--cyber-accent); margin: 0 0 10px 0; font-size: 1rem;">SYS.ALERT</h4>
+                <div style="font-size: 2rem; font-weight: 900; color: var(--cyber-accent); text-shadow: var(--cyber-glow-danger);">{{ $blockedCount }}</div>
+            </div>
+            <div class="cyber-radial danger" style="--val: {{ $stats['total_resources'] > 0 ? ($blockedCount / $stats['total_resources'] * 100) : 0 }};">
+                <i class="fas fa-exclamation-triangle" style="color: var(--cyber-accent); font-size: 1.5rem; position: relative; z-index: 10; animation: cyberAlert 2s infinite;"></i>
+            </div>
+        </div>
+    </div>
+
+    {{-- MAIN GRID --}}
+    <div class="pd-grid pd-grid-main">
+        
+        {{-- LEFT COLUMN --}}
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            {{-- Charts Row --}}
+            <div class="pd-grid" style="grid-template-columns: 1fr 1fr;">
+                <div class="pd-card">
+                    <h3 class="pd-card-title"><i class="fas fa-wave-square"></i> NETWORK.TRAFFIC</h3>
+                    <div class="pd-chart-container" style="height: 200px;">
+                        <canvas id="occupancyChart" data-active="{{ $stats['active_reservations'] }}" data-total="{{ $stats['total_resources'] }}"></canvas>
+                    </div>
+                </div>
+                <div class="pd-card">
+                    <h3 class="pd-card-title"><i class="fas fa-radiation"></i> INCIDENT.LOG</h3>
+                    <div class="pd-chart-container" style="height: 200px;">
+                        <canvas id="incidentsChart" data-labels="{{ json_encode($incidentsByStatus->pluck('status')) }}" data-values="{{ json_encode($incidentsByStatus->pluck('total')) }}"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            {{-- Inventory Block --}}
+            <div class="pd-card" style="border-top: 3px solid var(--cyber-secondary);">
+                <h3 class="pd-card-title" style="color: var(--cyber-secondary);"><i class="fas fa-database"></i> HARDWARE.MATRIX</h3>
+                <div class="pd-chart-container" style="height: 250px;">
+                    <canvas id="inventoryChart" data-labels="{{ json_encode($resourcesByType->pluck('type')) }}" data-values="{{ json_encode($resourcesByType->pluck('total')) }}"></canvas>
+                </div>
+            </div>
+        </div>
+
+        {{-- RIGHT COLUMN: TERMINAL LOGS --}}
+        <div class="pd-card" style="display: flex; flex-direction: column; background: var(--cyber-panel);">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(59,130,246,0.2); padding-bottom: 10px; margin-bottom: 15px;">
+                <h3 style="margin: 0; font-family: monospace; font-size: 1rem; color: var(--cyber-primary);">
+                    > tail -f /var/log/syslog
+                </h3>
+                <a href="{{ route('admin.logs') }}" style="color: var(--cyber-primary); font-family: monospace; text-decoration: none;">[EXPAND]</a>
+            </div>
+            
+            <ul class="cyber-list" style="flex: 1; overflow-y: auto; max-height: 550px;">
+                @foreach($recentLogs as $log)
+                    @php
+                        $color = match ($log->action) {
+                            'Signalement' => 'var(--cyber-warning)',
+                            'Incident Résolu' => 'var(--cyber-success)',
+                            'Demande Réservation' => 'var(--cyber-primary)',
+                            default => 'var(--cyber-text)'
+                        };
+                    @endphp
+                    <li>
+                        <div class="cyber-list-time">[{{ $log->created_at->format('H:i:s') }}]</div>
+                        <div class="cyber-list-content">
+                            <div class="cyber-list-action" style="color: {{ $color }};">{{ $log->action }}</div>
+                            <div class="cyber-list-detail">USR: {{ $log->user->name ?? 'ROOT' }}</div>
+                        </div>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+</div>
 @endsection
 
 @push('scripts')
     @vite(['resources/js/admin/dashboard.js'])
+    <!-- Chart.js Dark Mode Overrides -->
+    <script>
+        // We will override chart colors in JS if needed, but Chart.js transparent background works well.
+        Chart.defaults.color = '#6b7599';
+        Chart.defaults.borderColor = 'rgba(255,255,255,0.05)';
+    </script>
 @endpush

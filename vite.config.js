@@ -39,6 +39,7 @@ export default defineConfig({
                 'resources/js/incidents/manager.js',
                 'resources/js/about.js',
                 // Refactored Assets
+                'resources/css/premium-dashboards.css',
                 'resources/css/engineer/dashboard.css',
                 'resources/css/admin/dashboard.css', // [NEW] Admin Dashboard CSS
                 'resources/css/reservations/manager_hub.css',
@@ -52,6 +53,7 @@ export default defineConfig({
                 'resources/js/partials/flash.js',
                 'resources/css/reservations/premium_reservation.css',
                 'resources/js/reservations/premium_calendar.js',
+                'resources/js/dashboard.js',
             ],
             refresh: true,
         }),

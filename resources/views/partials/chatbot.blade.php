@@ -31,8 +31,19 @@
             </div>
         </div>
 
+        <!-- Image Preview Area -->
+        <div id="chatbot-image-preview-container" style="display: none; padding: 5px 15px; background: #f8fafc; border-top: 1px solid #e2e8f0; align-items: center; gap: 10px;">
+            <img id="chatbot-preview-img" src="" style="height: 40px; border-radius: 4px; object-fit: cover;">
+            <button id="chatbot-clear-img" style="background: none; border: none; color: #ef4444; cursor: pointer; font-size: 16px;"><i class="fas fa-times"></i></button>
+        </div>
+
         <!-- Input Area -->
         <div class="chatbot-input-area">
+            <label for="chatbot-file-upload" id="chatbot-file-btn" style="cursor: pointer; color: #94a3b8; font-size: 20px; display: flex; align-items: center; justify-content: center; padding: 0 5px; transition: color 0.2s;">
+                <i class="fas fa-paperclip"></i>
+            </label>
+            <input type="file" id="chatbot-file-upload" accept="image/*" style="display: none;">
+            
             <input type="text" id="chatbot-input" placeholder="Posez votre question..." autocomplete="off">
             <button id="chatbot-send"><i class="fas fa-paper-plane"></i></button>
         </div>
@@ -239,6 +250,10 @@
         gap: 10px;
     }
 
+    #chatbot-file-btn:hover {
+        color: #4f46e5;
+    }
+
     #chatbot-input {
         flex: 1;
         border: 1px solid #cbd5e1;
@@ -247,6 +262,7 @@
         outline: none;
         transition: border-color 0.2s;
         font-size: 14px;
+        min-width: 0; /* Prevents overflow */
     }
 
     #chatbot-input:focus {
@@ -285,10 +301,39 @@
         const messagesContainer = document.getElementById('chatbot-messages');
         const input = document.getElementById('chatbot-input');
         const sendBtn = document.getElementById('chatbot-send');
+        const fileInput = document.getElementById('chatbot-file-upload');
+        const previewContainer = document.getElementById('chatbot-image-preview-container');
+        const previewImg = document.getElementById('chatbot-preview-img');
+        const clearImgBtn = document.getElementById('chatbot-clear-img');
         const suggestionsContainer = document.getElementById('chatbot-suggestions-container');
 
         let isOpen = false;
         let menuLoaded = false;
+        let selectedImageBase64 = null;
+
+        // Handle Image Selection
+        if (fileInput) {
+            fileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        selectedImageBase64 = event.target.result;
+                        previewImg.src = selectedImageBase64;
+                        previewContainer.style.display = 'flex';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        if (clearImgBtn) {
+            clearImgBtn.addEventListener('click', () => {
+                selectedImageBase64 = null;
+                previewContainer.style.display = 'none';
+                fileInput.value = ''; // clear input
+            });
+        }
 
         // Toggle Chat
         function toggleChat() {
@@ -350,13 +395,23 @@
         // Send Message
         async function sendMessage() {
             const text = input.value.trim();
-            if (!text) return;
+            if (!text && !selectedImageBase64) return; // Prevent empty send
 
             // 1. Add User Message
-            addMessage(text, 'user');
+            let displayMsg = text;
+            if (selectedImageBase64) {
+                displayMsg += "\n[Image attachée]";
+            }
+            addMessage(displayMsg, 'user');
+            
+            // Capture image before clearing UI
+            const imageToSend = selectedImageBase64;
+            
+            // Clear UI
             input.value = '';
             input.disabled = true;
             sendBtn.disabled = true;
+            if (clearImgBtn) clearImgBtn.click(); // clear image preview
 
             // 2. Add Loading Indicator
             const loadingId = addLoading();
@@ -372,7 +427,7 @@
                         'Content-Type': 'application/json',
                         'X-CSRF-TOKEN': csrfToken
                     },
-                    body: JSON.stringify({ message: text })
+                    body: JSON.stringify({ message: text, image: imageToSend })
                 });
 
                 const data = await response.json();
@@ -406,7 +461,46 @@
         function addMessage(text, type) {
             const msgDiv = document.createElement('div');
             msgDiv.classList.add('message', type === 'user' ? 'user-message' : 'bot-message');
-            msgDiv.innerText = text;
+            
+            // Simple markdown parsing for the bot
+            if (type === 'bot') {
+                let parsedText = text
+                    // Parse markdown code blocks ```lang ... ``` -> with a download button
+                    .replace(/```(\w*)\n([\s\S]*?)```/g, (match, lang, code) => {
+                        const escapedCode = code.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                        const blob = new Blob([code], { type: 'text/plain' });
+                        const url = URL.createObjectURL(blob);
+                        const filename = 'code_' + Date.now() + (lang ? '.' + lang : '.txt');
+                        return `<div style="background:#1e293b; color:#fff; border-radius:8px; padding:10px; margin-top:5px;">
+                                    <div style="display:flex; justify-content:space-between; margin-bottom:5px; border-bottom:1px solid #334155; padding-bottom:5px;">
+                                        <span style="font-size:12px; color:#94a3b8;">${lang || 'code'}</span>
+                                        <a href="${url}" download="${filename}" style="color:#60a5fa; font-size:12px; text-decoration:none;">
+                                            <i class="fas fa-download"></i> Télécharger
+                                        </a>
+                                    </div>
+                                    <pre style="margin:0; overflow-x:auto; font-size:13px;"><code>${escapedCode}</code></pre>
+                                </div>`;
+                    })
+                    // Parse markdown images ![alt](url) -> <img src="url" alt="alt">
+                    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" style="max-width:100%; border-radius:8px; margin-top:5px;">')
+                    // Parse markdown links [text](url) -> <a href="url">text</a>
+                    .replace(/\[([^\]]+)\]\(([^)]+)\)(\{([^}]+)\})?/g, (match, title, url, _, attributes) => {
+                        let cls = '';
+                        if (attributes && attributes.includes('.btn')) {
+                            cls = 'class="btn btn-sm btn-primary" style="display:inline-block; margin-top:5px; padding:5px 10px; background:#4f46e5; color:white; border-radius:4px; text-decoration:none;"';
+                        }
+                        // Avoid double matching if it was already parsed as an image
+                        if (match.startsWith('!')) return match;
+                        return `<a href="${url}" ${cls}>${title}</a>`;
+                    })
+                    // Parse bold
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                
+                msgDiv.innerHTML = parsedText;
+            } else {
+                msgDiv.innerText = text;
+            }
+
             messagesContainer.appendChild(msgDiv);
             scrollToBottom();
             return msgDiv;

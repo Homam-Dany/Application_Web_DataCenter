@@ -4,236 +4,145 @@
     @vite(['resources/css/dashboard.css', 'resources/css/engineer/dashboard.css'])
 @endpush
 
-
 @section('content')
-    <div class="dashboard-wrapper">
-        {{-- HEADER --}}
-        <div class="page-header dashboard-header">
+<!-- Animated Cyber Background -->
+<div class="cyber-background"></div>
+
+<div class="pd-container" style="position: relative; z-index: 10;">
+    {{-- HEADER --}}
+    <div class="pd-header" style="border-bottom: 2px solid var(--cyber-panel-border); padding-bottom: 1rem;">
+        <div>
+            <h1 class="pd-title">NODE.ENGINEER</h1>
+            <p class="pd-subtitle">>> Initializing hardware maintenance protocols...</p>
+        </div>
+        <div style="display: flex; gap: 15px; align-items: center;">
+            <a href="{{ route('reservations.manager') }}" class="cyber-btn cyber-btn-secondary">
+                <i class="fas fa-inbox" style="margin-right: 8px;"></i> [Demandes]
+            </a>
+            <a href="{{ route('resources.create') }}" class="cyber-btn">
+                <i class="fas fa-plus" style="margin-right: 8px;"></i> [Deploy Node]
+            </a>
+        </div>
+    </div>
+
+    {{-- METRICS ROW --}}
+    <div class="pd-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom: 2rem;">
+        {{-- 1. Occupation Radial --}}
+        <div class="pd-card" style="display: flex; align-items: center; justify-content: space-between;">
             <div>
-                <h1 class="dashboard-title">
-                    <span
-                        style="background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Dashboard
-                        - Espace
-                        Responsable</span>
-                </h1>
-                <p class="dashboard-subtitle">Gestion temps réel de votre parc informatique.</p>
+                <h4 style="font-family: monospace; color: var(--cyber-primary); margin: 0 0 10px 0; font-size: 1rem;">SYS.LOAD</h4>
+                <div style="font-size: 2rem; font-weight: 900; text-shadow: var(--cyber-glow-primary);">{{ $stats['occupancy_rate'] }}%</div>
             </div>
-            <div style="display: flex; gap: 12px;">
-                <a href="{{ route('reservations.manager') }}" class="btn"
-                    style="background: white; color: var(--text-primary); border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); font-weight: 600; position: relative;">
-                    <i class="fas fa-inbox" style="margin-right: 8px; color: var(--text-secondary);"></i>
-                    Demandes
-                </a>
-                <a href="{{ route('resources.create') }}" class="btn"
-                    style="background: var(--primary-gradient); color: white; border: none; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);">
-                    <i class="fas fa-plus" style="margin-right: 8px;"></i> Nouveau Serveur
-                </a>
+            <div class="cyber-radial" style="--val: {{ $stats['occupancy_rate'] }};">
+                <i class="fas fa-microchip" style="color: var(--cyber-primary); font-size: 1.5rem; position: relative; z-index: 10;"></i>
             </div>
         </div>
 
-        {{-- METRICS ROW --}}
-        <div class="dashboard-stats-grid">
-            {{-- 1. Occupation --}}
-            <div class="card stat-card-custom">
-                <p class="stat-card-label">Occupation</p>
-                <div class="stat-card-body">
-                    <h2 class="stat-card-value">{{ $stats['occupancy_rate'] }}%</h2>
-                    <div class="stat-card-icon-wrapper" style="background: rgba(99, 102, 241, 0.1); color: #6366f1;">
-                        <i class="fas fa-chart-pie"></i>
-                    </div>
-                </div>
-                <div class="stat-progress-container" style="margin-top: 15px; height: 6px;">
-                    <div class="stat-progress-bar" style="width: {{ $stats['occupancy_rate'] }}%; background: #6366f1;">
-                    </div>
-                </div>
+        {{-- 2. Managed --}}
+        <div class="pd-card" style="display: flex; align-items: center; justify-content: space-between;">
+            <div>
+                <h4 style="font-family: monospace; color: var(--cyber-text); margin: 0 0 10px 0; font-size: 1rem;">NODES.TOTAL</h4>
+                <div style="font-size: 2rem; font-weight: 900;">{{ $stats['total_managed'] }}</div>
             </div>
-
-            {{-- 2. Total Managed --}}
-            <div class="card stat-card-custom">
-                <p class="stat-card-label">Gérés</p>
-                <div class="stat-card-body">
-                    <h2 class="stat-card-value">{{ $stats['total_managed'] }}</h2>
-                    <div class="stat-card-icon-wrapper" style="background: rgba(100, 116, 139, 0.1); color: #64748b;">
-                        <i class="fas fa-server"></i>
-                    </div>
-                </div>
-                <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: auto;">Vos ressources</p>
-            </div>
-
-            {{-- 3. Disponible --}}
-            <div class="card stat-card-custom">
-                <p class="stat-card-label">Disponible</p>
-                <div class="stat-card-body">
-                    <h2 class="stat-card-value" style="color: #10b981;">{{ $stats['available_count'] }}</h2>
-                    <div class="stat-card-icon-wrapper" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                </div>
-                <p style="font-size: 0.8rem; color: #10b981; font-weight: 600; margin-top: auto;">Prêt</p>
-            </div>
-
-            {{-- 4. Maintenance --}}
-            <div class="card stat-card-custom">
-                <p class="stat-card-label">Maintenance</p>
-                <div class="stat-card-body">
-                    <h2 class="stat-card-value" style="color: #f59e0b;">{{ $stats['maintenance_mode'] }}</h2>
-                    <div class="stat-card-icon-wrapper" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">
-                        <i class="fas fa-tools"></i>
-                    </div>
-                </div>
-                <p style="font-size: 0.8rem; color: #f59e0b; font-weight: 600; margin-top: auto;">En cours</p>
-            </div>
-
-            {{-- 5. Bloqué --}}
-            <div class="card stat-card-custom">
-                <p class="stat-card-label">Bloqué</p>
-                <div class="stat-card-body">
-                    <h2 class="stat-card-value" style="color: #ef4444;">{{ $stats['blocked_count'] }}</h2>
-                    <div class="stat-card-icon-wrapper" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">
-                        <i class="fas fa-ban"></i>
-                    </div>
-                </div>
-                <p style="font-size: 0.8rem; color: #ef4444; font-weight: 600; margin-top: auto;">À vérifier</p>
+            <div class="cyber-radial" style="--val: 100; background: conic-gradient(rgba(255,255,255,0.2) 100%, transparent 0);">
+                <i class="fas fa-server" style="color: var(--cyber-text); font-size: 1.5rem; position: relative; z-index: 10;"></i>
             </div>
         </div>
 
-        {{-- MAIN GRID --}}
-        <div class="engineer-grid">
-            {{-- LEFT: VISUAL SERVER GRID --}}
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title"><i class="fas fa-th-large" style="color: var(--primary);"></i> Vue Synthétique
-                    </h3>
-                    <div style="font-size: 0.85rem; font-weight: 500;">
-                        <span style="margin-right: 15px; display: inline-flex; align-items: center; gap: 6px;">
-                            <span style="width: 8px; height: 8px; border-radius: 50%; background: #10b981;"></span> OK
-                        </span>
-                        <span style="margin-right: 15px; display: inline-flex; align-items: center; gap: 6px;">
-                            <span style="width: 8px; height: 8px; border-radius: 50%; background: #f59e0b;"></span> Maint.
-                        </span>
-                        <span style="display: inline-flex; align-items: center; gap: 6px;">
-                            <span style="width: 8px; height: 8px; border-radius: 50%; background: #ef4444;"></span> Incident
-                        </span>
-                    </div>
-                </div>
-
-                <div class="server-grid">
-                    @forelse($resources as $res)
-                        @php
-                            $statusClass = 'status-disponible';
-                            $icon = 'fa-server';
-                            $iconColor = '#10b981';
-
-                            if ($res->status === 'maintenance') {
-                                $statusClass = 'status-maintenance';
-                                $icon = 'fa-tools';
-                                $iconColor = '#f59e0b';
-                            } elseif ($res->incidents->isNotEmpty()) {
-                                $statusClass = 'status-incident';
-                                $icon = 'fa-exclamation-triangle';
-                                $iconColor = '#ef4444';
-                            }
-                        @endphp
-                        <a href="{{ route('resources.edit', $res->id) }}" class="server-card {{ $statusClass }}"
-                            title="{{ $res->name }}">
-                            <div class="server-icon-wrapper" style="color: {{ $iconColor }}">
-                                <i class="fas {{ $icon }}"></i>
-                            </div>
-                            <div class="server-name">{{ $res->name }}</div>
-                            <span class="server-badge">
-                                <i class="fas fa-map-marker-alt" style="margin-right: 4px; font-size: 0.7em;"></i>
-                                {{ $res->rack_position ?? 'N/A' }}
-                            </span>
-                        </a>
-                    @empty
-                        <div style="grid-column: 1/-1; padding: 40px; text-align: center; color: var(--text-secondary);">
-                            <div style="font-size: 3rem; margin-bottom: 20px; opacity: 0.2;"><i class="fas fa-server"></i></div>
-                            <p>Aucune ressource assignée à votre compte.</p>
-                            <a href="{{ route('resources.create') }}" class="btn btn-sm btn-primary"
-                                style="margin-top: 15px;">Ajouter une ressource</a>
-                        </div>
-                    @endforelse
-                </div>
+        {{-- 3. Maintenance --}}
+        <div class="pd-card" style="display: flex; align-items: center; justify-content: space-between;">
+            <div>
+                <h4 style="font-family: monospace; color: var(--cyber-warning); margin: 0 0 10px 0; font-size: 1rem;">SYS.MAINT</h4>
+                <div style="font-size: 2rem; font-weight: 900; color: var(--cyber-warning);">{{ $stats['maintenance_mode'] }}</div>
             </div>
+            <div class="cyber-radial warning" style="--val: {{ $stats['total_managed'] > 0 ? ($stats['maintenance_mode'] / $stats['total_managed'] * 100) : 0 }};">
+                <i class="fas fa-tools" style="color: var(--cyber-warning); font-size: 1.5rem; position: relative; z-index: 10;"></i>
+            </div>
+        </div>
 
-            {{-- RIGHT: ACTIVITY & QUICK TOOLS --}}
-            <div style="display: flex; flex-direction: column; gap: 24px;">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-history" style="color: #8b5cf6;"></i> Activité Récente</h3>
-                    </div>
-                    <div class="activity-feed">
-                        @forelse($recentActivity as $log)
-                            <div class="feed-item">
-                                <div class="feed-icon">
-                                    <i class="fas fa-bolt"></i>
-                                </div>
-                                <div style="flex: 1;">
-                                    <div
-                                        style="font-weight: 600; font-size: 0.9rem; color: var(--text-primary); margin-bottom: 2px;">
-                                        {{ $log->action }}
-                                    </div>
-                                    <div style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.4;">
-                                        {{ Str::limit($log->description, 60) }}
-                                    </div>
-                                    <div
-                                        style="color: var(--text-muted); font-size: 0.75rem; margin-top: 6px; display: flex; align-items: center; gap: 5px;">
-                                        <i class="far fa-clock"></i> {{ $log->created_at->diffForHumans() }}
-                                    </div>
-                                </div>
-                            </div>
-                        @empty
-                            <p style="padding: 24px; text-align: center; color: var(--text-secondary);">Aucune activité récente.
-                            </p>
-                        @endforelse
-                    </div>
-                    @if($recentActivity->count() > 0)
-                        <div style="padding: 16px; border-top: 1px solid var(--border-color); text-align: center;">
-                            <a href="{{ route('reservations.history') }}"
-                                style="color: var(--primary); font-weight: 600; font-size: 0.85rem; text-decoration: none;">Voir
-                                tout l'historique</a>
-                        </div>
-                    @endif
-                </div>
-
-                {{-- Quick Tools --}}
-                <div class="card" style="overflow: visible;">
-                    <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-rocket" style="color: #ec4899;"></i> Outils Rapides</h3>
-                    </div>
-                    <div style="padding: 20px;">
-                        <a href="{{ route('resources.export') }}" class="quick-tool-link">
-                            <div style="display: flex; align-items: center;">
-                                <div class="quick-tool-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
-                                    <i class="fas fa-file-csv"></i>
-                                </div>
-                                <span style="font-weight: 600;">Export Inventaire</span>
-                            </div>
-                            <i class="fas fa-arrow-right" style="color: var(--text-muted);"></i>
-                        </a>
-
-                        <a href="{{ route('engineer.rack_map') }}" class="quick-tool-link">
-                            <div style="display: flex; align-items: center;">
-                                <div class="quick-tool-icon" style="background: rgba(99, 102, 241, 0.1); color: #6366f1;">
-                                    <i class="fas fa-th"></i>
-                                </div>
-                                <span style="font-weight: 600;">Carte des Racks</span>
-                            </div>
-                            <i class="fas fa-arrow-right" style="color: var(--text-muted);"></i>
-                        </a>
-
-                        <a href="#" class="quick-tool-link" style="margin-bottom: 0;">
-                            <div style="display: flex; align-items: center;">
-                                <div class="quick-tool-icon" style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6;">
-                                    <i class="fas fa-print"></i>
-                                </div>
-                                <span style="font-weight: 600;">Imprimer Étiquettes</span>
-                            </div>
-                            <i class="fas fa-arrow-right" style="color: var(--text-muted);"></i>
-                        </a>
-                    </div>
-                </div>
+        {{-- 4. Alert --}}
+        <div class="pd-card" style="display: flex; align-items: center; justify-content: space-between; border-color: rgba(255,0,60,0.5);">
+            <div>
+                <h4 style="font-family: monospace; color: var(--cyber-accent); margin: 0 0 10px 0; font-size: 1rem;">SYS.ALERT</h4>
+                <div style="font-size: 2rem; font-weight: 900; color: var(--cyber-accent); text-shadow: var(--cyber-glow-danger);">{{ $stats['blocked_count'] }}</div>
+            </div>
+            <div class="cyber-radial danger" style="--val: {{ $stats['total_managed'] > 0 ? ($stats['blocked_count'] / $stats['total_managed'] * 100) : 0 }};">
+                <i class="fas fa-radiation" style="color: var(--cyber-accent); font-size: 1.5rem; position: relative; z-index: 10; animation: cyberAlert 2s infinite;"></i>
             </div>
         </div>
     </div>
+
+    {{-- MAIN GRID --}}
+    <div class="pd-grid pd-grid-main">
+        {{-- LEFT: VISUAL SERVER GRID (MATRIX) --}}
+        <div class="pd-card" style="border-top: 3px solid var(--cyber-primary);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">
+                <h3 class="pd-card-title" style="margin: 0; border: none; padding: 0;"><i class="fas fa-th"></i> HARDWARE.MATRIX.LIVE</h3>
+                <div style="font-family: monospace; font-size: 0.8rem; display: flex; gap: 15px;">
+                    <span style="color: var(--cyber-success);"><i class="fas fa-circle"></i> ONLINE</span>
+                    <span style="color: var(--cyber-warning);"><i class="fas fa-circle"></i> MAINT</span>
+                    <span style="color: var(--cyber-accent);"><i class="fas fa-circle" style="animation: cyberPulse 1s infinite;"></i> ALERT</span>
+                </div>
+            </div>
+
+            <div class="cyber-server-grid">
+                @forelse($resources as $res)
+                    @php
+                        $statusClass = 'status-ok';
+                        $icon = 'fa-server';
+                        if ($res->status === 'maintenance') {
+                            $statusClass = 'status-maint';
+                            $icon = 'fa-tools';
+                        } elseif ($res->incidents->isNotEmpty()) {
+                            $statusClass = 'status-alert';
+                            $icon = 'fa-skull-crossbones';
+                        }
+                    @endphp
+                    <a href="{{ route('resources.edit', $res->id) }}" class="cyber-server-node {{ $statusClass }}" title="{{ $res->name }}">
+                        <i class="fas {{ $icon }} node-icon"></i>
+                        <div class="node-name">{{ $res->name }}</div>
+                        <div style="font-size: 0.6rem; color: var(--cyber-text-muted); margin-top: 2px;">{{ $res->rack_position ?? 'N/A' }}</div>
+                    </a>
+                @empty
+                    <div style="grid-column: 1/-1; padding: 40px; text-align: center; color: var(--cyber-text-muted); font-family: monospace;">
+                        > MATRIX EMPTY. NO NODES DETECTED.
+                    </div>
+                @endforelse
+            </div>
+        </div>
+
+        {{-- RIGHT: ACTIVITY & QUICK TOOLS --}}
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            {{-- Quick Tools Terminal --}}
+            <div class="pd-card" style="background: var(--cyber-panel);">
+                <h3 class="pd-card-title" style="color: var(--cyber-secondary);"><i class="fas fa-terminal"></i> BIN.TOOLS</h3>
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <a href="{{ route('resources.export') }}" class="cyber-btn" style="width: 100%; justify-content: flex-start;">
+                        > EXEC ./export_db.sh
+                    </a>
+                    <a href="{{ route('engineer.rack_map') }}" class="cyber-btn cyber-btn-secondary" style="width: 100%; justify-content: flex-start;">
+                        > EXEC ./view_racks.sh
+                    </a>
+                </div>
+            </div>
+
+            <div class="pd-card" style="flex: 1; display: flex; flex-direction: column; background: var(--cyber-panel);">
+                <h3 class="pd-card-title"><i class="fas fa-bolt"></i> SYS.LOG</h3>
+                <ul class="cyber-list" style="flex: 1; overflow-y: auto; max-height: 250px;">
+                    @forelse($recentActivity as $log)
+                        <li>
+                            <div class="cyber-list-time">[{{ $log->created_at->format('H:i') }}]</div>
+                            <div class="cyber-list-content">
+                                <div class="cyber-list-action" style="color: var(--cyber-secondary);">{{ $log->action }}</div>
+                                <div class="cyber-list-detail">{{ \Illuminate\Support\Str::limit($log->description, 40) }}</div>
+                            </div>
+                        </li>
+                    @empty
+                        <div style="padding: 24px; text-align: center; color: var(--cyber-text-muted); font-family: monospace;">> NO RECENT ACTIVITY.</div>
+                    @endforelse
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

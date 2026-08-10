@@ -8,7 +8,7 @@
     <title>{{ config('app.name', 'DataCenter Manager') }}</title>
 
     <!-- CSS -->
-    @vite(['resources/css/layouts/app.css'])
+    @vite(['resources/css/layouts/app.css', 'resources/css/premium-dashboards.css'])
     @vite(['resources/css/partials/command_palette.css'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -130,6 +130,21 @@
             <div class="navbar-right">
                 <!-- Group 3: Utility Tools -->
                 <div class="navbar-utils">
+                    <!-- Messagerie -->
+                    @auth
+                        <a href="{{ route('messagerie.index') }}"
+                            class="nav-util-link {{ request()->routeIs('messagerie.*') ? 'active' : '' }}"
+                            title="Messagerie Interne">
+                            <i class="fas fa-comments"></i>
+                            @php
+                                $unreadCount = \App\Models\Message::where('receiver_id', Auth::id())->where('is_read', false)->count();
+                            @endphp
+                            @if($unreadCount > 0)
+                                <span class="notification-badge">{{ $unreadCount }}</span>
+                            @endif
+                        </a>
+                    @endauth
+
                     <!-- Notifications -->
                     @auth
                         <a href="{{ route('notifications.index') }}"

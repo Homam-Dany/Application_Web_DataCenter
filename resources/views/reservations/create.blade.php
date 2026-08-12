@@ -23,7 +23,7 @@
                     data-availability-url-base="{{ route('reservations.availability', ['resource' => 'RESOURCE_ID']) }}">
                     <option value="">-- Liste des ressources disponibles --</option>
                     @foreach($resources as $resource)
-                        <option value="{{ $resource->id }}">
+                        <option value="{{ $resource->id }}" {{ request('resource_id') == $resource->id ? 'selected' : '' }}>
                             {{ $resource->name }} ({{ $resource->type }})
                         </option>
                     @endforeach

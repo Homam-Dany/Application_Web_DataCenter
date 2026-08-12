@@ -25,12 +25,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     data: data,
                     backgroundColor: backgroundColors,
                     borderWidth: 0,
-                    hoverOffset: 5
+                    hoverOffset: 15
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                animation: {
+                    animateScale: true,
+                    animateRotate: true,
+                    duration: 2500,
+                    easing: 'easeOutBounce'
+                },
                 plugins: {
                     legend: {
                         position: 'bottom',

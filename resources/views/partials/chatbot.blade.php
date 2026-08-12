@@ -44,6 +44,7 @@
             </label>
             <input type="file" id="chatbot-file-upload" accept="image/*" style="display: none;">
             
+            <button id="chatbot-mic" style="background: none; border: none; color: #94a3b8; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0 5px; transition: color 0.2s;"><i class="fas fa-microphone"></i></button>
             <input type="text" id="chatbot-input" placeholder="Posez votre question..." autocomplete="off">
             <button id="chatbot-send"><i class="fas fa-paper-plane"></i></button>
         </div>
@@ -301,6 +302,7 @@
         const messagesContainer = document.getElementById('chatbot-messages');
         const input = document.getElementById('chatbot-input');
         const sendBtn = document.getElementById('chatbot-send');
+        const micBtn = document.getElementById('chatbot-mic');
         const fileInput = document.getElementById('chatbot-file-upload');
         const previewContainer = document.getElementById('chatbot-image-preview-container');
         const previewImg = document.getElementById('chatbot-preview-img');
@@ -456,6 +458,61 @@
         if (input) input.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') sendMessage();
         });
+
+        // Web Speech API pour Commandes Vocales
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (SpeechRecognition && micBtn) {
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'fr-FR'; // Langue par défaut
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            let isRecording = false;
+
+            micBtn.addEventListener('click', () => {
+                if (isRecording) {
+                    recognition.stop();
+                } else {
+                    recognition.start();
+                }
+            });
+
+            recognition.onstart = function() {
+                isRecording = true;
+                micBtn.style.color = '#ef4444'; // Rouge pour indiquer l'enregistrement
+                micBtn.innerHTML = '<i class="fas fa-microphone-slash"></i>';
+                input.placeholder = 'Écoute en cours...';
+            };
+
+            recognition.onresult = function(event) {
+                const speechResult = event.results[0][0].transcript;
+                input.value = speechResult;
+            };
+
+            recognition.onspeechend = function() {
+                recognition.stop();
+            };
+
+            recognition.onend = function() {
+                isRecording = false;
+                micBtn.style.color = '#94a3b8';
+                micBtn.innerHTML = '<i class="fas fa-microphone"></i>';
+                input.placeholder = 'Posez votre question...';
+                if (input.value.trim() !== '') {
+                    sendMessage();
+                }
+            };
+
+            recognition.onerror = function(event) {
+                console.error("Erreur de reconnaissance vocale : " + event.error);
+                isRecording = false;
+                micBtn.style.color = '#94a3b8';
+                micBtn.innerHTML = '<i class="fas fa-microphone"></i>';
+                input.placeholder = 'Posez votre question...';
+            };
+        } else if (micBtn) {
+            micBtn.style.display = 'none'; // Cacher le bouton si non supporté
+        }
 
         // Helper Functions
         function addMessage(text, type) {

@@ -108,8 +108,51 @@ Cliquez sur 'Mot de passe oublié ?' sur la page de connexion. Entrez votre emai
             }
         }
 
+        // Gestion de l'historique de la session
+        $history = session()->get('chatbot_history', []);
+
         // 2. Si ce n'est pas une question exacte du menu, on interroge l'IA avec le contexte DB (et potentiellement l'image)
-        $aiResponse = $aiService->ask($input, $imageBase64);
+        $aiResponse = $aiService->ask($input, $imageBase64, $history);
+
+        // Interception des actions JSON générées par l'IA
+        if (preg_match('/```json\s*(\{.*?\})\s*```/s', $aiResponse, $matches)) {
+            $json = json_decode($matches[1], true);
+            if (is_array($json) && isset($json['action'])) {
+                try {
+                    if ($json['action'] === 'cancel_reservation' && isset($json['reservation_id'])) {
+                        $res = \App\Models\Reservation::where('id', $json['reservation_id'])
+                            ->where('user_id', \Illuminate\Support\Facades\Auth::id())
+                            ->first();
+                        if ($res) {
+                            $res->delete();
+                            $aiResponse = "✅ Action effectuée : Votre réservation a bien été annulée.";
+                        } else {
+                            $aiResponse = "❌ Impossible d'annuler cette réservation (elle n'existe pas ou ne vous appartient pas).";
+                        }
+                    } elseif ($json['action'] === 'report_incident' && isset($json['title'], $json['description'])) {
+                        \App\Models\Incident::create([
+                            'user_id' => \Illuminate\Support\Facades\Auth::id(),
+                            'title' => $json['title'],
+                            'description' => $json['description'],
+                            'status' => 'ouvert'
+                        ]);
+                        $aiResponse = "✅ Action effectuée : Incident signalé avec succès. L'équipe technique a été notifiée.";
+                    }
+                } catch (\Exception $e) {
+                    $aiResponse = "❌ Une erreur s'est produite lors de l'exécution de l'action.";
+                }
+            }
+        }
+
+        // Enregistrer la nouvelle interaction dans l'historique
+        $history[] = ['role' => 'user', 'content' => $input];
+        $history[] = ['role' => 'model', 'content' => $aiResponse];
+        
+        // Limiter l'historique aux 10 derniers messages (5 échanges) pour éviter de dépasser la taille des tokens
+        if (count($history) > 10) {
+            $history = array_slice($history, -10);
+        }
+        session()->put('chatbot_history', $history);
 
         return response()->json([
             'success' => true,

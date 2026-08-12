@@ -22,6 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 cutout: '75%',
                 responsive: true,
                 maintainAspectRatio: false,
+                animation: {
+                    animateScale: true,
+                    animateRotate: true,
+                    duration: 2500,
+                    easing: 'easeOutBounce'
+                },
                 plugins: {
                     legend: {
                         position: 'bottom',
@@ -50,23 +56,35 @@ document.addEventListener('DOMContentLoaded', () => {
         const labels = JSON.parse(inventoryCanvas.dataset.labels);
         const data = JSON.parse(inventoryCanvas.dataset.values);
 
+        const ctx = inventoryCanvas.getContext('2d');
+        const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+        gradient.addColorStop(0, '#00f0ff');   
+        gradient.addColorStop(1, '#10b981');
+
         new Chart(inventoryCanvas, {
             type: 'bar',
             data: {
                 labels: labels,
                 datasets: [{
                     data: data,
-                    backgroundColor: '#10b981',
+                    backgroundColor: gradient,
                     borderRadius: 8,
-                    barThickness: 30
+                    barThickness: 30,
+                    hoverBackgroundColor: '#00f0ff'
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                animation: {
+                    y: {
+                        duration: 2000,
+                        easing: 'easeOutElastic'
+                    }
+                },
                 scales: {
                     y: {
-                        grid: { color: '#f1f5f9' },
+                        grid: { color: 'rgba(255,255,255,0.05)' },
                         ticks: { color: '#94a3b8', font: { size: 11 } },
                         beginAtZero: true
                     },
@@ -109,12 +127,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     data: data,
                     backgroundColor: backgroundColors,
                     borderWidth: 0,
-                    hoverOffset: 10
+                    hoverOffset: 15
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                animation: {
+                    animateScale: true,
+                    animateRotate: true,
+                    duration: 2000,
+                    easing: 'easeOutQuart'
+                },
+                interaction: {
+                    mode: 'index'
+                },
                 plugins: {
                     legend: {
                         position: 'right', // Légende à droite pour changer un peu

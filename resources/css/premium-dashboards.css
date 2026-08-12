@@ -2,8 +2,8 @@
    EXTREME CYBER COMMAND CENTER - DASHBOARD CSS (LIGHT THEME)
    ========================================================================== */
 
-   :root {
-    /* Extreme Light/White Theme Forced for Dashboards */
+:root {
+    /* Extreme Light/White Theme Forced for Dashboards by Default */
     --cyber-bg: #f8fafc;
     --cyber-panel: rgba(255, 255, 255, 0.9);
     --cyber-panel-border: rgba(203, 213, 225, 0.8);
@@ -21,6 +21,26 @@
     --cyber-glow-secondary: 0 10px 25px rgba(139, 92, 246, 0.3);
     --cyber-glow-danger: 0 10px 25px rgba(239, 68, 68, 0.3);
     --cyber-glow-success: 0 10px 25px rgba(16, 185, 129, 0.3);
+}
+
+:root[data-theme="dark"] {
+    --cyber-bg: #050510; /* Ultra deep blue/black */
+    --cyber-panel: rgba(15, 23, 42, 0.7); /* Deep slate transparent for glassmorphism */
+    --cyber-panel-border: rgba(59, 130, 246, 0.3);
+    
+    --cyber-primary: #00f0ff; /* Neon Cyan */
+    --cyber-secondary: #b026ff; /* Neon Purple */
+    --cyber-accent: #ff003c; /* Neon Red */
+    --cyber-success: #00ff66; /* Neon Green */
+    --cyber-warning: #ffb800; /* Neon Yellow */
+    
+    --cyber-text: #e2e8f0; /* Light text */
+    --cyber-text-muted: #94a3b8; /* Muted light text */
+    
+    --cyber-glow-primary: 0 0 20px rgba(0, 240, 255, 0.5), inset 0 0 10px rgba(0, 240, 255, 0.2);
+    --cyber-glow-secondary: 0 0 20px rgba(176, 38, 255, 0.5);
+    --cyber-glow-danger: 0 0 20px rgba(255, 0, 60, 0.5);
+    --cyber-glow-success: 0 0 20px rgba(0, 255, 102, 0.5);
 }
 
 /* Background Animation */
